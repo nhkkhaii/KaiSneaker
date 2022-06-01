@@ -1,0 +1,12 @@
+.wrapper {
+    font-size: 1.6rem;
+    margin: 10px;
+}
+.inner {
+    + .inner {
+        &::before {
+            content: '/';
+            padding: 0 8px;
+        }
+    }
+}

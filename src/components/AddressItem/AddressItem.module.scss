@@ -1,0 +1,52 @@
+.wrapper {
+    width: 100%;
+    max-width: 600px;
+    max-height: 200px;
+    margin: 16px;
+
+    .inner {
+        border: 1px solid #cccccc;
+        margin: 8px;
+        border-radius: 20px;
+        padding: 8px;
+        position: relative;
+        .name {
+            font-size: 1.6rem;
+            margin: 0 8px;
+            width: 80%;
+            color: var(--black);
+        }
+        .address {
+            width: 80%;
+            text-align: justify;
+            margin: 0 8px;
+            color: #cccccc;
+            font-size: 1.6rem;
+            font-weight: 400;
+        }
+
+        .action {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+
+            .delete_btn,
+            .update_btn {
+                margin: 8px;
+                background: none;
+                font-size: 1.4rem;
+                cursor: pointer;
+                border-bottom: 1px solid rgba(0, 0, 0, 12%);
+                color: var(--black);
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+
+    + .wrapper {
+        border-top: 1px solid rgba(0, 0, 0, 12%);
+    }
+}

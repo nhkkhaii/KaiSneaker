@@ -1,0 +1,32 @@
+.brand {
+    height: 100px;
+    margin-top: 16px;
+    position: relative;
+    transform: translate3d(0, 0, 0);
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+}
+
+.brand .brand_item {
+    height: 100px;
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+    animation: moveSlideshow 15s linear infinite;
+}
+
+.brand_item > .brand_item-logo {
+    height: 50px;
+    margin: 0 50px;
+}
+
+@keyframes moveSlideshow {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+        /*The width of the page needs to be taken into consideration*/
+    }
+}

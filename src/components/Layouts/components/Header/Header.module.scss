@@ -1,0 +1,69 @@
+.wrapper {
+    height: 80px;
+    background-color: var(--white);
+    position: fixed;
+    border: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 12px rgb(0 0 0 / 10%);
+    right: 0;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    width: var(--logo-header);
+    line-height: var(--height-header);
+}
+
+// Actions
+.actions {
+    display: flex;
+    align-items: center;
+}
+
+.account-btn {
+    font-size: 2rem;
+    margin-right: 28px;
+    padding: 4px 8px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.action-btn {
+    font-size: 2.2rem;
+    color: var(--black);
+    opacity: 0.9;
+    background-color: transparent;
+    padding: 4px 10px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+}
+
+.badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    height: 2.4rem;
+    line-height: 2.2rem;
+    width: 2.4rem;
+    border-radius: 40px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-align: center;
+    z-index: -1;
+    border: 1px solid var(--black);
+    color: var(--black);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 12px;
+    cursor: pointer;
+}

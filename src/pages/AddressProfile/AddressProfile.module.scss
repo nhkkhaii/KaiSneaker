@@ -1,0 +1,25 @@
+.title {
+    margin: 40px 0;
+}
+
+.action {
+    width: 100%;
+    max-width: 600px;
+    .add_btn {
+        padding: 8px;
+        width: 130px;
+        float: right;
+        font-size: 1.6rem;
+        border-radius: 20px;
+        background-color: var(--black);
+        color: var(--white);
+        cursor: pointer;
+        &:hover {
+            opacity: 0.8;
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+}

@@ -1,0 +1,139 @@
+.title {
+    margin: 40px 0;
+}
+
+.profile {
+    width: 100%;
+    max-width: 600px;
+
+    .info {
+        margin-bottom: 30px;
+        position: relative;
+        .info_txt {
+            width: 100%;
+            padding: 10px;
+            outline: 0;
+            border: 1px solid #ccc;
+            color: #000;
+            background: transparent;
+            font-size: 15px;
+            border-radius: 8px;
+            &:focus ~ .info_label,
+            &:valid ~ .info_label {
+                top: -35px;
+                font-size: 14px;
+            }
+        }
+
+        .info_label {
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: 10px;
+            color: #000;
+            cursor: text;
+            transition: 0.2s;
+        }
+    }
+    .update_btn {
+        padding: 8px;
+        width: 100px;
+        font-size: 1.6rem;
+        float: right;
+        border-radius: 20px;
+        background-color: var(--black);
+        color: var(--white);
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+}
+
+/* Giới tính
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.gender {
+    position: relative;
+    margin-bottom: 30px;
+    .gender_heading {
+        font-size: 1.6rem;
+        font-weight: 400;
+        margin-left: 8px;
+    }
+}
+
+.switch {
+    background-color: white;
+    width: 80px;
+    height: 20px;
+    position: absolute;
+    border-radius: 40px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.switch::before,
+.switch::after {
+    content: '';
+    width: 2rem;
+    height: 2rem;
+    background-color: white;
+    position: absolute;
+    border-radius: 50%;
+    top: -10%;
+    left: -3%;
+    transition: all 350ms cubic-bezier(0, 0.95, 0.38, 0.98), background 150ms ease;
+    transform-origin: right center;
+}
+.switch::before {
+    border: 1px solid 33ccff;
+}
+.switch::after {
+    background: #ff99cc;
+    border: 1px solid #ff99cc;
+}
+.gender_check:checked + .switch:before {
+    background: #ff99cc;
+    transform: translateX(280%);
+    border: 1px solid #ff99cc;
+}
+.gender_check + .switch .female {
+    color: #ff99cc;
+}
+.gender_check:checked + .switch .male {
+    color: #33ccff;
+}
+.gender_check + .switch .male {
+    color: #ccc;
+}
+.gender_check:checked + .switch .female {
+    color: #ccc;
+}
+.gender_check:checked + .switch:after {
+    background: #33ccff;
+    transform: translateX(280%);
+    border: 1px solid #33ccff;
+}
+.female,
+.male {
+    position: absolute;
+    font-weight: lighter;
+    color: #ccc;
+}
+.female {
+    z-index: -1;
+    top: 30%;
+    transform: rotate(180deg);
+    font-size: 3rem;
+}
+.male {
+    z-index: -1;
+    left: 87%;
+    top: -145%;
+    font-size: 2.5rem;
+    transform: rotate(-50deg);
+}
