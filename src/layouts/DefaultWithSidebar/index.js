@@ -1,6 +1,6 @@
-import Sidebar from '~/components/Layouts/components/Sidebar';
-import Header from '~/components/Layouts/components/Header';
-import Footer from '~/components/Layouts/DefaultLayout/Footer';
+import Sidebar from '~/layouts/components/Sidebar';
+import Header from '~/layouts/components/Header';
+import Footer from '~/layouts/components/Footer';
 
 function DefaultWithSidebar({ children }) {
     return (

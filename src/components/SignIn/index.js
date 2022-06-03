@@ -5,16 +5,62 @@ import styles from './SignIn.module.scss';
 import { Link } from 'react-router-dom';
 import images from '~/assets/images';
 import { useState } from 'react';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
 function SignIn() {
     const [isContainerActive, setIsContainerActive] = useState(false);
+    const [errorMessages, setErrorMessages] = useState({});
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const [formData, setFormData] = useState({});
+    const [username, setUserName] = useState();
+    const [password, setPassword] = useState();
+
     const signUpButton = () => {
         setIsContainerActive(true);
     };
     const signInButton = () => {
         setIsContainerActive(false);
+    };
+
+    const renderErrorMessage = (name) =>
+        name === errorMessages.name && <div className="error">{errorMessages.message}</div>;
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setFormData({ username: username, password: password });
+
+        const response = await handleSubmitLogin({
+            formData,
+        });
+    };
+
+    const handleSubmitLogin = (data) => {
+        // var options = {
+        //     methods: 'POST',
+        //     header: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(data),
+        // };
+        axios
+            .post('http://26.215.178.30/DACS/api/theloai', {
+                type: 'create',
+                value: formData,
+            })
+            .then((response) => {
+                console.log(JSON.Parse(response));
+            });
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
+        // fetch('http://26.215.178.30/DACS/api/theloai', options)
+        //     .then(function (response) {
+        //         return response.json();
+        //     })
+        //     .then(callback);
     };
 
     return (
@@ -43,7 +89,7 @@ function SignIn() {
                     </form>
                 </div>
                 <div className={cx('inner', 'sign_in')}>
-                    <form action="#" className={cx('morri-container')}>
+                    <form className={cx('morri-container')} onSubmit={handleSubmit}>
                         <h1 className={cx('heading')}>Đăng nhập</h1>
                         <div className={cx('social')}>
                             <Link to="" className={cx('social_item')}>
@@ -54,8 +100,18 @@ function SignIn() {
                             </Link>
                         </div>
                         <span className={cx('subcontent')}>hoặc sử dụng tài khoản của bạn</span>
-                        <input type="email" placeholder="Email" className={cx('morri_input')} />
-                        <input type="password" placeholder="Password" className={cx('morri_input')} />
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            className={cx('morri_input')}
+                            onChange={(e) => setUserName(e.target.value)}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            className={cx('morri_input')}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
                         <Link to="/langquen" className={cx('forgot')}>
                             Quên mật khẩu?
                         </Link>

@@ -4,8 +4,8 @@ import Following from '~/pages/Following';
 import Nike from '~/pages/Nike';
 import Adidas from '~/pages/Adidas';
 import MLB from '~/pages/MLB';
-import DefaultWithSidebar from '~/components/Layouts/DefaultWithSidebar';
-import Login from '~/components/Layouts/Login';
+import DefaultWithSidebar from '~/layouts/DefaultWithSidebar';
+import Login from '~/layouts/Login';
 import SignIn from '~/components/SignIn';
 import Profile from '~/pages/Profile';
 import AddressProfile from '~/pages/AddressProfile';
@@ -13,7 +13,7 @@ import AddressProfile from '~/pages/AddressProfile';
 import Register from '~/pages/Register';
 import DetailProduct from '~/components/DetailProduct';
 import Shopping from '~/components/Shopping';
-import DefaultProfile from '~/components/Layouts/DefaultProfile';
+import DefaultProfile from '~/layouts/DefaultProfile';
 import Checkout from '~/components/Checkout';
 
 const publicRoutes = [
