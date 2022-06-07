@@ -4,8 +4,9 @@
 :root {
     --black: #000;
     --white: #fff;
-
     // Header
+    --height-header: 80px;
+
     --text-nav-color: #8c8c8c;
     --height-header: 8rem;
     --logo-header: 20rem;
@@ -24,6 +25,12 @@
     --text-color-signIn: #e6e6e6;
     // Shopping
     --text-shopping-brand: #8c8c8c;
+    // Admin
+    --blue-color: #287bff;
+    --white-color: #fff;
+    --grey-color: #f5f5f5;
+    --black1-color: #222;
+    --black2-color: #999;
 }
 
 * {
@@ -53,9 +60,6 @@ input,
 a[href] {
     color: var(--text-color);
     text-decoration: none;
-}
-.container {
-    margin-top: 80px;
 }
 
 .grid {

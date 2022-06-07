@@ -1,8 +1,8 @@
 import Header from '~/layouts/components/Header';
 import Footer from '~/layouts/components/Footer';
-import SidebarProfile from '~/components/SidebarProfile';
+import SidebarProfile from '~/layouts/components/SidebarProfile';
 
-function DefaultProfile({ children }) {
+function ProfileAccount({ children }) {
     return (
         <div>
             <Header />
@@ -22,4 +22,4 @@ function DefaultProfile({ children }) {
     );
 }
 
-export default DefaultProfile;
+export default ProfileAccount;

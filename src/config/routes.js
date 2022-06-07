@@ -1,9 +1,21 @@
 const routes = {
     home: '/',
-    following: '/following',
-    profile: '/@:nickname',
-    upload: '/upload',
+    sneaker: '/sneaker',
+    nike: '/nike',
+    adidas: '/adidas',
+    mlb: '/mlb',
     search: '/search',
+    login: 'login',
+    profile: '/@:nickname',
+    addressProfile: '/@:nickname/address-shipping',
+    shoppingCart: '/@:nickname/shopping-cart',
+    checkout: '/@:nickname/checkout',
+    product: '/sneaker/:product',
+    admin: '/admin',
+    adminUsers: '/admin/users',
+    adminCategory: '/admin/category',
+    adminProduct: '/admin/product',
+    adminAddProduct: '/admin/product/:idproduct',
 };
 
 export default routes;

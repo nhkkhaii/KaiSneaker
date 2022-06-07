@@ -14,7 +14,7 @@ function Products({ id, name, username, price, featured }) {
                 <FontAwesomeIcon icon={faCartShopping} className={cx('icon-bag')} />
                 <FontAwesomeIcon icon={faShare} className={cx('icon-share')} />
             </div>
-            <Link to={`/product/${username}`} state={{ data: username }}>
+            <Link to={`/sneaker/${username}`} state={{ data: username }}>
                 <div className={cx('product')}>
                     <Image
                         src="https://www.corsair.com/corsairmedia/sys_master/productcontent/CH-9300011-NA-M65_PRO_RGB_BLK_04.png"
@@ -26,7 +26,7 @@ function Products({ id, name, username, price, featured }) {
             <div className={cx('content')}>
                 <h3 className={cx('name')}>{name}</h3>
                 <p className={cx('price')}>{price}đ</p>
-                <Link to={`/product/${username}`} state={{ data: username }} className={cx('buy')}>
+                <Link to={`/sneaker/${username}`} state={{ data: username }} className={cx('buy')}>
                     Mua Ngay
                 </Link>
             </div>
