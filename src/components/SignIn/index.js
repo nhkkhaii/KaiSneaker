@@ -30,7 +30,7 @@ function SignIn() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setFormData({ username: username, password: password });
+        setFormData({ USERNAME: username, PASSWORD: password });
 
         const response = await handleSubmitLogin({
             formData,
@@ -46,12 +46,11 @@ function SignIn() {
         //     body: JSON.stringify(data),
         // };
         axios
-            .post('http://26.215.178.30/DACS/api/theloai', {
-                type: 'create',
-                value: formData,
+            .post('http://26.17.209.162/api/account/signin', {
+                data: formData,
             })
             .then((response) => {
-                console.log(JSON.Parse(response));
+                console.log(response);
             });
         // .catch(function (error) {
         //     console.log(error);
@@ -101,7 +100,7 @@ function SignIn() {
                         </div>
                         <span className={cx('subcontent')}>hoặc sử dụng tài khoản của bạn</span>
                         <input
-                            type="email"
+                            type="text"
                             placeholder="Email"
                             className={cx('morri_input')}
                             onChange={(e) => setUserName(e.target.value)}

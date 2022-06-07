@@ -15,6 +15,7 @@ import {
     faHome,
     faSearch,
     faSignOut,
+    faSliders,
     faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import { faBarChart, faComment } from '@fortawesome/free-regular-svg-icons';
@@ -72,11 +73,19 @@ function SidebarAdmin({ children }) {
                         </Link>
                     </li>
                     <li className={cx('nav-item')}>
-                        <Link to="#" className={cx('nav-item-link')}>
+                        <Link to={config.routes.adminBill} className={cx('nav-item-link')}>
                             <span className={cx('nav-icon')}>
                                 <FontAwesomeIcon icon={faFileInvoiceDollar} />
                             </span>
                             <span className={cx('nav-title')}>Hóa đơn</span>
+                        </Link>
+                    </li>
+                    <li className={cx('nav-item')}>
+                        <Link to={config.routes.adminSlider} className={cx('nav-item-link')}>
+                            <span className={cx('nav-icon')}>
+                                <FontAwesomeIcon icon={faSliders} />
+                            </span>
+                            <span className={cx('nav-title')}>Slider</span>
                         </Link>
                     </li>
                     <li className={cx('nav-item')}>

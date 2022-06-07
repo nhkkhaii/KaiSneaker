@@ -16,6 +16,8 @@ const routes = {
     adminCategory: '/admin/category',
     adminProduct: '/admin/product',
     adminAddProduct: '/admin/product/:idproduct',
+    adminSlider: '/admin/slider',
+    adminBill: '/admin/bill',
 };
 
 export default routes;
