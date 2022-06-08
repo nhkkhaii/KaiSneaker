@@ -1,0 +1,124 @@
+.wrapper {
+    padding: 16px;
+    .inner {
+        height: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .heading {
+            margin-left: 30px;
+        }
+    }
+
+    .wrapper_img {
+        .inner_img {
+            margin: 30px;
+
+            .upload_box {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .file_upload {
+                    height: 250px;
+                    width: 100%;
+                    border-radius: 20px;
+                    position: relative;
+                    margin: 16px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    border: 3px solid rgb(157, 157, 157);
+                    overflow: hidden;
+                    background-size: 100% 200%;
+                    transition: all 1s;
+                    color: rgb(157, 157, 157);
+                    font-size: 100px;
+
+                    .upload {
+                        height: 200px;
+                        width: 200px;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        opacity: 0;
+                        cursor: pointer;
+                    }
+
+                    .fadeout {
+                        display: none;
+                    }
+
+                    &:hover {
+                        background-position: 0 -100%;
+                        color: black;
+                        border-color: black;
+
+                        .delete_box.active {
+                            display: flex;
+                        }
+                    }
+
+                    .img_box {
+                        display: none;
+                        width: 100%;
+                        height: 100%;
+
+                        .img {
+                            transition: all 0.25s;
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+
+                    .fadein {
+                        display: block;
+                    }
+                    .delete_box {
+                        user-select: none;
+                        display: none;
+                        align-items: center;
+                        justify-content: center;
+                        top: 0;
+                        right: 0;
+                        bottom: 0;
+                        left: 0;
+                        background: rgba(0, 0, 0, 8%);
+                        position: absolute;
+                        z-index: 1;
+
+                        .btn_delete {
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+
+            .btn_update {
+                background-color: black;
+                color: white;
+                padding: 8px;
+                width: 100px;
+                font-size: 1.6rem;
+                cursor: pointer;
+                border-radius: 20px;
+                float: right;
+                margin-right: 16px;
+                transition: all 0.25s;
+                &:hover {
+                    opacity: 0.8;
+                }
+                &:active {
+                    transform: scale(0.95);
+                }
+
+                &:disabled {
+                    opacity: 0.1;
+                }
+            }
+        }
+    }
+}

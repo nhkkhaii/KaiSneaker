@@ -38,7 +38,6 @@ export const setDescription = (payload) => {
 export const deleteImg = (payload) => {
     return {
         type: DELETE_IMG,
-
         payload,
     };
 };

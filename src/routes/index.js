@@ -26,6 +26,11 @@ import AdminProduct from '~/components/AdminProduct';
 import AddProduct from '~/components/AddProduct';
 import AdminBill from '~/components/AdminBill';
 import AdminSlider from '~/components/AdminSlider';
+import UpdateBrand from '~/components/UpdateBrand';
+
+// Cookies
+
+import { useCookies } from 'react-cookie';
 
 const publicRoutes = [
     { path: config.routes.home, component: Home },
@@ -40,6 +45,9 @@ const publicRoutes = [
     { path: config.routes.checkout, component: Checkout },
     // Product
     { path: config.routes.product, component: DetailProduct },
+];
+
+const privateRoutes = [
     // Admin
     { path: config.routes.admin, component: Dashboard, layout: Admin },
     { path: config.routes.adminCategory, component: CategoryAdmin, layout: Admin },
@@ -48,8 +56,19 @@ const publicRoutes = [
     { path: config.routes.adminAddProduct, component: AddProduct, layout: Admin },
     { path: config.routes.adminBill, component: AdminBill, layout: Admin },
     { path: config.routes.adminSlider, component: AdminSlider, layout: Admin },
+    { path: config.routes.adminUpdateBrand, component: UpdateBrand, layout: Admin },
+    { path: config.routes.home, component: Home },
+    { path: config.routes.nike, component: Nike, layout: DefaultWithSidebar },
+    { path: config.routes.adidas, component: Adidas, layout: DefaultWithSidebar },
+    { path: config.routes.mlb, component: MLB, layout: DefaultWithSidebar },
+    { path: config.routes.login, component: SignIn, layout: Login },
+    // Profile
+    { path: config.routes.profile, component: Profile, layout: ProfileAccount },
+    { path: config.routes.addressProfile, component: AddressProfile, layout: ProfileAccount },
+    { path: config.routes.shoppingCart, component: Shopping },
+    { path: config.routes.checkout, component: Checkout },
+    // Product
+    { path: config.routes.product, component: DetailProduct },
 ];
-
-const privateRoutes = [];
 
 export { publicRoutes, privateRoutes };

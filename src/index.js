@@ -4,10 +4,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from '~/components/GlobalStyles';
 
+import { CookiesProvider } from 'react-cookie';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <GlobalStyles>
-        <App />
+        <CookiesProvider>
+            <App />
+        </CookiesProvider>
     </GlobalStyles>,
 );
 

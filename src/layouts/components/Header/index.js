@@ -6,11 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 import Navbar from '../Navbar';
 import { faBagShopping, faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import Search from '../Search';
 import Image from '~/components/Image';
+
 import Menu from '~/components/Popper/Menu';
 
 const cx = classNames.bind(styles);
@@ -23,22 +25,25 @@ const MENU_ITEMS = [
 ];
 
 function Header() {
-    const currentUser = false;
-    const id = 'nhkkhaii';
+    const [cookies, setCookie, removeCookie] = useCookies(['name']);
+    console.log(cookies);
+    function removeCK() {
+        removeCookie('name');
+    }
     const userMenu = [
         {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'Thông tin tài khoản',
-            to: '/@nhkkhaii',
+            to: cookies.name ? `/@${cookies.name.ID}` : '',
         },
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Đăng xuất',
-            to: '/logout',
+            to: '/',
             separate: true,
+            onClick: removeCK,
         },
     ];
-
     return (
         <header className={cx('wrapper')}>
             <Link to="/">
@@ -47,10 +52,10 @@ function Header() {
             <Navbar />
             <div className={cx('actions')}>
                 <Search />
-                {currentUser ? (
+                {cookies.name ? (
                     <>
                         <Tippy delay={[0, 50]} content="Giỏ hàng" placement="bottom">
-                            <Link to={`/${id}/shopping`} className={cx('action-btn')}>
+                            <Link to={cookies.name ? `/${cookies.name.ID}/shopping` : ''} className={cx('action-btn')}>
                                 <FontAwesomeIcon icon={faBagShopping} />
                                 <span className={cx('badge')}>12</span>
                             </Link>
@@ -59,8 +64,8 @@ function Header() {
                 ) : (
                     <></>
                 )}
-                <Menu items={currentUser ? userMenu : MENU_ITEMS}>
-                    {currentUser ? (
+                <Menu items={cookies.name ? userMenu : MENU_ITEMS}>
+                    {cookies.name ? (
                         <Image
                             className={cx('user-avatar')}
                             src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/623d4b2d95cec.png"

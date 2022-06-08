@@ -25,8 +25,7 @@ function AddProduct() {
 
     const handleSubmitLogin = (data) => {
         axios
-            .post('http://localhost/api/khachhang/post', {
-                type: 'create',
+            .post('http://26.17.209.162/api/account/getImg', {
                 data: state,
             })
             .then((response) => {

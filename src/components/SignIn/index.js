@@ -2,22 +2,34 @@ import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import styles from './SignIn.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import images from '~/assets/images';
-import { useState } from 'react';
+import { useState, useReducer } from 'react';
+
 import axios from 'axios';
+// Cookie
+import { useCookies } from 'react-cookie';
+
+// Login
+import { initStateLogin, loginReducer } from '~/reducers/loginReducers';
+import { setNameLogin, setPasswordLogin } from '~/actions/loginActions';
+
+// Register
+import { initStateRegister, registerReducer } from '~/reducers/registerReducers';
+import { setNameRegister, setPasswordRegister, setRePasswordRegister } from '~/actions/registerActions';
 
 const cx = classNames.bind(styles);
 
 function SignIn() {
     const [isContainerActive, setIsContainerActive] = useState(false);
-    const [errorMessages, setErrorMessages] = useState({});
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    // State Đăng nhập
+    const [stateLogin, dispatchLogin] = useReducer(loginReducer, initStateLogin);
+    // State Đăng ký
+    const [stateRegister, dispatchRegister] = useReducer(registerReducer, initStateRegister);
+    const [cookies, setCookie] = useCookies(['name']);
+    let navigate = useNavigate();
 
-    const [formData, setFormData] = useState({});
-    const [username, setUserName] = useState();
-    const [password, setPassword] = useState();
-
+    // console.log(cookies);
     const signUpButton = () => {
         setIsContainerActive(true);
     };
@@ -25,41 +37,51 @@ function SignIn() {
         setIsContainerActive(false);
     };
 
-    const renderErrorMessage = (name) =>
-        name === errorMessages.name && <div className="error">{errorMessages.message}</div>;
-
-    const handleSubmit = async (e) => {
+    // Login
+    const handleSubmitLG = async (e) => {
         e.preventDefault();
-        setFormData({ USERNAME: username, PASSWORD: password });
 
-        const response = await handleSubmitLogin({
-            formData,
+        await handleSubmitLogin({
+            stateLogin,
         });
     };
-
     const handleSubmitLogin = (data) => {
-        // var options = {
-        //     methods: 'POST',
-        //     header: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(data),
-        // };
         axios
             .post('http://26.17.209.162/api/account/signin', {
-                data: formData,
+                data: stateLogin,
+            })
+            .then((response) => {
+                if (response.data != 0) {
+                    setCookie('name', { ID: response.data.id, STATUS: response.data.status }, { path: '/' });
+                    navigate('/');
+                }
+
+                if (response.data === 0) {
+                }
+            });
+    };
+
+    // Đăng ký
+    const handleSubmitRG = async (e) => {
+        e.preventDefault();
+        if (stateRegister.REPASSWORD === stateRegister.PASSWORD) {
+            console.log(stateRegister);
+            await handleSubmitRegister({
+                stateRegister,
+            });
+        } else {
+            console.log('Nhập lại mật khẩu không trùng khớp');
+        }
+    };
+
+    const handleSubmitRegister = (data) => {
+        axios
+            .post('http://26.17.209.162/api/account/signup', {
+                data: stateRegister,
             })
             .then((response) => {
                 console.log(response);
             });
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
-        // fetch('http://26.215.178.30/DACS/api/theloai', options)
-        //     .then(function (response) {
-        //         return response.json();
-        //     })
-        //     .then(callback);
     };
 
     return (
@@ -70,7 +92,7 @@ function SignIn() {
             </Link>
             <div className={cx('wrapper', `${isContainerActive ? 'right-panel-active' : ''}`)}>
                 <div className={cx('inner', 'sign_up')}>
-                    <form action="#" className={cx('morri-container')}>
+                    <form action="#" className={cx('morri-container')} onSubmit={handleSubmitRG}>
                         <h1 className={cx('heading')}>Tạo tài khoản</h1>
                         <div className={cx('social')}>
                             <Link to="" className={cx('social_item')}>
@@ -81,14 +103,29 @@ function SignIn() {
                             </Link>
                         </div>
                         <span className={cx('subcontent')}>hoặc sử dụng email của bạn để đăng ký</span>
-                        <input type="text" placeholder="Name" className={cx('morri_input')} />
-                        <input type="email" placeholder="Email" className={cx('morri_input')} />
-                        <input type="password" placeholder="Password" className={cx('morri_input')} />
+                        <input
+                            type="text"
+                            placeholder="Tên tài khoản"
+                            className={cx('morri_input')}
+                            onChange={(e) => dispatchRegister(setNameRegister(e.target.value))}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Mật khẩu"
+                            className={cx('morri_input')}
+                            onChange={(e) => dispatchRegister(setPasswordRegister(e.target.value))}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Nhập lại mật khẩu"
+                            className={cx('morri_input')}
+                            onChange={(e) => dispatchRegister(setRePasswordRegister(e.target.value))}
+                        />
                         <button className={cx('btn')}>Đăng kí</button>
                     </form>
                 </div>
                 <div className={cx('inner', 'sign_in')}>
-                    <form className={cx('morri-container')} onSubmit={handleSubmit}>
+                    <form className={cx('morri-container')} onSubmit={handleSubmitLG}>
                         <h1 className={cx('heading')}>Đăng nhập</h1>
                         <div className={cx('social')}>
                             <Link to="" className={cx('social_item')}>
@@ -103,13 +140,13 @@ function SignIn() {
                             type="text"
                             placeholder="Email"
                             className={cx('morri_input')}
-                            onChange={(e) => setUserName(e.target.value)}
+                            onChange={(e) => dispatchLogin(setNameLogin(e.target.value))}
                         />
                         <input
                             type="password"
                             placeholder="Password"
                             className={cx('morri_input')}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => dispatchLogin(setPasswordLogin(e.target.value))}
                         />
                         <Link to="/langquen" className={cx('forgot')}>
                             Quên mật khẩu?

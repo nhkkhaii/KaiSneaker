@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import styles from './Menu.module.scss';
+import { useCookies } from 'react-cookie';
 
 const cx = classNames.bind(styles);
 

@@ -1,0 +1,114 @@
+.wrapper {
+    padding: 16px;
+    .inner {
+        margin: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .heading {
+            font-size: 2rem;
+        }
+
+        .btn_cancel {
+            padding: 8px;
+            width: 60px;
+            background-color: #ccc;
+            border-radius: 40px;
+            font-size: 1.6rem;
+            transition: all 0.25s;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+
+    .update_form {
+        padding: 8px;
+
+        .category-list {
+            .category_box {
+                display: flex;
+                font-size: 1.4rem;
+                align-items: center;
+                justify-content: space-between;
+
+                .category-item {
+                    position: relative;
+                    margin: 0 16px;
+                }
+                .input-label {
+                    display: block;
+                    margin-left: 18px;
+                    font-size: 1.4rem;
+                    padding: 0 8px;
+                    background: white;
+                    position: absolute;
+                    color: var(--black1-color);
+                    top: -2px;
+                }
+
+                .input-item {
+                    color: var(--black1-color);
+                    font-size: 1.4rem;
+                    width: 460px;
+                    padding: 12px 0 12px 26px;
+                    border: 1px solid var(--black1-color);
+                    margin: 10px 0;
+                    /* outline: none; */
+                    border-color: rgba(0, 0, 0, 12%);
+                    border-radius: 8px;
+                }
+
+                .input-item-description {
+                    font-size: 1.4rem;
+                    margin-top: 12px;
+                    padding: 6px;
+                    max-height: 300px;
+                    max-width: 460px;
+                    min-width: 460px;
+                }
+            }
+
+            .btn_update {
+                width: 100px;
+                background-color: black;
+                color: white;
+                font-size: 1.6rem;
+                padding: 8px;
+                border-radius: 40px;
+                float: right;
+                margin-right: 16px;
+                margin-top: 16px;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+
+                &:active {
+                    transform: scale(0.95);
+                }
+
+                &:disabled {
+                    background-color: #ccc;
+                }
+            }
+        }
+    }
+}
+
+.btn {
+    float: right;
+    margin: 10px 10px 0 0;
+    font-size: 1.4rem;
+    padding: 10px 22px;
+    border-radius: 20px;
+    background-color: #bfbfbf;
+    border: none;
+    color: #000;
+}
+
+.btn:hover {
+    cursor: pointer;
+    opacity: 0.9;
+}

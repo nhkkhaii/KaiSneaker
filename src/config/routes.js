@@ -16,6 +16,7 @@ const routes = {
     adminCategory: '/admin/category',
     adminProduct: '/admin/product',
     adminAddProduct: '/admin/product/:idproduct',
+    adminUpdateBrand: '/admin/category/:idbrand',
     adminSlider: '/admin/slider',
     adminBill: '/admin/bill',
 };
