@@ -27,6 +27,7 @@ import AddProduct from '~/components/AddProduct';
 import AdminBill from '~/components/AdminBill';
 import AdminSlider from '~/components/AdminSlider';
 import UpdateBrand from '~/components/UpdateBrand';
+import ViewBill from '~/components/ViewBill';
 
 // Cookies
 
@@ -62,6 +63,8 @@ const privateRoutes = [
     { path: config.routes.adidas, component: Adidas, layout: DefaultWithSidebar },
     { path: config.routes.mlb, component: MLB, layout: DefaultWithSidebar },
     { path: config.routes.login, component: SignIn, layout: Login },
+    { path: config.routes.adminViewBill, component: ViewBill, layout: Admin },
+
     // Profile
     { path: config.routes.profile, component: Profile, layout: ProfileAccount },
     { path: config.routes.addressProfile, component: AddressProfile, layout: ProfileAccount },

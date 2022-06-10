@@ -1,4 +1,12 @@
-import { SET_ID, SET_NAME, SET_IMG, SET_PRICE, SET_DESCRIPTION, DELETE_IMG } from '~/constants/productConstants';
+import {
+    SET_ID,
+    SET_NAME,
+    SET_IMG,
+    SET_PRICE,
+    SET_DESCRIPTION,
+    DELETE_IMG,
+    SET_BRAND,
+} from '~/constants/productConstants';
 
 export const setID = (payload) => {
     return {
@@ -38,6 +46,13 @@ export const setDescription = (payload) => {
 export const deleteImg = (payload) => {
     return {
         type: DELETE_IMG,
+        payload,
+    };
+};
+
+export const setBrand = (payload) => {
+    return {
+        type: SET_BRAND,
         payload,
     };
 };

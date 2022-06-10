@@ -14,11 +14,12 @@ const routes = {
     admin: '/admin',
     adminUsers: '/admin/users',
     adminCategory: '/admin/category',
-    adminProduct: '/admin/product',
-    adminAddProduct: '/admin/product/:idproduct',
+    adminProduct: '/admin/shoes',
+    adminAddProduct: '/admin/shoes/:idproduct',
     adminUpdateBrand: '/admin/category/:idbrand',
     adminSlider: '/admin/slider',
     adminBill: '/admin/bill',
+    adminViewBill: '/admin/bill/:idbill',
 };
 
 export default routes;

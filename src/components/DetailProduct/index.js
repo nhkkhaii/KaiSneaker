@@ -1,60 +1,83 @@
 import Breadcrumbs from '~/components/Breadcrumbs';
 import { useLocation } from 'react-router-dom';
 import React from 'react';
+import { useState, useRef, useEffect } from 'react';
+
 import { Fade } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import Image from '~/components/Image';
 import classNames from 'classnames/bind';
 import styles from './DetailProduct.module.scss';
-
+import axios from 'axios';
 const cx = classNames.bind(styles);
 
-const fadeImages = [
-    {
-        url: 'https://www.corsair.com/corsairmedia/sys_master/productcontent/CH-9300011-NA-M65_PRO_RGB_BLK_04.png',
-        caption: 'First Slide',
-    },
-    {
-        url: 'https://www.corsair.com/corsairmedia/sys_master/productcontent/CH-9300011-NA-M65_PRO_RGB_BLK_04.png',
-        caption: 'First Slide',
-    },
-    {
-        url: 'https://www.corsair.com/corsairmedia/sys_master/productcontent/CH-9300011-NA-M65_PRO_RGB_BLK_04.png',
-
-        caption: 'First Slide',
-    },
-    {
-        url: 'https://www.corsair.com/corsairmedia/sys_master/productcontent/CH-9300011-NA-M65_PRO_RGB_BLK_04.png',
-
-        caption: 'First Slide',
-    },
-];
-
-function DetailProduct({ ...props }) {
+function DetailProduct() {
     let location = useLocation();
-    console.log(location);
+    const [quantity, setQuantity] = useState(1);
+
+    function createMarkup() {
+        return { __html: location.state.data.SHOESDESCRIPTION };
+    }
+
+    const handleShoppingCart = () => {};
+
     return (
         <div className="grid wide">
             <div className="row">
                 <Breadcrumbs />
                 <div className={cx('slide-container', 'col', 'l-5')}>
                     <Fade>
-                        {fadeImages.map((fadeImage, index) => (
-                            <div className="each-fade" key={index}>
-                                <div className={cx('image-container')}>
-                                    <Image className={cx('image')} src={fadeImage.url} alt={fadeImage.caption} />
-                                </div>
-                            </div>
-                        ))}
+                        {Object.keys(location.state.data.IMAGE)
+                            .filter((key) => key !== 'IMAGEID')
+                            .map((key, index) => {
+                                return (
+                                    location.state.data.IMAGE[key] !== '' && (
+                                        <div className="each-fade" key={index}>
+                                            <div className={cx('image-container')}>
+                                                <Image
+                                                    className={cx('fill')}
+                                                    src={location.state.data.IMAGE[key]}
+                                                    alt={location.state.data.SHOESNAME}
+                                                />
+                                            </div>
+                                        </div>
+                                    )
+                                );
+                            })}
                     </Fade>
                 </div>
                 <div className={cx('col', 'l-7', 'info')}>
-                    <h2 className={cx('info-heading')}>{location.state.data}</h2>
-                    <p className={cx('info-money')}>2.000.000đ</p>
-                    <input type="number" className={cx('info-quantity')} />
+                    <h2 className={cx('info-heading')}>{location.state.data.SHOESNAME}</h2>
+                    <p className={cx('brand')}>{location.state.data.BRANDNAME}</p>
+                    <p className={cx('info-money')}>Giá : {location.state.data.SHOESPRICE}đ</p>
+
+                    <div className={cx('options')}>
+                        <div className={cx('size')}>
+                            <label className={cx('size_heading')}>Size</label>
+                            <select className={cx('size_option')}>
+                                <option value="1">41</option>
+                                <option value="2" selected>
+                                    42
+                                </option>
+                                <option value="3">43</option>
+                                <option value="4">44.5</option>
+                            </select>
+                        </div>
+                        <div className={cx('info_quantity')}>
+                            <span className={cx('minus')} onClick={() => setQuantity(quantity - 1)}>
+                                -
+                            </span>
+                            <span className={cx('num')}>{quantity}</span>
+                            <span className={cx('plus')} onClick={() => setQuantity(quantity + 1)}>
+                                +
+                            </span>
+                        </div>
+                    </div>
 
                     <div className={cx('info-btn')}>
-                        <button className={cx('info-btn-bag')}>Thêm vào giỏ hàng</button>
+                        <button className={cx('info-btn-bag')} onClick={handleShoppingCart}>
+                            Thêm vào giỏ hàng
+                        </button>
                         <button className={cx('info-btn-buy')}>Mua ngay</button>
                     </div>
                 </div>
@@ -63,20 +86,13 @@ function DetailProduct({ ...props }) {
                 <div className={cx('col', 'l-8', 'describe')}>
                     <h2 className={cx('describe_heading')}>Mô tả sản phẩm</h2>
                     <div className={cx('describe_content')}>
-                        <h3 className={cx('describe_content-name')}>Nike Air Jordan 1 Retro High x Off-White</h3>
+                        <h3 className={cx('describe_content-name')}>{location.state.data.SHOESNAME}</h3>
                         <div className={cx('describe_content-summary')}>
                             <h3 className={cx('describe_content-summary-heading')}>Sơ lược sản phẩm</h3>
-                            <p className={cx('describe_content-summary-content')}>
-                                Lenovo là một trong những hãng điện tử sản xuất máy tính mang thương hieuj toàn cầu nổi
-                                tiếng Lenovo là một trong những hãng điện tử sản xuất máy tính mang thương hieuj toàn
-                                cầu nổi tiếng Lenovo là một trong những hãng điện tử sản xuất máy tính mang thương hieuj
-                                toàn cầu nổi tiếng Lenovo là một trong những hãng điện tử sản xuất máy tính mang thương
-                                hieuj toàn cầu nổi tiếng Lenovo là một trong những hãng điện tử sản xuất máy tính mang
-                                thương hieuj toàn cầu nổi tiếng Lenovo là một trong những hãng điện tử sản xuất máy tính
-                                mang thương hieuj toàn cầu nổi tiếng Lenovo là một trong những hãng điện tử sản xuất máy
-                                tính mang thương hieuj toàn cầu nổi tiếng Lenovo là một trong những hãng điện tử sản
-                                xuất máy tính mang thương hieuj toàn cầu nổi tiếng
-                            </p>
+                            <p
+                                className={cx('describe_content-summary-content')}
+                                dangerouslySetInnerHTML={createMarkup()}
+                            ></p>
                         </div>
                     </div>
                 </div>

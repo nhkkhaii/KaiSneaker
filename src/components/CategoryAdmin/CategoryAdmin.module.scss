@@ -46,11 +46,12 @@
 
 .details-content-item--maxwith {
     max-width: 166px;
+    text-align: justify !important;
 }
 
 .details-content-item {
     position: relative;
-    padding: 2px 0;
+    padding: 2px 10px;
     text-align: center;
     color: var(--black1-color);
 }
@@ -60,7 +61,7 @@
     position: absolute;
     right: 0;
     top: 50%;
-    height: 20px;
+    height: 50%;
     transform: translateY(-50%);
     border-right: 1px solid rgba(0, 0, 0, 0.2);
 }

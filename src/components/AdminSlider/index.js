@@ -30,7 +30,6 @@ function AdminSlider() {
             dispatchSlide(addSlide(res.data));
         });
     }, []);
-
     // Convert input sang base 64
     const uploadImage = async (e, callback) => {
         const file = e.target.files[0];

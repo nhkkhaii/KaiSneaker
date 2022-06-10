@@ -45,8 +45,11 @@
 
 .details-content-item {
     position: relative;
-    padding: 2px 0;
+    padding: 2px 8px;
     text-align: center;
+    overflow: hidden;
+    max-width: 100px;
+    min-width: 20px;
     color: var(--black1-color);
 }
 
@@ -55,7 +58,7 @@
     position: absolute;
     right: 0;
     top: 50%;
-    height: 20px;
+    height: 50%;
     transform: translateY(-50%);
     border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -76,4 +79,10 @@
 .details-content-item-btn:hover {
     cursor: pointer;
     opacity: 0.8;
+}
+
+.justify_item {
+    white-space: pre-line;
+    text-overflow: ellipsis;
+    text-align: justify !important;
 }

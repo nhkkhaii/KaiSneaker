@@ -10,24 +10,6 @@ import { useState, useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
-const fadeImages = [
-    {
-        url: images.Slide1,
-        caption: 'First Slide',
-    },
-    {
-        url: images.Slide2,
-        caption: 'First Slide',
-    },
-    {
-        url: images.Slide3,
-        caption: 'First Slide',
-    },
-    {
-        url: images.Slide4,
-        caption: 'First Slide',
-    },
-];
 function Slider() {
     const [slideData, setSlideData] = useState([]);
 
@@ -41,20 +23,23 @@ function Slider() {
                 setSlideData(response.data[0]);
             });
     }, []);
-    console.log(slideData);
-    // Object.keys(myObject).map(function(key, index) {
-    //     myObject[key] *= 2;
-    //   });
+
     return (
         <div className={cx('slide-container')}>
             <Fade>
-                {fadeImages.map((fadeImage, index) => (
-                    <div className="each-fade" key={index}>
-                        <div className={cx('image-container')}>
-                            <Image className={cx('fill')} src={fadeImage.url} alt={fadeImage.caption} />
-                        </div>
-                    </div>
-                ))}
+                {Object.keys(slideData)
+                    .filter((key) => key !== 'IMAGEID')
+                    .map((key, index) => {
+                        return (
+                            slideData[key] !== '' && (
+                                <div className="each-fade" key={index}>
+                                    <div className={cx('image-container')}>
+                                        <Image className={cx('fill')} src={slideData[key]} alt={''} />
+                                    </div>
+                                </div>
+                            )
+                        );
+                    })}
             </Fade>
         </div>
     );

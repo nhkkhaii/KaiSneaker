@@ -6,15 +6,17 @@ import {
     SET_PRICE,
     SET_IMG,
     DELETE_IMG,
+    SET_BRAND,
 } from '~/constants/productConstants';
 
 // init state
 export const initState = {
-    id: '',
-    name: '',
-    price: '',
-    description: '',
-    img: [],
+    SHOESID: '',
+    IDBRAND: '',
+    SHOESNAME: '',
+    SHOESPRICE: '',
+    SHOESDESCRIPTION: '',
+    SHOESIMG: [],
 };
 
 export const productDetailsReducer = (state, action) => {
@@ -22,38 +24,44 @@ export const productDetailsReducer = (state, action) => {
         case SET_ID:
             return {
                 ...state,
-                id: action.payload,
+                SHOESID: action.payload,
+            };
+            break;
+        case SET_BRAND:
+            return {
+                ...state,
+                IDBRAND: action.payload,
             };
             break;
         case SET_NAME:
             return {
                 ...state,
-                name: action.payload,
+                SHOESNAME: action.payload,
             };
             break;
 
         case SET_DESCRIPTION:
             return {
                 ...state,
-                description: action.payload,
+                SHOESDESCRIPTION: action.payload,
             };
             break;
         case SET_PRICE:
             return {
                 ...state,
-                price: action.payload,
+                SHOESPRICE: action.payload,
             };
             break;
         case SET_IMG:
             return {
                 ...state,
-                img: [...state.img, action.payload],
+                SHOESIMG: [...state.SHOESIMG, action.payload],
             };
             break;
         case DELETE_IMG:
             return {
                 ...state,
-                img: state.img.filter((item) => item !== action.payload),
+                SHOESIMG: state.SHOESIMG.filter((item) => item !== action.payload),
             };
             break;
         case ADD_PRODUCT:
