@@ -28,6 +28,7 @@ import AdminBill from '~/components/AdminBill';
 import AdminSlider from '~/components/AdminSlider';
 import UpdateBrand from '~/components/UpdateBrand';
 import ViewBill from '~/components/ViewBill';
+import AdminStock from '~/components/AdminStock';
 
 // Cookies
 
@@ -64,6 +65,7 @@ const privateRoutes = [
     { path: config.routes.mlb, component: MLB, layout: DefaultWithSidebar },
     { path: config.routes.login, component: SignIn, layout: Login },
     { path: config.routes.adminViewBill, component: ViewBill, layout: Admin },
+    { path: config.routes.adminStock, component: AdminStock, layout: Admin },
 
     // Profile
     { path: config.routes.profile, component: Profile, layout: ProfileAccount },

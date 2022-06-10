@@ -20,6 +20,7 @@ const routes = {
     adminSlider: '/admin/slider',
     adminBill: '/admin/bill',
     adminViewBill: '/admin/bill/:idbill',
+    adminStock: '/admin/stock',
 };
 
 export default routes;

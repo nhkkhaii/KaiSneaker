@@ -3,3 +3,5 @@ export const initStateShoppingCart = {
     SHOESID: '',
     IDSIZE: '',
 };
+
+export const registerReducer = (state, action) => {};

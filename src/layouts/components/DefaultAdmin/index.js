@@ -97,11 +97,11 @@ function SidebarAdmin({ children }) {
                         </Link>
                     </li>
                     <li className={cx('nav-item')}>
-                        <Link to="#" className={cx('nav-item-link')}>
+                        <Link to={config.routes.adminStock} className={cx('nav-item-link')}>
                             <span className={cx('nav-icon')}>
                                 <FontAwesomeIcon icon={faComment} />
                             </span>
-                            <span className={cx('nav-title')}>Chat</span>
+                            <span className={cx('nav-title')}>Kho</span>
                         </Link>
                     </li>
                     <li className={cx('nav-item')}>
