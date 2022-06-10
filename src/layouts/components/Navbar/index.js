@@ -1,55 +1,35 @@
 import classNames from 'classnames/bind';
 import styles from './Navbar.module.scss';
 import { Link } from 'react-router-dom';
+import config from '~/config';
+
 const cx = classNames.bind(styles);
 
 function Navbar() {
     return (
         <ul className={cx('navbar')}>
             <li className={cx('navbar-item')}>
-                <Link className={cx('navbar-link')} to="/">
+                <Link className={cx('navbar-link')} to={config.routes.home}>
                     Trang chủ
                 </Link>
             </li>
             <li className={cx('navbar-item')}>
-                <Link className={cx('navbar-link')} to="/sneaker">
+                <Link className={cx('navbar-link')} to={config.routes.sneaker}>
                     Sneaker
                 </Link>
             </li>
             <li className={cx('navbar-item')}>
-                <Link className={cx('navbar-link')} to="/nike">
+                <Link className={cx('navbar-link')} to={config.routes.nike}>
                     Nike
                 </Link>
-                <ul className={cx('subnav')}>
-                    <li className={cx('subnav-item')}>
-                        <Link className={cx('subnav-link')} to="/jordans">
-                            Jordan
-                        </Link>
-                    </li>
-                    <li className={cx('subnav-item')}>
-                        <Link className={cx('subnav-link')} to="/air-force-1">
-                            Air Force
-                        </Link>
-                    </li>
-                    <li className={cx('subnav-item')}>
-                        <Link className={cx('subnav-link')} to="/blazer">
-                            Blazer
-                        </Link>
-                    </li>
-                    <li className={cx('subnav-item')}>
-                        <Link className={cx('subnav-link')} to="/dunk">
-                            Dunk
-                        </Link>
-                    </li>
-                </ul>
             </li>
             <li className={cx('navbar-item')}>
-                <Link className={cx('navbar-link')} to="/adidas">
+                <Link className={cx('navbar-link')} to={config.routes.adidas}>
                     Adidas
                 </Link>
             </li>
             <li className={cx('navbar-item')}>
-                <Link className={cx('navbar-link')} to="/mlb">
+                <Link className={cx('navbar-link')} to={config.routes.mlb}>
                     MLB
                 </Link>
             </li>

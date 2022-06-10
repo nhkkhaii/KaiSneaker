@@ -1,7 +1,8 @@
 import Products from '~/components/Products';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function Adidas() {
+function Nike() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
@@ -10,21 +11,17 @@ function Adidas() {
     // this useEffect will run once
     // similar to componentDidMount()
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then((res) => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setItems(result);
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                },
-            );
+        axios
+            .get('http://26.17.209.162/api/shoes/get')
+            .then(async (res) => {
+                setItems(res.data);
+                setIsLoaded(true);
+                setItems(res.data);
+            })
+            .catch((error) => {
+                setIsLoaded(true);
+                setError(error);
+            });
     }, []);
     if (error) {
         return <div>Error: {error.message}</div>;
@@ -33,14 +30,26 @@ function Adidas() {
     } else {
         return (
             <div className="row">
-                {items.map((item) => (
-                    <div key={item.id} className="col l-3">
-                        <Products id={item.id} name={item.name} username={item.username} />
-                    </div>
-                ))}
+                {items.map((item) => {
+                    if (item.BRANDNAME === 'Adidas') {
+                        return (
+                            <div className="col l-3" key={item.SHOESID}>
+                                <Products
+                                    id={item.SHOESID}
+                                    name={item.SHOESNAME}
+                                    price={item.SHOESPRICE}
+                                    imgID={item.IMAGEID}
+                                    description={item.SHOESDESCRIPTION}
+                                    brand={item.BRANDNAME}
+                                />
+                            </div>
+                        );
+                    }
+                })}
+                ;
             </div>
         );
     }
 }
 
-export default Adidas;
+export default Nike;

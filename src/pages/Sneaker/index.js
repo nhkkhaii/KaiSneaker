@@ -2,7 +2,7 @@ import Products from '~/components/Products';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function Nike() {
+function Sneaker() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
@@ -30,25 +30,22 @@ function Nike() {
     } else {
         return (
             <div className="row">
-                {items.map((item) => {
-                    if (item.BRANDNAME === 'MLB') {
-                        return (
-                            <div className="col l-3" key={item.SHOESID}>
-                                <Products
-                                    id={item.SHOESID}
-                                    name={item.SHOESNAME}
-                                    price={item.SHOESPRICE}
-                                    imgID={item.IMAGEID}
-                                    description={item.SHOESDESCRIPTION}
-                                    brand={item.BRANDNAME}
-                                />
-                            </div>
-                        );
-                    }
-                })}
+                {items.map((item) => (
+                    <div className="col l-3" key={item.SHOESID}>
+                        <Products
+                            id={item.SHOESID}
+                            name={item.SHOESNAME}
+                            price={item.SHOESPRICE}
+                            imgID={item.IMAGEID}
+                            description={item.SHOESDESCRIPTION}
+                            brand={item.BRANDNAME}
+                        />
+                    </div>
+                ))}
+                ;
             </div>
         );
     }
 }
 
-export default Nike;
+export default Sneaker;

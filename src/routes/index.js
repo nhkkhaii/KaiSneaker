@@ -7,9 +7,12 @@ import Login from '~/layouts/Login';
 import Admin from '~/layouts/Admin';
 
 // Pages
+import Sneaker from '~/pages/Sneaker';
+
 import Home from '~/pages/Home';
 import Nike from '~/pages/Nike';
 import Adidas from '~/pages/Adidas';
+
 import MLB from '~/pages/MLB';
 import SignIn from '~/components/SignIn';
 import Profile from '~/pages/Profile';
@@ -30,15 +33,13 @@ import UpdateBrand from '~/components/UpdateBrand';
 import ViewBill from '~/components/ViewBill';
 import AdminStock from '~/components/AdminStock';
 
-// Cookies
-
-import { useCookies } from 'react-cookie';
-
 const publicRoutes = [
     { path: config.routes.home, component: Home },
     { path: config.routes.nike, component: Nike, layout: DefaultWithSidebar },
     { path: config.routes.adidas, component: Adidas, layout: DefaultWithSidebar },
     { path: config.routes.mlb, component: MLB, layout: DefaultWithSidebar },
+    { path: config.routes.sneaker, component: Sneaker, layout: DefaultWithSidebar },
+
     { path: config.routes.login, component: SignIn, layout: Login },
     // Profile
     { path: config.routes.profile, component: Profile, layout: ProfileAccount },
@@ -72,6 +73,8 @@ const privateRoutes = [
     { path: config.routes.addressProfile, component: AddressProfile, layout: ProfileAccount },
     { path: config.routes.shoppingCart, component: Shopping },
     { path: config.routes.checkout, component: Checkout },
+    { path: config.routes.sneaker, component: Sneaker, layout: DefaultWithSidebar },
+
     // Product
     { path: config.routes.product, component: DetailProduct },
 ];

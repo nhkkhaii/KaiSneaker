@@ -45,7 +45,20 @@ function Products({ featured, id, name, price, imgID, description, brand }) {
             <div className={cx('content')}>
                 <h3 className={cx('name')}>{name}</h3>
                 <p className={cx('price')}>{price}đ</p>
-                <Link to={`/sneaker/${id}`} state={{ data: { SHOESID: id, IMAGE: imgProducts } }} className={cx('buy')}>
+                <Link
+                    to={`/sneaker/${id}`}
+                    state={{
+                        data: {
+                            SHOESID: id,
+                            SHOESNAME: name,
+                            SHOESDESCRIPTION: description,
+                            BRANDNAME: brand,
+                            SHOESPRICE: price,
+                            IMAGE: imgProducts,
+                        },
+                    }}
+                    className={cx('buy')}
+                >
                     Mua Ngay
                 </Link>
             </div>

@@ -1,20 +1,44 @@
 import Breadcrumbs from '~/components/Breadcrumbs';
 import { useLocation } from 'react-router-dom';
 import React from 'react';
-import { useState, useRef, useEffect } from 'react';
-
+import { useState, useRef, useEffect, useReducer } from 'react';
+import { useCookies } from 'react-cookie';
 import { Fade } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import Image from '~/components/Image';
 import classNames from 'classnames/bind';
 import styles from './DetailProduct.module.scss';
 import axios from 'axios';
+
+import { initStateShoppingCart, shoppingCartReducer } from '~/reducers/shoppingCartReducers';
+import { setIDAccount, setShoesID, setIDSize, setQuantityUP, setQuantityDown } from '~/actions/shoppingCartActions';
+
 const cx = classNames.bind(styles);
 
 function DetailProduct() {
+    const [cookies, setCookie] = useCookies(['name']);
+    const [stateShopping, dispatchShopping] = useReducer(shoppingCartReducer, initStateShoppingCart);
     let location = useLocation();
     const [quantity, setQuantity] = useState(1);
 
+    useEffect(() => {
+        if (cookies.name) {
+            dispatchShopping(setIDAccount(cookies.name.ID));
+        }
+        dispatchShopping(setShoesID(location.state.data.SHOESID));
+    }, []);
+
+    const quantityUp = () => {
+        dispatchShopping(setQuantityUP());
+        setQuantity(quantity + 1);
+    };
+
+    const quantityDown = () => {
+        if (quantity > 1) {
+            dispatchShopping(setQuantityDown());
+            setQuantity(quantity - 1);
+        }
+    };
     function createMarkup() {
         return { __html: location.state.data.SHOESDESCRIPTION };
     }
@@ -56,19 +80,17 @@ function DetailProduct() {
                             <label className={cx('size_heading')}>Size</label>
                             <select className={cx('size_option')}>
                                 <option value="1">41</option>
-                                <option value="2" selected>
-                                    42
-                                </option>
+                                <option value="2">42</option>
                                 <option value="3">43</option>
                                 <option value="4">44.5</option>
                             </select>
                         </div>
                         <div className={cx('info_quantity')}>
-                            <span className={cx('minus')} onClick={() => setQuantity(quantity - 1)}>
+                            <span className={cx('minus')} onClick={quantityDown}>
                                 -
                             </span>
-                            <span className={cx('num')}>{quantity}</span>
-                            <span className={cx('plus')} onClick={() => setQuantity(quantity + 1)}>
+                            <span className={cx('num')}>{quantity < 10 ? '0' + quantity : quantity}</span>
+                            <span className={cx('plus')} onClick={quantityUp}>
                                 +
                             </span>
                         </div>
