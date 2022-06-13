@@ -8,6 +8,7 @@ import {
     SET_PASSWORD,
     SET_AVATAR,
     SET_IDACCOUNT,
+    DELETE_AVATAR,
 } from '~/constants/userConstants';
 
 export const initStateUser = {
@@ -18,6 +19,7 @@ export const initStateUser = {
     EMAIL: '',
     NUMBERPHONE: '',
     DATEOFBIRTH: '',
+    IMAGEUSER: '',
 };
 
 export const userReducer = (state, action) => {
@@ -68,6 +70,18 @@ export const userReducer = (state, action) => {
             return {
                 ...state,
                 DATEOFBIRTH: action.payload,
+            };
+            break;
+        case SET_AVATAR:
+            return {
+                ...state,
+                IMAGEUSER: action.payload,
+            };
+            break;
+        case DELETE_AVATAR:
+            return {
+                ...state,
+                IMAGEUSER: '',
             };
             break;
 

@@ -35,7 +35,7 @@ function AdminBill() {
                 <h2 className={cx('account-heading')}>Hóa đơn sản phẩm</h2>
             </div>
 
-            {billData != 0 ? (
+            {billData !== 0 ? (
                 <table className={cx('details-table')}>
                     <thead className={cx('details-thead')}>
                         <tr className={cx('details-title-list')}>
@@ -52,7 +52,7 @@ function AdminBill() {
                             <tbody className={cx('details-tbody')} key={bill.IDBILL}>
                                 <tr className={cx('details-content-list')}>
                                     <td className={cx('details-content-item')}>{bill.IDBILL}</td>
-                                    <td className={cx('details-content-item')}>Khải Khùng</td>
+                                    <td className={cx('details-content-item')}>{bill.FULLNAME}</td>
                                     <td className={cx('details-content-item')}>{bill.CREATEDBILLDATE}</td>
                                     <td className={cx('details-content-item')}>
                                         <NumberFormat

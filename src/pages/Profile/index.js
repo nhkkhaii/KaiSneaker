@@ -9,8 +9,12 @@ import {
     setDateOfBirth,
     setCCCD,
     setPassword,
+    setAvatar,
+    deleteAvatar,
 } from '~/actions/userActions';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp, faXmark } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
@@ -42,12 +46,12 @@ function Profile() {
                     dispatchUser(setNumberPhone(res.data[0].NUMBERPHONE));
                     dispatchUser(setDateOfBirth(res.data[0].DATEOFBIRTH));
                     setPassword(res.data[0].PASSWORD);
+                    dispatchUser(setAvatar(res.data[0].IMAGEUSER));
                 });
         } else {
             navigate('/login');
         }
     }, []);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         await axios
@@ -62,11 +66,64 @@ function Profile() {
             });
     };
 
+    // Convert input sang base 64
+    const uploadImage = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        dispatchUser(setAvatar(base64));
+    };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
     console.log(stateUser);
+
     return (
         <>
             <h2 className={cx('title')}>Thông tin tài khoản</h2>
             <form className={cx('profile')} onSubmit={handleSubmit}>
+                <div className={cx('product_img')}>
+                    <div className={cx('img_item')}>
+                        <div className={cx('file_upload')}>
+                            <input
+                                className={cx('upload')}
+                                type="file"
+                                disabled={stateUser.IMAGEUSER}
+                                onChange={(e) => uploadImage(e)}
+                            />
+                            <FontAwesomeIcon
+                                icon={faArrowUp}
+                                className={cx(stateUser.IMAGEUSER ? 'fadeout' : '')}
+                            ></FontAwesomeIcon>
+                            <div className={cx('img_box', stateUser.IMAGEUSER ? 'fadein' : '')}>
+                                <img
+                                    alt={stateUser.FULLNAME ? stateUser.FULLNAME : ''}
+                                    className={cx('img')}
+                                    src={stateUser.IMAGEUSER ? stateUser.IMAGEUSER : ''}
+                                />
+                                <div className={cx('delete_box', stateUser.IMAGEUSER ? 'active' : '')}>
+                                    <FontAwesomeIcon
+                                        icon={faXmark}
+                                        className={cx('btn_delete')}
+                                        onClick={(e) => dispatchUser(deleteAvatar(stateUser.IMAGEUSER))}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className={cx('info')}>
                     <input
                         type="text"

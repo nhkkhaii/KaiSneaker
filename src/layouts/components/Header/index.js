@@ -28,6 +28,7 @@ const MENU_ITEMS = [
 function Header() {
     const [cookies, setCookie, removeCookie] = useCookies(['name']);
     const [countShopping, setCountShopping] = useState(0);
+    const [accountData, setAccountData] = useState([]);
     let navigate = useNavigate();
     const removeCK = () => {
         removeCookie('name');
@@ -44,6 +45,17 @@ function Header() {
                 .then((res) => {
                     if (res.data != 0 && res.data != -1) {
                         setCountShopping(res.data.length);
+                    }
+                });
+            axios
+                .post('http://26.17.209.162/api/account/post', {
+                    type: 'get',
+                    data: { IDACCOUNT: cookies. name.ID },
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    if (res.data != 0 && res.data != -1) {
+                        setAccountData(res.data[0]);
                     }
                 });
         }
@@ -88,11 +100,7 @@ function Header() {
                 )}
                 <Menu items={cookies.name ? userMenu : MENU_ITEMS}>
                     {cookies.name ? (
-                        <Image
-                            className={cx('user-avatar')}
-                            src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/623d4b2d95cec.png"
-                            alt="Nguyen Van A"
-                        />
+                        <Image className={cx('user-avatar')} src={accountData.IMAGEUSER} alt={accountData.FULLNAME} />
                     ) : (
                         <button className={cx('account-btn')}>
                             <FontAwesomeIcon icon={faUser} />

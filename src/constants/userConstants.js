@@ -6,5 +6,5 @@ export const SET_DATEOFBIRTH = 'set_birth';
 export const SET_CMND = 'set_cmnd';
 export const SET_PASSWORD = 'set_password';
 export const SET_AVATAR = 'set_avatar';
-
 export const SET_IDACCOUNT = 'set_idaccount';
+export const DELETE_AVATAR = 'delete_avatar';

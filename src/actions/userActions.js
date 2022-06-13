@@ -8,6 +8,7 @@ import {
     SET_PASSWORD,
     SET_AVATAR,
     SET_IDACCOUNT,
+    DELETE_AVATAR,
 } from '~/constants/userConstants';
 
 export const setIDAccount = (payload) => {
@@ -64,5 +65,11 @@ export const setCCCD = (payload) => {
     return {
         type: SET_CMND,
         payload,
+    };
+};
+
+export const deleteAvatar = (payload) => {
+    return {
+        type: DELETE_AVATAR,
     };
 };
