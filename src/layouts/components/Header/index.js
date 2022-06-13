@@ -42,8 +42,9 @@ function Header() {
                     data: { IDACCOUNT: cookies.name.ID },
                 })
                 .then((res) => {
-                    console.log(res.data);
-                    setCountShopping(res.data.length);
+                    if (res.data != 0 && res.data != -1) {
+                        setCountShopping(res.data.length);
+                    }
                 });
         }
     }, []);

@@ -66,7 +66,6 @@ function AddressProfile() {
 
             {addressData != 0 ? (
                 addressData.map((address) => {
-                    console.log(address);
                     return (
                         <AddressItem
                             key={address.SHOPPINGINFOID}
@@ -107,6 +106,7 @@ function AddressProfile() {
                                     Tên người nhận
                                 </label>
                                 <input
+                                    required
                                     className={cx('input-item')}
                                     type="text"
                                     placeholder="Tên người nhận"
@@ -118,6 +118,7 @@ function AddressProfile() {
                                     Địa chỉ
                                 </label>
                                 <input
+                                    required
                                     className={cx('input-item')}
                                     type="text"
                                     placeholder="Địa chỉ"
@@ -132,6 +133,12 @@ function AddressProfile() {
                                     className={cx('input-item')}
                                     type="text"
                                     placeholder="Số điện thoại"
+                                    required
+                                    onKeyPress={(event) => {
+                                        if (!/[0-9]/.test(event.key)) {
+                                            event.preventDefault();
+                                        }
+                                    }}
                                     onChange={(e) => dispatchAddress(setInfoPhone(e.target.value))}
                                 />
                             </div>

@@ -27,6 +27,20 @@ function AddressItem({ SHOPPINGINFOID, IDACCOUNT, SHOPPINGINFONAME, SHOPPINGINFO
     const hideBuyTickets = () => {
         setStatusModal(false);
     };
+
+    const deleteAddress = async () => {
+        await axios
+            .post('http://26.17.209.162/api/shippinginfo/post', {
+                type: 'delete',
+                data: { IDACCOUNT: IDACCOUNT, SHOPPINGINFOID: SHOPPINGINFOID },
+            })
+            .then((res) => {
+                if ((res.data != 0) & (res.data != -1)) {
+                    alert('Xóa địa chỉ thành công');
+                    window.location.reload();
+                }
+            });
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -38,7 +52,9 @@ function AddressItem({ SHOPPINGINFOID, IDACCOUNT, SHOPPINGINFONAME, SHOPPINGINFO
                     <button className={cx('update_btn')} onClick={showBuyTickets}>
                         Cập nhật
                     </button>
-                    <button className={cx('delete_btn')}>Xóa</button>
+                    <button className={cx('delete_btn')} onClick={deleteAddress}>
+                        Xóa
+                    </button>
                 </div>
             </div>
             {/* Begin modal */}

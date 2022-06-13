@@ -9,6 +9,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import NumberFormat from 'react-number-format';
+import ShoppingItem from '~/components/ShoppingItem';
 
 const cx = classNames.bind(styles);
 function Shipping() {
@@ -45,60 +46,20 @@ function Shipping() {
                         shoppingCart.map((product, index) => {
                             const count = product.SHOESPRICE * product.QUANTITY;
                             countMoney(count);
+                            console.log(product);
                             return (
-                                <div className={cx('row', 'item')} key={index}>
-                                    <div className={cx('col', 'l-3', 'item_box')}>
-                                        <img
-                                            className={cx('item_img')}
-                                            src={product.IMAGESHOES1}
-                                            alt={product.SHOESNAME}
-                                        />
-                                    </div>
-                                    <div className={cx('col', 'l-9', 'info')}>
-                                        <div className={cx('row')}>
-                                            <div className={cx('col', 'l-8')}>
-                                                <p className={cx('item_name')}>{product.SHOESNAME}</p>
-                                                <div className={cx('brand')}>{product.BRANDNAME}</div>
-                                                <div className={cx('options')}>
-                                                    <div className={cx('size')}>
-                                                        <label className={cx('size_heading')}>Size</label>
-                                                        <p className={cx('size_option')}>{product.SIZEEUR}</p>
-                                                    </div>
-                                                    <div className={cx('info_quantity')}>
-                                                        <span className={cx('minus')}>-</span>
-                                                        <span className={cx('num')}>
-                                                            {Number(product.QUANTITY) < 10
-                                                                ? '0' + product.QUANTITY
-                                                                : Number(product.QUANTITY)}
-                                                        </span>
-                                                        <span
-                                                            className={cx('plus')}
-                                                            onClick={(e) => {
-                                                                product.QUANTITY = Number(product.QUANTITY) + 1;
-                                                            }}
-                                                        >
-                                                            +
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className={cx('col', 'l-4')}>
-                                                <p className={cx('item_money')}>
-                                                    <span>Giá : </span>
-                                                    <NumberFormat
-                                                        value={product.SHOESPRICE * product.QUANTITY}
-                                                        displayType={'text'}
-                                                        thousandSeparator={true}
-                                                        suffix={'đ'}
-                                                    />
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div className={cx('action')}>
-                                            <FontAwesomeIcon icon={faTrashAlt} className={cx('remove')} />
-                                        </div>
-                                    </div>
-                                </div>
+                                <ShoppingItem
+                                    key={index}
+                                    IMAGESHOES1={product.IMAGESHOES1}
+                                    SHOESNAME={product.SHOESNAME}
+                                    BRANDNAME={product.BRANDNAME}
+                                    SIZEEUR={product.SIZEEUR}
+                                    QUANTITY={product.QUANTITY}
+                                    SHOESPRICE={product.SHOESPRICE}
+                                    IDACCOUNT={product.IDACCOUNT}
+                                    IDSIZE={product.IDSIZE}
+                                    SHOESID={product.SHOESID}
+                                />
                             );
                         })
                     ) : (
@@ -134,7 +95,7 @@ function Shipping() {
 
                     <Button
                         to={`/@${cookies.name.ID}/checkout`}
-                        disabled={shoppingCart > 0 ? true : false}
+                        disabled={shoppingCart == 0 ? true : false}
                         state={{ data: { money: money, delivery: delivery } }}
                         className={cx('checkout')}
                     >

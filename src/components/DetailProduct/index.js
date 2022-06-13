@@ -44,7 +44,12 @@ function DetailProduct() {
                 type: 'getsize',
                 data: { SHOESID: location.state.data.SHOESID },
             })
-            .then((res) => setSizeData(res.data));
+            .then((res) => {
+                if ((res.data != 0) & (res.data != -1)) {
+                    setSizeData(res.data);
+                    dispatchShopping(setIDSize(res.data[0].IDSIZE));
+                }
+            });
     }, []);
 
     const quantityUp = () => {
@@ -67,7 +72,6 @@ function DetailProduct() {
     function createMarkup() {
         return { __html: location.state.data.SHOESDESCRIPTION };
     }
-    console.log(stateShopping);
 
     const handleShoppingCart = () => {
         if (cookies.name) {
