@@ -1,28 +1,53 @@
-.title {
-    margin: 40px 0;
+.details-table {
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    .details-title-item {
+        font-weight: 600;
+        padding: 4px 4px;
+        text-align: center;
+        color: var(--black1-color);
+    }
 }
 
-.action {
-    width: 100%;
-    max-width: 600px;
-    .add_btn {
-        padding: 8px;
-        width: 130px;
-        float: right;
-        font-size: 1.6rem;
+.details-tbody ~ .details-tbody {
+    border-top: 1px solid rgba(0, 0, 0, 12%);
+}
+
+.details-content-item {
+    position: relative;
+    padding: 2px 0;
+    text-align: center;
+    color: var(--black1-color);
+    .stock-img {
+        width: 100px;
+        height: 100px;
+    }
+    &::after {
+        content: ' ';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        height: 50%;
+        transform: translateY(-50%);
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
+    }
+    .details-content-item-btn {
+        padding: 8px 8px;
+        border: none;
+        background-color: var(--blue-color);
         border-radius: 20px;
-        background-color: var(--black);
-        color: var(--white);
-        transition: all 0.25s;
-        cursor: pointer;
+        color: var(--white-color);
         &:hover {
+            cursor: pointer;
             opacity: 0.8;
         }
-
-        &:active {
-            transform: scale(0.95);
-        }
     }
+}
+
+.details-content-item:nth-child(5)::after,
+.details-content-item:nth-child(6)::after {
+    border-right: none;
 }
 
 // modal
@@ -35,7 +60,6 @@
     left: 0;
     display: block;
     z-index: 12;
-    display: flex;
     justify-content: center;
     align-items: center;
     display: none;
@@ -109,15 +133,14 @@
             margin: 10px 68px 0 0;
             padding: 10px 22px;
             border-radius: 20px;
-            background-color: #000;
+            background-color: #bfbfbf;
             border: none;
-            color: white;
-            transition: all 0.25s;
+            color: #000;
         }
 
         .btn:hover {
             cursor: pointer;
-            opacity: 0.8;
+            opacity: 0.9;
         }
     }
 }
@@ -125,3 +148,4 @@
 .modal.open {
     display: flex;
 }
+// modal

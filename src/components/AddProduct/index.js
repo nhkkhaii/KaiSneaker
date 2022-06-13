@@ -187,6 +187,11 @@ function AddProduct() {
                                 value={location.state ? state.SHOESPRICE : null}
                                 placeholder="Giá tiền"
                                 onChange={(e) => dispatch(setPrice(e.target.value))}
+                                onKeyPress={(event) => {
+                                    if (!/[0-9]/.test(event.key)) {
+                                        event.preventDefault();
+                                    }
+                                }}
                             />
                         </div>
                         <div className={cx('info')}>

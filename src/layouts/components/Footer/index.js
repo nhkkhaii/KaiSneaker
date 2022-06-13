@@ -13,55 +13,54 @@ function Footer() {
         <footer className={cx('wrapper')}>
             <div className={cx('grid', 'wide')}>
                 <div className={cx('inner', 'row')}>
-                    <div className={cx('brand', 'col', 'l-4')}>
-                        <img src={images.logo} alt="Morri" className={cx('logo')} />
-                        <p className={cx('slogan')}>Cùng nhau lưu giữ những khoảnh khắc</p>
+                    <div className={cx('brand', 'col', 'l-3')}>
+                        <img src={images.logo} alt="Kai Sneaker" className={cx('logo')} />
+                        <p className={cx('slogan')}>
+                            Hãy mang những giấc mơ của bạn lên đôi chân để dẫn lối giấc mơ đó thành hiện thực.
+                        </p>
                     </div>
-                    <div className={cx('quicklinks', 'col', 'l-4')}>
-                        <h2 className={cx('quicklinks-heading')}>Quick Links</h2>
-                        <ul className={cx('quicklink')}>
-                            <li className={cx('quicklink-item')}>
-                                <Link to="/nike">Nike</Link>
-                            </li>
-                            <li className={cx('quicklink-item')}>
-                                <Link to="/adidas">Adidas</Link>
-                            </li>
-                            <li className={cx('quicklink-item')}>
-                                <Link to="/mlb">MLB</Link>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className={cx('contacts', 'col', 'l-4')}>
-                        <h2 className={cx('contacts-heading')}>Contact</h2>
-                        <ul className={cx('contact')}>
-                            <li className={cx('contact-item')}>
-                                <FontAwesomeIcon icon={faMobile} className={cx('contact-logo')}></FontAwesomeIcon>
-                                <p className={cx('contact-content')}>+84 945772109</p>
-                            </li>
-                            <li className={cx('contact-item')}>
+                    <div className={cx('contacts', 'col', 'l-2')}>
+                        <h2 className={cx('contacts-heading')}>Email</h2>
+                        <div className={cx('contact')}>
+                            <div className={cx('contact-item')}>
                                 <FontAwesomeIcon icon={faEnvelope} className={cx('contact-logo')}></FontAwesomeIcon>
                                 <p className={cx('contact-content')}>nhkkhaii@gmail.com</p>
-                            </li>
-                            <li className={cx('contact-item')}>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={cx('contacts', 'col', 'l-2')}>
+                        <h2 className={cx('contacts-heading')}>Phone</h2>
+                        <div className={cx('contact')}>
+                            <div className={cx('contact-item')}>
+                                <FontAwesomeIcon icon={faMobile} className={cx('contact-logo')}></FontAwesomeIcon>
+                                <p className={cx('contact-content')}>0945772109</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={cx('contacts', 'col', 'l-2')}>
+                        <h2 className={cx('contacts-heading')}>Address</h2>
+                        <div className={cx('contact')}>
+                            <div className={cx('contact-item')}>
                                 <FontAwesomeIcon icon={faMapLocation} className={cx('contact-logo')}></FontAwesomeIcon>
-                                <p className={cx('contact-content')}>Long Xuyên, An Giang</p>
-                            </li>
-                        </ul>
+                                <p className={cx('contact-content')}>Long Xuyên, An giang</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className={cx('row', 'copyright')}>
-                    <div className={cx('col', 'l-6', 'copyright-text')}>
-                        Copyright <span>&copy;</span> by Morri. All right reserved
+            </div>
+            <div className={cx('copyright')}>
+                <div className={cx('copyright_inner')}>
+                    <div className={cx('copyright-text')}>
+                        Copyright <span>&copy;</span> by Kai Sneaker. All right reserved
                     </div>
-                    <div className={cx('col', 'l-6', 'copyright-link')}>
-                        <div className={cx('copyright-contact')}>
-                            <a href="https://www.instagram.com/_youngboik/">
-                                <FontAwesomeIcon icon={faInstagram} className={cx('copyright-logo')}></FontAwesomeIcon>
-                            </a>
-                            <a href="https://www.facebook.com/nhk.khai/">
-                                <FontAwesomeIcon icon={faFacebook} className={cx('copyright-logo')}></FontAwesomeIcon>
-                            </a>
-                        </div>
+
+                    <div className={cx('copyright-contact')}>
+                        <a href="https://www.instagram.com/_youngboik/">
+                            <FontAwesomeIcon icon={faInstagram} className={cx('copyright-logo')}></FontAwesomeIcon>
+                        </a>
+                        <a href="https://www.facebook.com/nhk.khai/">
+                            <FontAwesomeIcon icon={faFacebook} className={cx('copyright-logo')}></FontAwesomeIcon>
+                        </a>
                     </div>
                 </div>
             </div>

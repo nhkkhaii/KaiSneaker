@@ -4,6 +4,7 @@ import {
     SET_IDSIZE,
     SET_QUANTITYUP,
     SET_QUANTITYDOWN,
+    SET_QUANTITY,
 } from '~/constants/shoppingCartConstants';
 
 export const initStateShoppingCart = {
@@ -19,6 +20,12 @@ export const shoppingCartReducer = (state, action) => {
             return {
                 ...state,
                 IDACCOUNT: action.payload,
+            };
+            break;
+        case SET_QUANTITY:
+            return {
+                ...state,
+                QUANTITY: 1,
             };
             break;
         case SET_SHOESID:

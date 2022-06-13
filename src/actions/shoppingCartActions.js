@@ -4,6 +4,7 @@ import {
     SET_IDSIZE,
     SET_QUANTITYUP,
     SET_QUANTITYDOWN,
+    SET_QUANTITY,
 } from '~/constants/shoppingCartConstants';
 
 export const setIDAccount = (payload) => {
@@ -35,5 +36,11 @@ export const setQuantityUP = () => {
 export const setQuantityDown = () => {
     return {
         type: SET_QUANTITYDOWN,
+    };
+};
+
+export const setQuantity = () => {
+    return {
+        type: SET_QUANTITY,
     };
 };

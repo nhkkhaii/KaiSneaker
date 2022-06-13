@@ -22,9 +22,14 @@ function Sidebar({ children }) {
             <Breadcrumbs />
             <div className={cx('col', 'l-3')}>
                 <div className={cx('category')}>
-                    <h3 className={cx('category__heading')}>DANH MỤC</h3>
+                    <h3 className={cx('category__heading')}>Thương hiệu </h3>
                     {brandData != 0 ? (
                         <ul className={cx('category-list')}>
+                            <li className={cx('category-item')}>
+                                <Link to={`/sneaker`} className={cx('category-item__link')}>
+                                    Sneaker
+                                </Link>
+                            </li>
                             {brandData.map((brand) => {
                                 return (
                                     <li className={cx('category-item')} key={brand.IDBRAND}>

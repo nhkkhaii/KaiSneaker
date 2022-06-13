@@ -42,7 +42,6 @@ function Sneaker() {
                         />
                     </div>
                 ))}
-                ;
             </div>
         );
     }

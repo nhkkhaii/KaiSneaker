@@ -8,13 +8,14 @@ import 'tippy.js/dist/tippy.css';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Navbar from '../Navbar';
 import { faBagShopping, faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import Search from '../Search';
 import Image from '~/components/Image';
 
 import Menu from '~/components/Popper/Menu';
-
+import axios from 'axios';
 const cx = classNames.bind(styles);
 const MENU_ITEMS = [
     {
@@ -26,11 +27,27 @@ const MENU_ITEMS = [
 
 function Header() {
     const [cookies, setCookie, removeCookie] = useCookies(['name']);
+    const [countShopping, setCountShopping] = useState(0);
     let navigate = useNavigate();
     const removeCK = () => {
         removeCookie('name');
         window.location.reload();
     };
+
+    useEffect(() => {
+        if (cookies.name) {
+            axios
+                .post('http://26.17.209.162/api/shoppingcart/post', {
+                    type: 'get',
+                    data: { IDACCOUNT: cookies.name.ID },
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    setCountShopping(res.data.length);
+                });
+        }
+    }, []);
+
     const userMenu = [
         {
             icon: <FontAwesomeIcon icon={faUser} />,
@@ -56,9 +73,12 @@ function Header() {
                 {cookies.name ? (
                     <>
                         <Tippy delay={[0, 50]} content="Giỏ hàng" placement="bottom">
-                            <Link to={cookies.name ? `/${cookies.name.ID}/shopping` : ''} className={cx('action-btn')}>
+                            <Link
+                                to={cookies.name ? `/@${cookies.name.ID}/shopping-cart` : ''}
+                                className={cx('action-btn')}
+                            >
                                 <FontAwesomeIcon icon={faBagShopping} />
-                                <span className={cx('badge')}>12</span>
+                                <span className={cx('badge')}>{countShopping}</span>
                             </Link>
                         </Tippy>
                     </>

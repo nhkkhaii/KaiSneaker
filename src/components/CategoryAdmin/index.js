@@ -60,8 +60,8 @@ function AdminUser() {
                 data: stateBrand,
             })
             .then((response) => {
+                console.log(response.data);
                 getCourses();
-                console.log(response);
             });
     };
 
@@ -73,7 +73,6 @@ function AdminUser() {
             })
             .then((response) => {
                 getCourses();
-                console.log(response);
             });
     };
 

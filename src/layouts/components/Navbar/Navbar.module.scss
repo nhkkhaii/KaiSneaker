@@ -1,6 +1,7 @@
 /* Navigation */
 .navbar {
     display: flex;
+    text-transform: uppercase;
     .navbar-item {
         margin: 0 8px;
         color: var(--text-nav-color);

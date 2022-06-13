@@ -3,21 +3,25 @@
     max-width: 600px;
     max-height: 200px;
     margin: 16px;
-
+    &:focus-visible {
+        border: 2px solid black;
+    }
     .inner {
-        border: 1px solid #cccccc;
         margin: 8px;
         border-radius: 20px;
         padding: 8px;
         position: relative;
+
         .name {
             font-size: 1.6rem;
             margin: 0 8px;
-            width: 80%;
+            width: 70%;
             color: var(--black);
+            font-weight: 500;
         }
+        .phone,
         .address {
-            width: 80%;
+            width: 70%;
             text-align: justify;
             margin: 0 8px;
             color: #cccccc;
@@ -49,4 +53,105 @@
     + .wrapper {
         border-top: 1px solid rgba(0, 0, 0, 12%);
     }
+}
+
+// modal
+.modal {
+    background: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: block;
+    z-index: 12;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+
+    .modal-detail {
+        width: 600px;
+        height: 350px;
+        background-color: #fff;
+        border-radius: 20px;
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+
+            .modal-heading {
+                font-size: 2rem;
+            }
+
+            .modal--close {
+                font-size: 2rem;
+                background-color: #bfbfbf;
+                padding: 8px 12px;
+                border-radius: 50%;
+            }
+
+            .modal--close:hover {
+                opacity: 0.9;
+                cursor: pointer;
+            }
+        }
+
+        .stock-list {
+            font-size: 1.4rem;
+            text-align: center;
+            .info {
+                .stock-select {
+                    width: 460px;
+                    padding: 12px 0 12px 26px;
+                    margin-bottom: 8px;
+                    border-radius: 8px;
+                }
+                .input-label {
+                    margin-left: 18px;
+                    font-size: 1.4rem;
+                    padding: 0 8px;
+                    background: white;
+                    position: absolute;
+                    color: var(--black1-color);
+                }
+
+                .mt-10 {
+                    margin-top: -10px;
+                }
+                .input-item {
+                    color: var(--black1-color);
+                    font-size: 1.4rem;
+                    width: 460px;
+                    padding: 12px 0 12px 26px;
+                    margin: 10px 0;
+                    border: 2px solid #000;
+                    border-color: rgba(0, 0, 0, 12%);
+                    border-radius: 8px;
+                }
+            }
+        }
+
+        .btn {
+            font-size: 1.4rem;
+            float: right;
+            margin: 10px 68px 0 0;
+            padding: 10px 22px;
+            border-radius: 20px;
+            background-color: #000;
+            border: none;
+            color: white;
+            transition: all 0.25s;
+        }
+
+        .btn:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+    }
+}
+
+.modal.open {
+    display: flex;
 }

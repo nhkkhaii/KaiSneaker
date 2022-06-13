@@ -9,41 +9,87 @@ import Image from '~/components/Image';
 import classNames from 'classnames/bind';
 import styles from './DetailProduct.module.scss';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import { initStateShoppingCart, shoppingCartReducer } from '~/reducers/shoppingCartReducers';
-import { setIDAccount, setShoesID, setIDSize, setQuantityUP, setQuantityDown } from '~/actions/shoppingCartActions';
+import {
+    setIDAccount,
+    setShoesID,
+    setIDSize,
+    setQuantityUP,
+    setQuantityDown,
+    setQuantity,
+} from '~/actions/shoppingCartActions';
+
+import NumberFormat from 'react-number-format';
 
 const cx = classNames.bind(styles);
 
 function DetailProduct() {
     const [cookies, setCookie] = useCookies(['name']);
     const [stateShopping, dispatchShopping] = useReducer(shoppingCartReducer, initStateShoppingCart);
+    const [sizeData, setSizeData] = useState([]);
+    const [quantity, setQuantityData] = useState(1);
+    let navigate = useNavigate();
     let location = useLocation();
-    const [quantity, setQuantity] = useState(1);
 
+    console.log(location.state.data);
     useEffect(() => {
         if (cookies.name) {
             dispatchShopping(setIDAccount(cookies.name.ID));
         }
         dispatchShopping(setShoesID(location.state.data.SHOESID));
+        axios
+            .post('http://26.17.209.162/api/stock/post', {
+                type: 'getsize',
+                data: { SHOESID: location.state.data.SHOESID },
+            })
+            .then((res) => setSizeData(res.data));
     }, []);
 
     const quantityUp = () => {
-        dispatchShopping(setQuantityUP());
-        setQuantity(quantity + 1);
+        sizeData.filter((product) => {
+            if (stateShopping.IDSIZE === product.IDSIZE) {
+                if (stateShopping.QUANTITY < product.QUANTITYINSTOCK) {
+                    dispatchShopping(setQuantityUP());
+                    setQuantityData(quantity + 1);
+                }
+            }
+        });
     };
 
     const quantityDown = () => {
         if (quantity > 1) {
             dispatchShopping(setQuantityDown());
-            setQuantity(quantity - 1);
+            setQuantityData(quantity - 1);
         }
     };
     function createMarkup() {
         return { __html: location.state.data.SHOESDESCRIPTION };
     }
+    console.log(stateShopping);
 
-    const handleShoppingCart = () => {};
+    const handleShoppingCart = () => {
+        if (cookies.name) {
+            axios
+                .post('http://26.17.209.162/api/shoppingcart/post', {
+                    type: 'create',
+                    data: stateShopping,
+                })
+                .then(async (res) => console.log(res.data));
+        } else {
+            navigate('/login');
+        }
+    };
+
+    const handleBuyNow = () => {
+        if (cookies.name) {
+            handleShoppingCart();
+            navigate(`/@${cookies.name.ID}/shopping-cart`);
+        } else {
+            navigate('/login');
+        }
+    };
 
     return (
         <div className="grid wide">
@@ -73,16 +119,38 @@ function DetailProduct() {
                 <div className={cx('col', 'l-7', 'info')}>
                     <h2 className={cx('info-heading')}>{location.state.data.SHOESNAME}</h2>
                     <p className={cx('brand')}>{location.state.data.BRANDNAME}</p>
-                    <p className={cx('info-money')}>Giá : {location.state.data.SHOESPRICE}đ</p>
+                    <p className={cx('info-money')}>
+                        <span>Giá : </span>
+                        <NumberFormat
+                            value={location.state.data.SHOESPRICE}
+                            displayType={'text'}
+                            thousandSeparator={true}
+                            suffix={'đ'}
+                        />
+                    </p>
 
                     <div className={cx('options')}>
                         <div className={cx('size')}>
                             <label className={cx('size_heading')}>Size</label>
-                            <select className={cx('size_option')}>
-                                <option value="1">41</option>
-                                <option value="2">42</option>
-                                <option value="3">43</option>
-                                <option value="4">44.5</option>
+                            <select
+                                className={cx('size_option')}
+                                onChange={(e) => {
+                                    dispatchShopping(setIDSize(e.target.value));
+                                    setQuantityData(1);
+                                    dispatchShopping(setQuantity());
+                                }}
+                            >
+                                {sizeData != 0 ? (
+                                    sizeData.map((size) => {
+                                        return (
+                                            <option value={size.IDSIZE} key={size.IDSIZE}>
+                                                {size.SIZEEUR}
+                                            </option>
+                                        );
+                                    })
+                                ) : (
+                                    <></>
+                                )}
                             </select>
                         </div>
                         <div className={cx('info_quantity')}>
@@ -100,7 +168,9 @@ function DetailProduct() {
                         <button className={cx('info-btn-bag')} onClick={handleShoppingCart}>
                             Thêm vào giỏ hàng
                         </button>
-                        <button className={cx('info-btn-buy')}>Mua ngay</button>
+                        <button className={cx('info-btn-buy')} onClick={handleBuyNow}>
+                            Mua ngay
+                        </button>
                     </div>
                 </div>
             </div>
