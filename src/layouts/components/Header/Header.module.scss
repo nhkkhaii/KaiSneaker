@@ -11,11 +11,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.logo {
-    width: var(--logo-header);
-    line-height: var(--height-header);
+    .logo_box {
+        display: flex;
+        .logo {
+            line-height: var(--height-header);
+            height: var(--height-header);
+        }
+    }
 }
 
 // Actions

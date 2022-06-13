@@ -13,7 +13,7 @@ import Navbar from '../Navbar';
 import { faBagShopping, faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import Search from '../Search';
 import Image from '~/components/Image';
-
+import config from '~/config';
 import Menu from '~/components/Popper/Menu';
 import axios from 'axios';
 const cx = classNames.bind(styles);
@@ -50,22 +50,29 @@ function Header() {
             axios
                 .post('http://26.17.209.162/api/account/post', {
                     type: 'get',
-                    data: { IDACCOUNT: cookies. name.ID },
+                    data: { IDACCOUNT: cookies.name.ID },
                 })
                 .then((res) => {
-                    console.log(res.data);
                     if (res.data != 0 && res.data != -1) {
                         setAccountData(res.data[0]);
                     }
                 });
         }
-    }, []);
+    }, [countShopping]);
 
     const userMenu = [
         {
             icon: <FontAwesomeIcon icon={faUser} />,
-            title: 'Thông tin tài khoản',
-            to: cookies.name ? `/@${cookies.name.ID}` : '',
+            title: cookies.name
+                ? cookies.name.STATUS === 'e3afed0047b08059d0fada10f400c1e5'
+                    ? 'Đi tới trang Admin'
+                    : 'Thông tin tài khoản'
+                : '',
+            to: cookies.name
+                ? cookies.name.STATUS === 'e3afed0047b08059d0fada10f400c1e5'
+                    ? `${config.routes.admin}`
+                    : `/@${cookies.name.ID}`
+                : '',
         },
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
@@ -77,7 +84,7 @@ function Header() {
     ];
     return (
         <header className={cx('wrapper')}>
-            <Link to="/">
+            <Link to="/" className={cx('logo_box')}>
                 <Image src={images.logo} className={cx('logo')} />
             </Link>
             <Navbar />
