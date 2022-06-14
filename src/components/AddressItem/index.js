@@ -6,21 +6,25 @@ import { useNavigate } from 'react-router-dom';
 import { initStateAddress, addressReducer } from '~/reducers/addressReducers';
 import { setIDAccount, setInfoPhone, setInfoName, setAddress, setIDInfo } from '~/actions/addressActions';
 
+import Button from '~/components/Button';
 import classNames from 'classnames/bind';
 import styles from './AddressItem.module.scss';
 
 const cx = classNames.bind(styles);
 
-function AddressItem({ SHOPPINGINFOID, IDACCOUNT, SHOPPINGINFONAME, SHOPPINGINFOPHONE, ADDRESS }) {
+function AddressItem({ SHOPPINGINFOID, IDACCOUNT, SHOPPINGINFONAME, SHOPPINGINFOPHONE, ADDRESS, nonUpdate }) {
     const [statusModal, setStatusModal] = useState(false);
     const [stateAddress, dispatchAddress] = useReducer(addressReducer, initStateAddress);
     useEffect(() => {
-        dispatchAddress(setIDAccount(IDACCOUNT));
-        dispatchAddress(setIDInfo(SHOPPINGINFOID));
-
-        dispatchAddress(setInfoName(SHOPPINGINFONAME));
-        dispatchAddress(setInfoPhone(SHOPPINGINFOPHONE));
-        dispatchAddress(setAddress(ADDRESS));
+        try {
+            dispatchAddress(setIDAccount(IDACCOUNT));
+            dispatchAddress(setIDInfo(SHOPPINGINFOID));
+            dispatchAddress(setInfoName(SHOPPINGINFONAME));
+            dispatchAddress(setInfoPhone(SHOPPINGINFOPHONE));
+            dispatchAddress(setAddress(ADDRESS));
+        } catch (error) {
+            console.log(error);
+        }
     }, []);
 
     const showBuyTickets = () => {
@@ -36,36 +40,46 @@ function AddressItem({ SHOPPINGINFOID, IDACCOUNT, SHOPPINGINFONAME, SHOPPINGINFO
             stateAddress,
         });
     };
-    console.log(stateAddress);
     const updateAddress = async (e) => {
-        await axios
-            .post('http://26.17.209.162/api/shippinginfo/post', {
-                type: 'update',
-                data: stateAddress,
-            })
-            .then((res) => {
-                console.log(res.data);
-                if (res.data == 1) {
-                    alert('Cập nhật địa chỉ thành công');
-                    window.location.reload();
-                } else if (res.data == -1) {
-                    alert('Cập nhật địa chỉ thất bại');
-                }
-            });
+        try {
+            await axios
+                .post('http://26.17.209.162/api/shippinginfo/post', {
+                    type: 'update',
+                    data: stateAddress,
+                })
+                .then((res) => {
+                    if (res.data == 1) {
+                        alert('Cập nhật địa chỉ thành công');
+                        window.location.reload();
+                    } else if (res.data == -1) {
+                        alert('Cập nhật địa chỉ thất bại');
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const deleteAddress = async () => {
-        await axios
-            .post('http://26.17.209.162/api/shippinginfo/post', {
-                type: 'delete',
-                data: { IDACCOUNT: IDACCOUNT, SHOPPINGINFOID: SHOPPINGINFOID },
-            })
-            .then((res) => {
-                if ((res.data != 0) & (res.data != -1)) {
-                    alert('Xóa địa chỉ thành công');
-                    window.location.reload();
-                }
-            });
+        try {
+            if (window.confirm('Bạn có chắc chắn muốn xóa địa chỉ này ? ')) {
+                await axios
+                    .post('http://26.17.209.162/api/shippinginfo/post', {
+                        type: 'delete',
+                        data: { IDACCOUNT: IDACCOUNT, SHOPPINGINFOID: SHOPPINGINFOID },
+                    })
+                    .then((res) => {
+                        if (res.data == 1) {
+                            alert('Xóa địa chỉ thành công');
+                            window.location.reload();
+                        } else if (res.data == -1) {
+                            alert('Xóa địa chỉ thất bại');
+                        }
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
     return (
         <div className={cx('wrapper')}>
@@ -75,12 +89,16 @@ function AddressItem({ SHOPPINGINFOID, IDACCOUNT, SHOPPINGINFONAME, SHOPPINGINFO
                 <div className={cx('phone')}>{SHOPPINGINFOPHONE}</div>
 
                 <div className={cx('action')}>
-                    <button className={cx('update_btn')} onClick={showBuyTickets}>
-                        Cập nhật
-                    </button>
-                    <button className={cx('delete_btn')} onClick={deleteAddress}>
+                    {nonUpdate ? (
+                        <></>
+                    ) : (
+                        <Button className={cx('update_btn')} onClick={showBuyTickets}>
+                            Cập nhật
+                        </Button>
+                    )}
+                    <Button className={cx('delete_btn')} onClick={deleteAddress}>
                         Xóa
-                    </button>
+                    </Button>
                 </div>
             </div>
             {/* Begin modal */}

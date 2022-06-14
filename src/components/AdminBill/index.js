@@ -11,7 +11,6 @@ const cx = classNames.bind(styles);
 
 function AdminBill() {
     const [billData, setBillData] = useState([]);
-
     useEffect(() => {
         getCourses();
     }, []);
@@ -20,7 +19,9 @@ function AdminBill() {
         try {
             await axios
                 .get('http://26.17.209.162/api/bill/get')
-                .then(async (res) => setBillData(res.data))
+                .then(async (res) => {
+                    setBillData(res.data);
+                })
                 .catch((error) => {
                     console.log(error);
                 });
@@ -28,8 +29,23 @@ function AdminBill() {
             console.error(error);
         }
     };
+
+    const handleUpdate = async (IDBILL, status) => {
+        await axios
+            .post('http://26.17.209.162/api/bill/post', {
+                type: 'updatebill',
+                data: { IDBILL: IDBILL, STATUSBILL: status },
+            })
+            .then(async (res) => {
+                console.log(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
     return (
-        <>
+        <div className={cx('wrapper')}>
             {/* <!-- Begin adminProductTable --> */}
             <div className={cx('account-header')}>
                 <h2 className={cx('account-heading')}>Hóa đơn sản phẩm</h2>
@@ -47,6 +63,8 @@ function AdminBill() {
                         </tr>
                     </thead>
                     {billData.map((bill, index) => {
+                        var status = bill.STATUSBILL;
+                        console.log(status);
                         return (
                             <tbody className={cx('details-tbody')} key={bill.IDBILL}>
                                 <tr className={cx('details-content-list')}>
@@ -64,12 +82,14 @@ function AdminBill() {
                                     <td className={cx('details-content-item')}>
                                         <select
                                             className={cx('details-content-select')}
-                                            onChange={(e) => console.log(e.target.value)}
+                                            onChange={(e) => {
+                                                status = e.target.value;
+                                            }}
                                         >
-                                            <option value="Chờ duyệt">{bill.STATUSBILL}</option>
-                                            <option value="Trả về">{bill.STATUSBILL}</option>
-                                            <option value="Đang giao hàng">{bill.STATUSBILL}</option>
-                                            <option value="Đã giao">{bill.STATUSBILL}</option>
+                                            <option value={bill.STATUSBILL}>{bill.STATUSBILL}</option>
+                                            <option value="Trả về">Trả về</option>
+                                            <option value="Đang giao hàng">Đang giao hàng</option>
+                                            <option value="Đã giao">Đã giao</option>
                                         </select>
                                     </td>
                                     <td className={cx('details-content-item')}>
@@ -82,7 +102,12 @@ function AdminBill() {
                                         </Button>
                                     </td>
                                     <td className={cx('details-content-item')}>
-                                        <Button className={cx('details-content-item-btn')}>Cập nhật</Button>
+                                        <Button
+                                            className={cx('details-content-item-btn')}
+                                            onClick={(e) => handleUpdate(bill.IDBILL, status)}
+                                        >
+                                            Cập nhật
+                                        </Button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -92,7 +117,7 @@ function AdminBill() {
             ) : (
                 <h2>Không có hóa đơn</h2>
             )}
-        </>
+        </div>
     );
 }
 

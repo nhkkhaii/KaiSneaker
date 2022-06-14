@@ -37,7 +37,7 @@ function SidebarAdmin({ children }) {
                             <span className={cx('nav-icon')}>
                                 <FontAwesomeIcon icon={faHome} />
                             </span>
-                            <span className={cx('nav-title')}>MORRI</span>
+                            <span className={cx('nav-title')}>Kai Sneaker</span>
                         </Link>
                     </li>
                     <li className={cx('nav-item')}>

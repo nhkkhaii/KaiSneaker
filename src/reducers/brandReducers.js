@@ -1,9 +1,16 @@
-import { SET_BRANDNAME, SET_DESCRIPTIONBRAND, ADD_BRAND } from '~/constants/brandConstants';
+import {
+    SET_BRANDNAME,
+    SET_DESCRIPTIONBRAND,
+    ADD_BRAND,
+    SET_IMAGEBRAND,
+    DELETE_IMAGEBRAND,
+} from '~/constants/brandConstants';
 
 export const initStateBrand = {
     IDBRAND: '',
     BRANDNAME: '',
     DESCRIPTIONBRAND: '',
+    IMAGEBRAND: '',
 };
 
 export const detailBrandReducer = (state, action) => {
@@ -12,6 +19,18 @@ export const detailBrandReducer = (state, action) => {
             return {
                 ...state,
                 BRANDNAME: action.payload,
+            };
+            break;
+        case SET_IMAGEBRAND:
+            return {
+                ...state,
+                IMAGEBRAND: action.payload,
+            };
+            break;
+        case DELETE_IMAGEBRAND:
+            return {
+                ...state,
+                IMAGEBRAND: '',
             };
             break;
         case SET_DESCRIPTIONBRAND:
@@ -25,6 +44,7 @@ export const detailBrandReducer = (state, action) => {
                 IDBRAND: action.payload.IDBRAND,
                 BRANDNAME: action.payload.BRANDNAME,
                 DESCRIPTIONBRAND: action.payload.DESCRIPTIONBRAND,
+                IMAGEBRAND: action.payload.IMAGEBRAND,
             };
             break;
         default:

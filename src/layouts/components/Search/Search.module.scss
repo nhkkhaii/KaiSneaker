@@ -3,6 +3,7 @@
     background: rgb(245, 243, 243);
     border-radius: 40px;
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: space-between;
     margin-right: 8px;
@@ -51,7 +52,7 @@
 
 .clear {
     position: absolute;
-    right: calc(40px + 16px);
+    right: calc(40px + 10px);
     top: 50%;
     transform: translateY(-50%);
     color: rgba(22, 24, 35, 0.34);

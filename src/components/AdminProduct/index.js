@@ -26,14 +26,25 @@ function AdminProduct() {
     };
 
     const handleDeleteProduct = (data) => {
-        axios
-            .post('http://26.17.209.162/api/shoes/post', {
-                type: 'delete',
-                data: { SHOESID: data },
-            })
-            .then((response) => {
-                getCourses();
-            });
+        try {
+            if (window.confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')) {
+                axios
+                    .post('http://26.17.209.162/api/shoes/post', {
+                        type: 'delete',
+                        data: { SHOESID: data },
+                    })
+                    .then((res) => {
+                        if (res.data == 1) {
+                            alert('Xóa sản phẩm thành công!!!');
+                            getCourses();
+                        } else if (res.data == -1) {
+                            alert('Xóa sản phẩm thất bại!!!');
+                        }
+                    });
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (

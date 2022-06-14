@@ -13,7 +13,7 @@
     width: 84px;
     padding: 10px 6px;
     border-radius: 10px;
-    background-color: var(--blue-color);
+    background-color: black;
     border: none;
     color: var(--white-color) !important;
 }
@@ -71,7 +71,7 @@
 .details-content-item-btn {
     padding: 8px 8px;
     border: none;
-    background-color: var(--blue-color);
+    background-color: black;
     border-radius: 20px;
     color: var(--white-color);
 }
@@ -82,7 +82,7 @@
 }
 
 .justify_item {
-    white-space: pre-line;
+    white-space: nowrap;
     text-overflow: ellipsis;
     text-align: justify !important;
 }

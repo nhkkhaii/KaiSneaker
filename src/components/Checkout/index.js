@@ -14,6 +14,7 @@ import { setIDUser, setSHOPPINGINFOID, setTotal } from '~/actions/orderActions';
 import { initStateOrder, orderReducer } from '~/reducers/orderReducers';
 import { useLocation } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
@@ -47,10 +48,6 @@ function Checkout() {
             navigate('/login');
         }
     }, []);
-
-    const handleChange = (event) => {
-        alert(event.target);
-    };
 
     const addOrder = async () => {
         await axios
@@ -88,7 +85,6 @@ function Checkout() {
                 }
             });
     };
-    console.log(stateOrder);
 
     const showBuyTickets = () => {
         setStatusModal(true);
@@ -134,13 +130,13 @@ function Checkout() {
                                     <></>
                                 )}
                                 <div className={cx('actions')}>
-                                    <button
+                                    <Button
                                         className={cx('btn_ctn')}
-                                        disabled={stateOrder.SHOPPINGINFOID == '' ? true : false}
+                                        disabled={stateOrder.SHOPPINGINFOID === '' ? true : false}
                                         onClick={addOrder}
                                     >
                                         Tiếp tục
-                                    </button>
+                                    </Button>
                                     <button className={cx('btn_add')} onClick={showBuyTickets}>
                                         Thêm địa chỉ
                                     </button>
@@ -158,14 +154,14 @@ function Checkout() {
                                         className={cx('payment_input')}
                                         id="acc1"
                                     />
-                                    <label for="acc1" className={cx('payment-item_title')}>
+                                    <label htmlFor="acc1" className={cx('payment-item_title')}>
                                         <i className={cx('fa fa-map-marker')}></i> My name?
                                     </label>
                                     <div className={cx('payment_content')}>Hi, You can call me Dandi.</div>
                                 </div>
                                 <div className={cx('payment-item')}>
                                     <input type="radio" name="payment" value="PayPal" id="acc2" />
-                                    <label for="acc2">
+                                    <label htmlFor="acc2">
                                         <i className={cx('fa fa-heart')}></i> What am I interesting for?
                                     </label>
                                 </div>
@@ -215,7 +211,7 @@ function Checkout() {
                             {shoppingCartData != 0 ? (
                                 shoppingCartData.map((product, index) => {
                                     return (
-                                        <div className={cx('product_item')}>
+                                        <div className={cx('product_item')} key={product.SHOESID}>
                                             <img
                                                 src={product.IMAGESHOES1}
                                                 alt={product.SHOESNAME}

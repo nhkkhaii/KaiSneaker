@@ -16,6 +16,7 @@ import Image from '~/components/Image';
 import config from '~/config';
 import Menu from '~/components/Popper/Menu';
 import axios from 'axios';
+import { useDebounce } from '~/hooks';
 const cx = classNames.bind(styles);
 const MENU_ITEMS = [
     {
@@ -27,47 +28,40 @@ const MENU_ITEMS = [
 
 function Header() {
     const [cookies, setCookie, removeCookie] = useCookies(['name']);
-    const [countShopping, setCountShopping] = useState(0);
+    const [countShopping, setCountShopping] = useState([]);
     const [accountData, setAccountData] = useState([]);
+    const debounced = useDebounce(countShopping, 1000);
+
     let navigate = useNavigate();
     const removeCK = () => {
         removeCookie('name');
         window.location.reload();
     };
 
-    const getAccount = async () => {
-        await axios
-            .post('http://26.17.209.162/api/account/post', {
-                type: 'get',
-                data: { IDACCOUNT: cookies.name.ID },
-            })
-            .then((res) => {
-                if (res.data != 0 && res.data != -1) {
-                    setAccountData(res.data[0]);
-                }
-            });
-    };
-
-    const countCart = async () => {
+    useEffect(() => {
         if (cookies.name) {
-            await axios
+            axios
                 .post('http://26.17.209.162/api/shoppingcart/post', {
                     type: 'get',
                     data: { IDACCOUNT: cookies.name.ID },
                 })
                 .then((res) => {
                     if (res.data != 0 && res.data != -1) {
-                        setCountShopping(res.data.length);
+                        setCountShopping(res.data);
+                    }
+                });
+            axios
+                .post('http://26.17.209.162/api/account/post', {
+                    type: 'get',
+                    data: { IDACCOUNT: cookies.name.ID },
+                })
+                .then((res) => {
+                    if (res.data != 0 && res.data != -1) {
+                        setAccountData(res.data[0]);
                     }
                 });
         }
-    };
-
-    useEffect(() => {
-        countCart();
-
-        getAccount();
-    }, []);
+    }, [debounced]);
     const userMenu = [
         {
             icon: <FontAwesomeIcon icon={faUser} />,
@@ -106,7 +100,7 @@ function Header() {
                                 className={cx('action-btn')}
                             >
                                 <FontAwesomeIcon icon={faBagShopping} />
-                                <span className={cx('badge')}>{countShopping}</span>
+                                <span className={cx('badge')}>{countShopping.length}</span>
                             </Link>
                         </Tippy>
                     </>

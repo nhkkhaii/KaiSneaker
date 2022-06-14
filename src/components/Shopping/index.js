@@ -59,6 +59,7 @@ function Shipping() {
                                     IDACCOUNT={product.IDACCOUNT}
                                     IDSIZE={product.IDSIZE}
                                     SHOESID={product.SHOESID}
+                                    QUANTITYINSTOCK={product.QUANTITYINSTOCK}
                                 />
                             );
                         })

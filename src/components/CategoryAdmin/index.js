@@ -1,13 +1,13 @@
 import classNames from 'classnames/bind';
 import styles from './CategoryAdmin.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { useState, useReducer, useEffect } from 'react';
 import axios from 'axios';
 
 import Button from '~/components/Button';
 import { initStateBrand, detailBrandReducer } from '~/reducers/brandReducers';
-import { setBrandName, setDesBrand } from '~/actions/brandActions';
+import { setBrandName, setDesBrand, setImgBrand, deleteImgBrand } from '~/actions/brandActions';
 
 const cx = classNames.bind(styles);
 
@@ -54,30 +54,72 @@ function AdminUser() {
     };
 
     const handleSubmitNewBrand = (data) => {
-        axios
-            .post('http://26.17.209.162/api/brand/post', {
-                type: 'create',
-                data: stateBrand,
-            })
-            .then((response) => {
-                console.log(response.data);
-                getCourses();
-            });
+        try {
+            axios
+                .post('http://26.17.209.162/api/brand/post', {
+                    type: 'create',
+                    data: stateBrand,
+                })
+                .then((res) => {
+                    if (res.data == 1) {
+                        alert('Thêm thương hiệu thành công');
+                        setStatusModal(false);
+                        getCourses();
+                    } else if (res.data == -1) {
+                        alert('Thêm thương hiệu thất bại');
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleSubmitDeleteBrand = ({ item }) => {
-        axios
-            .post('http://26.17.209.162/api/brand/post', {
-                type: 'delete',
-                data: { IDBRAND: item.IDBRAND },
-            })
-            .then((response) => {
-                getCourses();
-            });
+        try {
+            if (window.confirm('Bạn có chắc chắn muốn xóa thương hiệu này không?')) {
+                axios
+                    .post('http://26.17.209.162/api/brand/post', {
+                        type: 'delete',
+                        data: { IDBRAND: item.IDBRAND },
+                    })
+                    .then((res) => {
+                        if (res.data == 1) {
+                            alert('Xóa thương hiệu thành công');
+                            getCourses();
+                        } else if (res.data == -1) {
+                            alert('Xóa thương hiệu thất bại');
+                        }
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // Convert input sang base 64
+    const uploadImage = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        dispatchBrand(setImgBrand(base64));
+    };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
     };
 
     return (
-        <>
+        <div className={cx('wrapper')}>
             {/* <!-- Begin adminCategoriesTable --> */}
             <div className={cx('category-header')}>
                 <h2 className={cx('category-heading')}>Thêm thương hiệu</h2>
@@ -95,40 +137,43 @@ function AdminUser() {
                             <td className={cx('details-title-item')}>Mô tả</td>
                         </tr>
                     </thead>
-                    {brandData.map((item, index) => (
-                        <tbody className={cx('details-tbody')} key={item.IDBRAND}>
-                            <tr className={cx('details-content-list')}>
-                                <td className={cx('details-content-item')}>{item.IDBRAND}</td>
-                                <td className={cx('details-content-item')}>{item.BRANDNAME}</td>
-                                <td className={cx('details-content-item', 'details-content-item--maxwith')}>
-                                    <span>{item.DESCRIPTIONBRAND}</span>
-                                </td>
-                                <td className={cx('details-content-item')}>
-                                    <Button
-                                        to={`/admin/category/${item.BRANDNAME}`}
-                                        state={{
-                                            data: {
-                                                IDBRAND: item.IDBRAND,
-                                                BRANDNAME: item.BRANDNAME,
-                                                DESCRIPTIONBRAND: item.DESCRIPTIONBRAND,
-                                            },
-                                        }}
-                                        className={cx('details-content-item-btn')}
-                                    >
-                                        Sửa
-                                    </Button>
-                                </td>
-                                <td className={cx('details-content-item')}>
-                                    <button
-                                        className={cx('details-content-item-btn')}
-                                        onClick={(e) => handleSubmitDeleteBrand({ item })}
-                                    >
-                                        Xóa
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    ))}
+                    {brandData.map((item, index) => {
+                        return (
+                            <tbody className={cx('details-tbody')} key={item.IDBRAND}>
+                                <tr className={cx('details-content-list')}>
+                                    <td className={cx('details-content-item')}>{item.IDBRAND}</td>
+                                    <td className={cx('details-content-item')}>{item.BRANDNAME}</td>
+                                    <td className={cx('details-content-item', 'details-content-item--maxwith')}>
+                                        <span>{item.DESCRIPTIONBRAND}</span>
+                                    </td>
+                                    <td className={cx('details-content-item')}>
+                                        <Button
+                                            to={`/admin/category/${item.BRANDNAME}`}
+                                            state={{
+                                                data: {
+                                                    IDBRAND: item.IDBRAND,
+                                                    BRANDNAME: item.BRANDNAME,
+                                                    DESCRIPTIONBRAND: item.DESCRIPTIONBRAND,
+                                                    IMAGEBRAND: item.IMAGEBRAND,
+                                                },
+                                            }}
+                                            className={cx('details-content-item-btn')}
+                                        >
+                                            Sửa
+                                        </Button>
+                                    </td>
+                                    <td className={cx('details-content-item')}>
+                                        <button
+                                            className={cx('details-content-item-btn')}
+                                            onClick={(e) => handleSubmitDeleteBrand({ item })}
+                                        >
+                                            Xóa
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        );
+                    })}
                 </table>
             ) : (
                 <h2>Không có dữ liệu</h2>
@@ -160,6 +205,37 @@ function AdminUser() {
                         />
                     </div>
                     <form className={cx('category-list')} onSubmit={handleSubmit}>
+                        <div className={cx('product_img')}>
+                            <div className={cx('img_item')}>
+                                <div className={cx('file_upload')}>
+                                    <input
+                                        className={cx('upload')}
+                                        type="file"
+                                        disabled={stateBrand.IMAGEBRAND}
+                                        onChange={(e) => uploadImage(e)}
+                                    />
+                                    <FontAwesomeIcon
+                                        icon={faArrowUp}
+                                        className={cx(stateBrand.IMAGEBRAND ? 'fadeout' : '')}
+                                    ></FontAwesomeIcon>
+                                    <div className={cx('img_box', stateBrand.IMAGEBRAND ? 'fadein' : '')}>
+                                        <img
+                                            alt={stateBrand.BRANDNAME ? stateBrand.BRANDNAME : ''}
+                                            className={cx('img')}
+                                            src={stateBrand.IMAGEBRAND ? stateBrand.IMAGEBRAND : ''}
+                                        />
+                                        <div className={cx('delete_box', stateBrand.IMAGEBRAND ? 'active' : '')}>
+                                            <FontAwesomeIcon
+                                                icon={faXmark}
+                                                className={cx('btn_delete')}
+                                                onClick={(e) => dispatchBrand(deleteImgBrand(stateBrand.IMAGEBRAND))}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <label htmlFor="" className={cx('input-label')}>
                             Tên danh mục
                         </label>
@@ -167,6 +243,7 @@ function AdminUser() {
                             className={cx('input-item')}
                             type="text"
                             placeholder="Tên danh mục"
+                            required
                             onChange={(e) => dispatchBrand(setBrandName(e.target.value))}
                         />
                         <label htmlFor="" className={cx('input-label')}>
@@ -183,7 +260,7 @@ function AdminUser() {
                 </div>
             </div>
             {/* <!--End Modal --> */}
-        </>
+        </div>
     );
 }
 

@@ -2,22 +2,23 @@ import classNames from 'classnames/bind';
 import styles from './UpdateBrand.module.scss';
 import { useLocation } from 'react-router-dom';
 import Button from '~/components/Button';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { useState, useReducer, useEffect } from 'react';
 import config from '~/config';
-
+import { useNavigate } from 'react-router-dom';
 import { initStateBrand, detailBrandReducer } from '~/reducers/brandReducers';
-import { setBrandName, setDesBrand, addBrand } from '~/actions/brandActions';
+import { setBrandName, setDesBrand, addBrand, setImgBrand, deleteImgBrand } from '~/actions/brandActions';
 
 const cx = classNames.bind(styles);
 
 function UpdateBrand({}) {
     let location = useLocation();
+    let navigate = useNavigate();
 
     const [stateBrand, dispatchBrand] = useReducer(detailBrandReducer, initStateBrand);
     const [brandData, setBrandData] = useState([location.state.data]);
-
     useEffect(() => {
         dispatchBrand(addBrand(location.state.data));
     }, []);
@@ -29,14 +30,23 @@ function UpdateBrand({}) {
     };
 
     const handleSubmitUpdateBrand = (data) => {
-        axios
-            .post('http://26.17.209.162/api/brand/post', {
-                type: 'update',
-                data: stateBrand,
-            })
-            .then((response) => {
-                console.log(response);
-            });
+        try {
+            axios
+                .post('http://26.17.209.162/api/brand/post', {
+                    type: 'update',
+                    data: stateBrand,
+                })
+                .then((res) => {
+                    if (res.data == 1) {
+                        alert('Cập nhật thương hiệu thành công!!');
+                        navigate('/admin/category');
+                    } else if (res.data == -1) {
+                        alert('Cập nhật thương hiệu thất bại!!');
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     // check coi có thay đổi dữ liệu không
@@ -46,6 +56,28 @@ function UpdateBrand({}) {
         } else {
             return false;
         }
+    };
+
+    // Convert input sang base 64
+    const uploadImage = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        dispatchBrand(setImgBrand(base64));
+    };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
     };
 
     return (
@@ -60,6 +92,37 @@ function UpdateBrand({}) {
 
                 <div className={cx('update_form')}>
                     <form className={cx('category-list')} onSubmit={handleSubmit}>
+                        <div className={cx('product_img')}>
+                            <div className={cx('img_item')}>
+                                <div className={cx('file_upload')}>
+                                    <input
+                                        className={cx('upload')}
+                                        type="file"
+                                        disabled={stateBrand.IMAGEBRAND}
+                                        onChange={(e) => uploadImage(e)}
+                                    />
+                                    <FontAwesomeIcon
+                                        icon={faArrowUp}
+                                        className={cx(stateBrand.IMAGEBRAND ? 'fadeout' : '')}
+                                    ></FontAwesomeIcon>
+                                    <div className={cx('img_box', stateBrand.IMAGEBRAND ? 'fadein' : '')}>
+                                        <img
+                                            alt={stateBrand.BRANDNAME ? stateBrand.BRANDNAME : ''}
+                                            className={cx('img')}
+                                            src={stateBrand.IMAGEBRAND ? stateBrand.IMAGEBRAND : ''}
+                                        />
+                                        <div className={cx('delete_box', stateBrand.IMAGEBRAND ? 'active' : '')}>
+                                            <FontAwesomeIcon
+                                                icon={faXmark}
+                                                className={cx('btn_delete')}
+                                                onClick={(e) => dispatchBrand(deleteImgBrand(stateBrand.IMAGEBRAND))}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className={cx('category_box')}>
                             <div className={cx('category-item')}>
                                 <label htmlFor="" className={cx('input-label')}>

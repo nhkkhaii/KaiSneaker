@@ -17,6 +17,7 @@ function ShoppingItem({
     IDACCOUNT,
     IDSIZE,
     SHOESID,
+    QUANTITYINSTOCK,
 }) {
     const deleteItem = async () => {
         await axios
@@ -36,18 +37,29 @@ function ShoppingItem({
     console.log(QUANTITY);
 
     const quantityUp = async () => {
-        await axios
-            .post('http://26.17.209.162/api/shoppingcart/post', {
-                type: 'update',
-                data: { IDACCOUNT: IDACCOUNT, IDSIZE: IDSIZE, SHOESID: SHOESID, QUANTITY: QUANTITY + 1 },
-            })
-            .then((res) => {
-                if ((res.data != 0) & (res.data != -1)) {
-                    window.location.reload();
-                } else {
-                    alert('Xóa sản phẩm khỏi giỏ hàng thất bại');
-                }
-            });
+        if (QUANTITY < QUANTITYINSTOCK) {
+            await axios
+                .post('http://26.17.209.162/api/shoppingcart/post', {
+                    type: 'update',
+                    data: { IDACCOUNT: IDACCOUNT, IDSIZE: IDSIZE, SHOESID: SHOESID, QUANTITY: QUANTITY * 1 + 1 },
+                })
+                .then((res) => {
+                    console.log(res.data);
+                });
+        }
+    };
+
+    const quantityDown = async () => {
+        if (QUANTITY > 1) {
+            await axios
+                .post('http://26.17.209.162/api/shoppingcart/post', {
+                    type: 'update',
+                    data: { IDACCOUNT: IDACCOUNT, IDSIZE: IDSIZE, SHOESID: SHOESID, QUANTITY: QUANTITY * 1 - 1 },
+                })
+                .then((res) => {
+                    console.log(res.data);
+                });
+        }
     };
     return (
         <div className={cx('row', 'item')}>
@@ -65,16 +77,13 @@ function ShoppingItem({
                                 <p className={cx('size_option')}>{SIZEEUR}</p>
                             </div>
                             <div className={cx('info_quantity')}>
-                                <span className={cx('minus')}>-</span>
+                                <span className={cx('minus')} onClick={(e) => quantityDown}>
+                                    -
+                                </span>
                                 <span className={cx('num')}>
                                     {Number(QUANTITY) < 10 ? '0' + QUANTITY : Number(QUANTITY)}
                                 </span>
-                                <span
-                                    className={cx('plus')}
-                                    onClick={(e) => {
-                                        QUANTITY = Number(QUANTITY) + 1;
-                                    }}
-                                >
+                                <span className={cx('plus')} onClick={(e) => quantityUp}>
                                     +
                                 </span>
                             </div>

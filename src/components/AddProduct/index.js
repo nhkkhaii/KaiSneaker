@@ -23,92 +23,108 @@ function AddProduct() {
     let navigate = useNavigate();
 
     useEffect(() => {
-        if (location.state) {
-            if (location.state.data) {
-                dispatch(setID(location.state.data.SHOESID));
-                dispatch(setDescription(location.state.data.SHOESDESCRIPTION));
-                dispatch(setPrice(location.state.data.SHOESPRICE));
-                dispatch(setName(location.state.data.SHOESNAME));
-                axios
-                    .post('http://26.17.209.162/api/image/post', {
-                        type: 'get',
-                        data: { IMAGEID: location.state.data.IMAGEID },
-                    })
-                    .then((res) => {
-                        var array = Object.keys(res.data[0])
-                            .filter((key) => key !== 'IMAGEID')
-                            .map(function (key) {
-                                return res.data[0][key];
-                            });
+        try {
+            if (location.state) {
+                if (location.state.data) {
+                    dispatch(setID(location.state.data.SHOESID));
+                    dispatch(setDescription(location.state.data.SHOESDESCRIPTION));
+                    dispatch(setPrice(location.state.data.SHOESPRICE));
+                    dispatch(setName(location.state.data.SHOESNAME));
+                    axios
+                        .post('http://26.17.209.162/api/image/post', {
+                            type: 'get',
+                            data: { IMAGEID: location.state.data.IMAGEID },
+                        })
+                        .then((res) => {
+                            var array = Object.keys(res.data[0])
+                                .filter((key) => key !== 'IMAGEID')
+                                .map(function (key) {
+                                    return res.data[0][key];
+                                });
 
-                        if (array[0] != '') {
-                            dispatch(setImg(array[0]));
-                        }
-                        if (array[1] != '') {
-                            dispatch(setImg(array[1]));
-                        }
-                        if (array[2] != '') {
-                            dispatch(setImg(array[2]));
-                        }
+                            if (array[0] != '') {
+                                dispatch(setImg(array[0]));
+                            }
+                            if (array[1] != '') {
+                                dispatch(setImg(array[1]));
+                            }
+                            if (array[2] != '') {
+                                dispatch(setImg(array[2]));
+                            }
 
-                        if (array[3] != '') {
-                            dispatch(setImg(array[3]));
-                        }
-                    });
+                            if (array[3] != '') {
+                                dispatch(setImg(array[3]));
+                            }
+                        });
 
-                axios
-                    .post('http://26.17.209.162/api/brand/post', {
-                        type: 'get',
-                        data: { IDBRAND: location.state.data.IDBRAND },
-                    })
-                    .then((res) => {
-                        dispatch(setBrand(res.data[0]));
-                    });
+                    axios
+                        .post('http://26.17.209.162/api/brand/post', {
+                            type: 'get',
+                            data: { IDBRAND: location.state.data.IDBRAND },
+                        })
+                        .then((res) => {
+                            dispatch(setBrand(res.data[0]));
+                        });
+                }
             }
+            axios.post('http://26.17.209.162/api/brand/get').then((res) => {
+                setBrandData(res.data);
+            });
+        } catch (error) {
+            console.log(error);
         }
-        axios.post('http://26.17.209.162/api/brand/get').then((res) => {
-            setBrandData(res.data);
-        });
     }, []);
 
     const handleSubmitUpdate = async (e) => {
         e.preventDefault();
-        const response = await handleSubmitUpdateProduct({
+        await handleSubmitUpdateProduct({
             state,
         });
     };
 
     const handleSubmitUpdateProduct = (data) => {
-        axios
-            .post('http://26.17.209.162/api/shoes/post', {
-                type: 'update',
-                data: state,
-            })
-            .then((response) => {
-                if ((response.data != 0) & (response.data != -1)) {
-                    navigate('/admin/shoes');
-                }
-            });
+        try {
+            axios
+                .post('http://26.17.209.162/api/shoes/post', {
+                    type: 'update',
+                    data: state,
+                })
+                .then((res) => {
+                    if (res.data == 1) {
+                        alert('Cập nhật sản phẩm thành công !!!');
+                        navigate('/admin/shoes');
+                    } else if (res.data == -1) {
+                        alert('Cập nhật sản phẩm thất bại !!!');
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await handleSubmitLogin({
+        const response = await handleCreateProduct({
             state,
         });
     };
 
-    const handleSubmitLogin = (data) => {
-        axios
-            .post('http://26.17.209.162/api/shoes/post', {
-                type: 'create',
-                data: state,
-            })
-            .then((response) => {
-                if ((response.data != 0) & (response.data != -1)) {
-                    navigate('/admin/shoes');
-                }
-            });
+    const handleCreateProduct = (data) => {
+        try {
+            axios
+                .post('http://26.17.209.162/api/shoes/post', {
+                    type: 'create',
+                    data: state,
+                })
+                .then((res) => {
+                    if (res.data == 1) {
+                        alert('Thêm sản phẩm thành công !!!');
+                        navigate('/admin/shoes');
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     // Convert input sang base 64
@@ -132,6 +148,7 @@ function AddProduct() {
             };
         });
     };
+
     return (
         <>
             <div className={cx('wrapper')}>
@@ -156,6 +173,7 @@ function AddProduct() {
                                 className={cx('info-txt')}
                                 id="idproduct"
                                 type="text"
+                                required
                                 value={location.state ? state.SHOESID : null}
                                 placeholder="Mã sản phẩm"
                                 onChange={(e) => dispatch(setID(e.target.value))}
@@ -169,6 +187,7 @@ function AddProduct() {
                                 className={cx('info-txt')}
                                 type="text"
                                 id="name"
+                                required
                                 value={location.state ? state.SHOESNAME : null}
                                 placeholder="Tên sản phẩm"
                                 onChange={(e) => dispatch(setName(e.target.value))}
@@ -184,6 +203,7 @@ function AddProduct() {
                                 className={cx('info-txt')}
                                 type="text"
                                 id="price"
+                                required
                                 value={location.state ? state.SHOESPRICE : null}
                                 placeholder="Giá tiền"
                                 onChange={(e) => dispatch(setPrice(e.target.value))}
@@ -194,14 +214,6 @@ function AddProduct() {
                                 }}
                             />
                         </div>
-                        <div className={cx('info')}>
-                            <label htmlFor="quantity" className={cx('info-heading')}>
-                                Số lượng
-                            </label>
-                            <input className={cx('info-txt')} type="number" id="quantity" placeholder="Số lượng" />
-                        </div>
-                    </div>
-                    <div className={cx('group')}>
                         <div className={cx('select-box')}>
                             <input type="checkbox" className={cx('select_view')} />
                             <div className={cx('select-button')}>
@@ -265,19 +277,6 @@ function AddProduct() {
                                     const data = editor.getData();
                                     dispatch(setDescription(data));
                                     console.log(data);
-                                }}
-                            />
-                        </div>
-
-                        <div className={cx('description_item')}>
-                            <h2 className={cx('item_heading')}>Thông số kỹ thuật</h2>
-                            <CKEditor
-                                className={cx('item_content')}
-                                editor={ClassicEditor}
-                                data=""
-                                onChange={(event, editor) => {
-                                    const data = editor.getData();
-                                    console.log({ event, editor, data });
                                 }}
                             />
                         </div>
