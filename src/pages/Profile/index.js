@@ -171,6 +171,7 @@ function Profile() {
                         maxLength="5"
                         value={stateUser.GENDER ? stateUser.GENDER : null}
                         onChange={(e) => dispatchUser(setGender(e.target.value))}
+                        placeholder={'Nam hoặc Nữ'}
                     />
                     <label htmlFor="gender" className={cx('info_label')}>
                         Giới tính

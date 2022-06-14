@@ -35,9 +35,22 @@ function Header() {
         window.location.reload();
     };
 
-    useEffect(() => {
+    const getAccount = async () => {
+        await axios
+            .post('http://26.17.209.162/api/account/post', {
+                type: 'get',
+                data: { IDACCOUNT: cookies.name.ID },
+            })
+            .then((res) => {
+                if (res.data != 0 && res.data != -1) {
+                    setAccountData(res.data[0]);
+                }
+            });
+    };
+
+    const countCart = async () => {
         if (cookies.name) {
-            axios
+            await axios
                 .post('http://26.17.209.162/api/shoppingcart/post', {
                     type: 'get',
                     data: { IDACCOUNT: cookies.name.ID },
@@ -47,19 +60,14 @@ function Header() {
                         setCountShopping(res.data.length);
                     }
                 });
-            axios
-                .post('http://26.17.209.162/api/account/post', {
-                    type: 'get',
-                    data: { IDACCOUNT: cookies.name.ID },
-                })
-                .then((res) => {
-                    if (res.data != 0 && res.data != -1) {
-                        setAccountData(res.data[0]);
-                    }
-                });
         }
-    }, [countShopping]);
+    };
 
+    useEffect(() => {
+        countCart();
+
+        getAccount();
+    }, []);
     const userMenu = [
         {
             icon: <FontAwesomeIcon icon={faUser} />,
@@ -107,7 +115,11 @@ function Header() {
                 )}
                 <Menu items={cookies.name ? userMenu : MENU_ITEMS}>
                     {cookies.name ? (
-                        <Image className={cx('user-avatar')} src={accountData.IMAGEUSER} alt={accountData.FULLNAME} />
+                        <Image
+                            className={cx('user-avatar')}
+                            src={accountData.IMAGEUSER !== null ? accountData.IMAGEUSER : ''}
+                            alt={accountData.FULLNAME}
+                        />
                     ) : (
                         <button className={cx('account-btn')}>
                             <FontAwesomeIcon icon={faUser} />

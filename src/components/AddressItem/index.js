@@ -28,6 +28,22 @@ function AddressItem({ SHOPPINGINFOID, IDACCOUNT, SHOPPINGINFONAME, SHOPPINGINFO
         setStatusModal(false);
     };
 
+    const updateAddress = async () => {
+        await axios
+            .post('http://26.17.209.162/api/shippinginfo/post', {
+                type: 'update',
+                data: stateAddress,
+            })
+            .then((res) => {
+                if (res.data == 1) {
+                    alert('Cập nhật địa chỉ thành công');
+                    window.location.reload();
+                } else if (res.data == -1) {
+                    alert('Cập nhật địa chỉ thất bại');
+                }
+            });
+    };
+
     const deleteAddress = async () => {
         await axios
             .post('http://26.17.209.162/api/shippinginfo/post', {
