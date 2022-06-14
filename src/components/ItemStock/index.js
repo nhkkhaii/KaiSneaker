@@ -5,11 +5,21 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { useState, useReducer, useEffect } from 'react';
 import Image from '~/components/Image';
+import { initStateStock, stockReducer } from '~/reducers/stockReducers';
+import { setSHOESID, setIDSIZE, setQUANTITYSTOCK } from '~/actions/stockActions';
 
 const cx = classNames.bind(styles);
 
-function ItemStock({ SHOESID, IDSIZE, SIZEEUR, SHOESNAME, IMAGESHOES1, QUANTITYINSTOCK }) {
+function ItemStock({ SHOESID, IDSIZE, SIZEEUR, SHOESNAME, IMAGESHOES1, QUANTITYINSTOCK, sizeData, productData }) {
     const [statusModal, setStatusModal] = useState(false);
+    const [stateStock, dispatchStock] = useReducer(stockReducer, initStateStock);
+
+    useEffect(() => {
+        dispatchStock(setSHOESID(SHOESID));
+        dispatchStock(setIDSIZE(IDSIZE));
+        dispatchStock(setQUANTITYSTOCK(QUANTITYINSTOCK));
+    }, []);
+
     const showBuyTickets = () => {
         setStatusModal(true);
     };
@@ -18,16 +28,46 @@ function ItemStock({ SHOESID, IDSIZE, SIZEEUR, SHOESNAME, IMAGESHOES1, QUANTITYI
     };
 
     const deleteProduct = async () => {
-        await axios
-            .post('http://26.17.209.162/api/stock/post', {
-                type: 'delete',
-                data: { SHOESID: SHOESID, IDSIZE: IDSIZE },
-            })
-            .then((res) => {
-                if (res.data != 0 && res.data != -1) {
-                    window.location.reload();
-                }
-            });
+        try {
+            if (window.confirm('Bạn có chắc chắn muốn xóa sản phẩm khỏi kho không?')) {
+                await axios
+                    .post('http://26.17.209.162/api/stock/post', {
+                        type: 'delete',
+                        data: { SHOESID: SHOESID, IDSIZE: IDSIZE },
+                    })
+                    .then((res) => {
+                        if (res.data == 1) {
+                            alert('Xóa sản phẩm khỏi kho thành công');
+                            window.location.reload();
+                        } else if (res.data == -1) {
+                            alert('Xóa sản phẩm khỏi kho thất bại');
+                        }
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const updateProduct = async (e) => {
+        try {
+            e.preventDefault();
+            await axios
+                .post('http://26.17.209.162/api/stock/post', {
+                    type: 'update',
+                    data: stateStock,
+                })
+                .then((res) => {
+                    if (res.data == 1) {
+                        alert('Cập nhật sản phẩm kho thành công');
+                        window.location.reload();
+                    } else if (res.data == -1) {
+                        alert('Cập nhật sản phẩm kho thất bại');
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -66,16 +106,28 @@ function ItemStock({ SHOESID, IDSIZE, SIZEEUR, SHOESNAME, IMAGESHOES1, QUANTITYI
                         <FontAwesomeIcon className={cx('modal--close')} icon={faXmark} onClick={hideBuyTickets} />
                     </div>
 
-                    <form>
+                    <form onSubmit={updateProduct}>
                         <div className={cx('stock-list')}>
                             <div className={cx('info')}>
                                 <label htmlFor="" className={cx('input-label', 'mt-10')}>
                                     Tên sản phẩm
                                 </label>
-                                <select className={cx('stock-select')}>
-                                    <option value="0">Tên sản phẩm</option>
-                                    <option value="1">MSI</option>
-                                    <option value="2">ASUS</option>
+                                <select
+                                    className={cx('stock-select')}
+                                    value={stateStock.SHOESID}
+                                    onChange={(e) => dispatchStock(setSHOESID(e.target.value))}
+                                >
+                                    {productData != 0 ? (
+                                        productData.map((product) => {
+                                            return (
+                                                <option key={product.SHOESID} value={product.SHOESID}>
+                                                    {product.SHOESNAME}
+                                                </option>
+                                            );
+                                        })
+                                    ) : (
+                                        <></>
+                                    )}
                                 </select>
                             </div>
 
@@ -83,10 +135,22 @@ function ItemStock({ SHOESID, IDSIZE, SIZEEUR, SHOESNAME, IMAGESHOES1, QUANTITYI
                                 <label htmlFor="" className={cx('input-label', 'mt-10')}>
                                     Chọn Size
                                 </label>
-                                <select className={cx('stock-select')}>
-                                    <option value="0">Chọn Size</option>
-                                    <option value="1">44.5</option>
-                                    <option value="2">50</option>
+                                <select
+                                    className={cx('stock-select')}
+                                    value={stateStock.IDSIZE}
+                                    onChange={(e) => dispatchStock(setIDSIZE(e.target.value))}
+                                >
+                                    {sizeData != 0 ? (
+                                        sizeData.map((size) => {
+                                            return (
+                                                <option key={size.IDSIZE} value={size.IDSIZE}>
+                                                    {size.SIZEEUR}
+                                                </option>
+                                            );
+                                        })
+                                    ) : (
+                                        <></>
+                                    )}
                                 </select>
                             </div>
 
@@ -97,12 +161,14 @@ function ItemStock({ SHOESID, IDSIZE, SIZEEUR, SHOESNAME, IMAGESHOES1, QUANTITYI
                                 <input
                                     className={cx('input-item')}
                                     type="text"
+                                    value={stateStock.QUANTITYINSTOCK ? stateStock.QUANTITYINSTOCK : null}
                                     placeholder="Số lượng"
                                     onKeyPress={(event) => {
                                         if (!/[0-9]/.test(event.key)) {
                                             event.preventDefault();
                                         }
                                     }}
+                                    onChange={(e) => dispatchStock(setQUANTITYSTOCK(e.target.value))}
                                 />
                             </div>
                         </div>

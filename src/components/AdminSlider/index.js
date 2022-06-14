@@ -60,14 +60,23 @@ function AdminSlider() {
     };
 
     const handleSubmitSlide = (data) => {
-        axios
-            .post('http://26.17.209.162/api/image/post', {
-                type: 'update',
-                data: stateSlide,
-            })
-            .then((response) => {
-                console.log(response);
-            });
+        try {
+            axios
+                .post('http://26.17.209.162/api/image/post', {
+                    type: 'update',
+                    data: stateSlide,
+                })
+                .then((res) => {
+                    if (res.data == 1) {
+                        alert('Cập nhật Slider thành công');
+                        window.location.reload();
+                    } else if (res.data == -1) {
+                        alert('Cập nhật Slider thất bại');
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const checkChangeSlide = () => {

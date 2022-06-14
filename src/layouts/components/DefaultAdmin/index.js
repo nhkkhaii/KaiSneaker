@@ -1,16 +1,16 @@
 import classNames from 'classnames/bind';
 import styles from './DefaultAdmin.module.scss';
 import { Link } from 'react-router-dom';
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Image from '~/components/Image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import config from '~/config';
-
+import { useCookies } from 'react-cookie';
 import {
     faBars,
     faBoxOpen,
     faDashboard,
-    faFileInvoice,
     faFileInvoiceDollar,
     faHome,
     faSearch,
@@ -24,8 +24,22 @@ const cx = classNames.bind(styles);
 
 function SidebarAdmin({ children }) {
     const [statusMenu, setStatusMenu] = useState(false);
+    const [cookie, setCookies, removeCookie] = useCookies(['name']);
+    let navigate = useNavigate();
+
+    useEffect(() => {
+        if (!cookie.name) {
+            navigate('/login');
+        }
+    }, []);
+
     const handleToggleMenu = () => {
         setStatusMenu(!statusMenu);
+    };
+
+    const logOut = () => {
+        removeCookie('name');
+        navigate('/login');
     };
 
     return (
@@ -46,14 +60,6 @@ function SidebarAdmin({ children }) {
                                 <FontAwesomeIcon icon={faDashboard} />
                             </span>
                             <span className={cx('nav-title')}>Dashboard</span>
-                        </Link>
-                    </li>
-                    <li className={cx('nav-item')}>
-                        <Link to={config.routes.adminUsers} className={cx('nav-item-link')}>
-                            <span className={cx('nav-icon')}>
-                                <FontAwesomeIcon icon={faUsers} />
-                            </span>
-                            <span className={cx('nav-title')}>Tài khoản</span>
                         </Link>
                     </li>
                     <li className={cx('nav-item')}>
@@ -89,14 +95,6 @@ function SidebarAdmin({ children }) {
                         </Link>
                     </li>
                     <li className={cx('nav-item')}>
-                        <Link to="#" className={cx('nav-item-link')}>
-                            <span className={cx('nav-icon')}>
-                                <FontAwesomeIcon icon={faFileInvoice} />
-                            </span>
-                            <span className={cx('nav-title')}>Thống kê</span>
-                        </Link>
-                    </li>
-                    <li className={cx('nav-item')}>
                         <Link to={config.routes.adminStock} className={cx('nav-item-link')}>
                             <span className={cx('nav-icon')}>
                                 <FontAwesomeIcon icon={faComment} />
@@ -104,8 +102,8 @@ function SidebarAdmin({ children }) {
                             <span className={cx('nav-title')}>Kho</span>
                         </Link>
                     </li>
-                    <li className={cx('nav-item')}>
-                        <Link to="#" className={cx('nav-item-link')}>
+                    <li className={cx('nav-item')} onClick={logOut}>
+                        <Link to={''} className={cx('nav-item-link')}>
                             <span className={cx('nav-icon')}>
                                 <FontAwesomeIcon icon={faSignOut} />
                             </span>

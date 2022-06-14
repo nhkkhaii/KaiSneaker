@@ -2,8 +2,6 @@ import classNames from 'classnames/bind';
 import styles from './Products.module.scss';
 import NumberFormat from 'react-number-format';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faShare } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import Image from '~/components/Image';
 import { useEffect, useState, useReducer } from 'react';

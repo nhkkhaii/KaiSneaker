@@ -12,7 +12,6 @@ const routes = {
     shoppingCart: '/@:nickname/shopping-cart',
     checkout: '/@:nickname/checkout',
     admin: '/admin',
-    adminUsers: '/admin/users',
     adminCategory: '/admin/category',
     adminProduct: '/admin/shoes',
     adminAddProduct: '/admin/shoes/:idproduct',

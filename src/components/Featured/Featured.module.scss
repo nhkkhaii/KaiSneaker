@@ -1,5 +1,8 @@
 .features {
     padding-left: 8px;
+    .item {
+        display: flex;
+    }
 }
 
 .features_heading {

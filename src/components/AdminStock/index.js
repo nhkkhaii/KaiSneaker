@@ -54,17 +54,24 @@ function AdminStock() {
     };
 
     const handleSubmitStock = (data) => {
-        axios
-            .post('http://26.17.209.162/api/stock/post', {
-                type: 'create',
-                data: stateStock,
-            })
-            .then((response) => {
-                if (response.data != 0 && response.data != -1) {
-                    getCourses();
-                    setStatusModal(false);
-                }
-            });
+        try {
+            axios
+                .post('http://26.17.209.162/api/stock/post', {
+                    type: 'create',
+                    data: stateStock,
+                })
+                .then((res) => {
+                    if (res.data == 1) {
+                        alert('Thêm sản phẩm vào kho thành công!!!');
+                        getCourses();
+                        setStatusModal(false);
+                    } else if (res.data == -1) {
+                        alert('Thêm sản phẩm vào kho thất bại!!!');
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
     return (
         <>
@@ -97,6 +104,8 @@ function AdminStock() {
                                 QUANTITYINSTOCK={stock.QUANTITYINSTOCK}
                                 SHOESNAME={stock.SHOESNAME}
                                 IMAGESHOES1={stock.IMAGESHOES1}
+                                productData={productData}
+                                sizeData={sizeData}
                             />
                         );
                     })}

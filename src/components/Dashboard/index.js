@@ -125,11 +125,11 @@ function Dashboard() {
                                                     <span
                                                         className={cx(
                                                             'status',
-                                                            bill.STATUSBILL == 'Chờ duyệt'
+                                                            bill.STATUSBILL === 'Chờ duyệt'
                                                                 ? 'pending'
-                                                                : bill.STATUSBIL == 'Trả hàng'
+                                                                : bill.STATUSBILL === 'Trả về'
                                                                 ? 'return'
-                                                                : bill.STATUSBIL == 'Đang giao hàng'
+                                                                : bill.STATUSBILL === 'Đang giao hàng'
                                                                 ? 'ingrogress'
                                                                 : 'delivered',
                                                         )}

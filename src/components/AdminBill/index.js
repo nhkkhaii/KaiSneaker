@@ -31,17 +31,25 @@ function AdminBill() {
     };
 
     const handleUpdate = async (IDBILL, status) => {
-        await axios
-            .post('http://26.17.209.162/api/bill/post', {
-                type: 'updatebill',
-                data: { IDBILL: IDBILL, STATUSBILL: status },
-            })
-            .then(async (res) => {
-                console.log(res.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        try {
+            await axios
+                .post('http://26.17.209.162/api/bill/post', {
+                    type: 'updatebill',
+                    data: { IDBILL: IDBILL, STATUSBILL: status },
+                })
+                .then(async (res) => {
+                    if (res.data == 1) {
+                        alert('Cập nhật trạng thái hóa đơn thành công');
+                    } else if (res.data == -1) {
+                        alert('Cập nhật trạng thái hóa đơn thất bại');
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
