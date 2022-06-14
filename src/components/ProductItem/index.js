@@ -28,10 +28,12 @@ function ProductItem({ BRANDNAME, IMAGESHOES1, SHOESNAME, SHOESPRICE, SHOESID, S
                     <h4 className={cx('name')}>
                         <span>{SHOESNAME} </span>
                     </h4>
-                    <span className={cx('username')}>{BRANDNAME}</span>
+                    <span className={cx('brandname')}>{BRANDNAME}</span>
                 </div>
                 <div className={cx('box_price')}>
-                    <span className={cx('price')}>{SHOESPRICE}</span>
+                    <span className={cx('price')}>
+                        <NumberFormat value={SHOESPRICE} displayType={'text'} thousandSeparator={true} suffix={'đ'} />
+                    </span>
                 </div>
             </div>
         </Link>
