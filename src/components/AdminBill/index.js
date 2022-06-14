@@ -47,7 +47,6 @@ function AdminBill() {
                         </tr>
                     </thead>
                     {billData.map((bill, index) => {
-                        console.log(bill);
                         return (
                             <tbody className={cx('details-tbody')} key={bill.IDBILL}>
                                 <tr className={cx('details-content-list')}>
@@ -63,11 +62,14 @@ function AdminBill() {
                                         />
                                     </td>
                                     <td className={cx('details-content-item')}>
-                                        <select className={cx('details-content-select')}>
-                                            <option value="0">Trang thái</option>
-                                            <option value="1">Đang giao hàng</option>
-                                            <option value="2">Trả về</option>
-                                            <option value="3">Thành công</option>
+                                        <select
+                                            className={cx('details-content-select')}
+                                            onChange={(e) => console.log(e.target.value)}
+                                        >
+                                            <option value="Chờ duyệt">{bill.STATUSBILL}</option>
+                                            <option value="Trả về">{bill.STATUSBILL}</option>
+                                            <option value="Đang giao hàng">{bill.STATUSBILL}</option>
+                                            <option value="Đã giao">{bill.STATUSBILL}</option>
                                         </select>
                                     </td>
                                     <td className={cx('details-content-item')}>
