@@ -1,7 +1,14 @@
-import { SET_IDACCOUNT, SET_SHIPPINGINFONAME, SET_ADDRESS, SET_SHIPPINGINFOPHONE } from '~/constants/addressConstants';
+import {
+    SET_IDACCOUNT,
+    SET_SHIPPINGINFONAME,
+    SET_ADDRESS,
+    SET_SHIPPINGINFOPHONE,
+    SET_SHIPPINGINFOID,
+} from '~/constants/addressConstants';
 
 export const initStateAddress = {
     IDACCOUNT: '',
+    SHOPPINGINFOID: '',
     SHOPPINGINFONAME: '',
     ADDRESS: '',
     SHOPPINGINFOPHONE: '',
@@ -13,6 +20,12 @@ export const addressReducer = (state, action) => {
             return {
                 ...state,
                 IDACCOUNT: action.payload,
+            };
+            break;
+        case SET_SHIPPINGINFOID:
+            return {
+                ...state,
+                SHOPPINGINFOID: action.payload,
             };
             break;
         case SET_SHIPPINGINFONAME:

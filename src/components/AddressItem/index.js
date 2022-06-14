@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { initStateAddress, addressReducer } from '~/reducers/addressReducers';
-import { setIDAccount, setInfoPhone, setInfoName, setAddress } from '~/actions/addressActions';
+import { setIDAccount, setInfoPhone, setInfoName, setAddress, setIDInfo } from '~/actions/addressActions';
 
 import classNames from 'classnames/bind';
 import styles from './AddressItem.module.scss';
@@ -16,6 +16,8 @@ function AddressItem({ SHOPPINGINFOID, IDACCOUNT, SHOPPINGINFONAME, SHOPPINGINFO
     const [stateAddress, dispatchAddress] = useReducer(addressReducer, initStateAddress);
     useEffect(() => {
         dispatchAddress(setIDAccount(IDACCOUNT));
+        dispatchAddress(setIDInfo(SHOPPINGINFOID));
+
         dispatchAddress(setInfoName(SHOPPINGINFONAME));
         dispatchAddress(setInfoPhone(SHOPPINGINFOPHONE));
         dispatchAddress(setAddress(ADDRESS));
@@ -28,13 +30,21 @@ function AddressItem({ SHOPPINGINFOID, IDACCOUNT, SHOPPINGINFONAME, SHOPPINGINFO
         setStatusModal(false);
     };
 
-    const updateAddress = async () => {
+    const handleSubmitUpdate = async (e) => {
+        e.preventDefault();
+        await updateAddress({
+            stateAddress,
+        });
+    };
+    console.log(stateAddress);
+    const updateAddress = async (e) => {
         await axios
             .post('http://26.17.209.162/api/shippinginfo/post', {
                 type: 'update',
                 data: stateAddress,
             })
             .then((res) => {
+                console.log(res.data);
                 if (res.data == 1) {
                     alert('Cập nhật địa chỉ thành công');
                     window.location.reload();
@@ -86,7 +96,7 @@ function AddressItem({ SHOPPINGINFOID, IDACCOUNT, SHOPPINGINFONAME, SHOPPINGINFO
                         <FontAwesomeIcon className={cx('modal--close')} icon={faXmark} onClick={hideBuyTickets} />
                     </div>
 
-                    <form>
+                    <form onSubmit={handleSubmitUpdate}>
                         <div className={cx('stock-list')}>
                             <div className={cx('info')}>
                                 <label htmlFor="" className={cx('input-label')}>

@@ -1,4 +1,10 @@
-import { SET_IDACCOUNT, SET_SHIPPINGINFONAME, SET_ADDRESS, SET_SHIPPINGINFOPHONE } from '~/constants/addressConstants';
+import {
+    SET_IDACCOUNT,
+    SET_SHIPPINGINFONAME,
+    SET_ADDRESS,
+    SET_SHIPPINGINFOPHONE,
+    SET_SHIPPINGINFOID,
+} from '~/constants/addressConstants';
 
 export const setIDAccount = (payload) => {
     return {
@@ -10,6 +16,13 @@ export const setIDAccount = (payload) => {
 export const setInfoName = (payload) => {
     return {
         type: SET_SHIPPINGINFONAME,
+        payload,
+    };
+};
+
+export const setIDInfo = (payload) => {
+    return {
+        type: SET_SHIPPINGINFOID,
         payload,
     };
 };
