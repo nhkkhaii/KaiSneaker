@@ -68,8 +68,8 @@ function Search() {
                                             IMAGEID: result.IMAGEID,
                                             IMAGESHOES1: result.IMAGESHOES1,
                                             IMAGESHOES2: result.IMAGESHOES2,
-                                            IMAGESHOES3: result.IMAGESHOES2,
-                                            IMAGESHOES4: result.IMAGESHOES2,
+                                            IMAGESHOES3: result.IMAGESHOES3,
+                                            IMAGESHOES4: result.IMAGESHOES4,
                                         }}
                                         SHOESNAME={result.SHOESNAME}
                                         SHOESPRICE={result.SHOESPRICE}

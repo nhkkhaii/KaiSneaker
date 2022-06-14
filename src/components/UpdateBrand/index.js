@@ -37,6 +37,7 @@ function UpdateBrand({}) {
                     data: stateBrand,
                 })
                 .then((res) => {
+                    // console.log(res.data);
                     if (res.data == 1) {
                         alert('Cập nhật thương hiệu thành công!!');
                         navigate('/admin/category');
@@ -48,6 +49,8 @@ function UpdateBrand({}) {
             console.log(error);
         }
     };
+
+    console.log(stateBrand);
 
     // check coi có thay đổi dữ liệu không
     const checkChangeDataBrand = () => {

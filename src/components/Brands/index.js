@@ -1,37 +1,47 @@
 import classNames from 'classnames/bind';
 import styles from './Brands.module.scss';
 import Image from '~/components/Image';
-import images from '~/assets/images';
-
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 const cx = classNames.bind(styles);
 
-const brands = [
-    {
-        id: '1',
-        title: 'Nike',
-        image: images.nike,
-    },
-    {
-        id: '2',
-        title: 'Adidas',
-        image: images.adidas,
-    },
-    {
-        id: '3',
-        title: 'MLB',
-        image: images.mlb,
-    },
-];
 function Brands() {
+    const [brandData, setBrandData] = useState([]);
+    useEffect(() => {
+        try {
+            axios.get('http://26.17.209.162/api/brand/get').then((res) => setBrandData(res.data));
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+
     return (
         <div className={cx('brand', 'row')}>
             <div className={cx('col', 'l-12', 'brand_item')}>
-                {brands.map((brand) => (
-                    <Image src={brand.image} alt={brand.title} key={brand.id} className={cx('brand_item-logo')} />
-                ))}
-                {brands.map((brand) => (
-                    <Image src={brand.image} alt={brand.title} key={brand.id} className={cx('brand_item-logo')} />
-                ))}
+                {brandData != 0 ? (
+                    brandData.map((brand) => (
+                        <Image
+                            src={brand.IMAGEBRAND}
+                            alt={brand.BRANDNAME}
+                            key={brand.IDBRAND}
+                            className={cx('brand_item-logo')}
+                        />
+                    ))
+                ) : (
+                    <></>
+                )}
+                {brandData != 0 ? (
+                    brandData.map((brand) => (
+                        <Image
+                            src={brand.IMAGEBRAND}
+                            alt={brand.BRANDNAME}
+                            key={brand.IDBRAND}
+                            className={cx('brand_item-logo')}
+                        />
+                    ))
+                ) : (
+                    <></>
+                )}
             </div>
         </div>
     );

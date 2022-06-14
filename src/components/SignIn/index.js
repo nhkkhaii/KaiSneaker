@@ -46,19 +46,19 @@ function SignIn() {
         });
     };
     const handleSubmitLogin = (data) => {
-        axios
-            .post('http://26.17.209.162/api/account/signin', {
-                data: stateLogin,
-            })
-            .then((response) => {
-                if (response.data != 0) {
+        try {
+            axios
+                .post('http://26.17.209.162/api/account/signin', {
+                    data: stateLogin,
+                })
+                .then((response) => {
+                    alert('Đăng nhập thành công');
                     setCookie('name', { ID: response.data.id, STATUS: response.data.status }, { path: '/' });
                     navigate('/');
-                }
-
-                if (response.data === 0) {
-                }
-            });
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     // Đăng ký
@@ -70,18 +70,28 @@ function SignIn() {
                 stateRegister,
             });
         } else {
-            console.log('Nhập lại mật khẩu không trùng khớp');
+            alert('Nhập lại mật khẩu không trùng khớp');
         }
     };
 
     const handleSubmitRegister = (data) => {
-        axios
-            .post('http://26.17.209.162/api/account/signup', {
-                data: stateRegister,
-            })
-            .then((response) => {
-                console.log(response);
-            });
+        try {
+            axios
+                .post('http://26.17.209.162/api/account/signup', {
+                    data: stateRegister,
+                })
+                .then((res) => {
+                    if (res.data == 1) {
+                        alert('Đăng ký thành công');
+                    } else if (res.data == -1) {
+                        alert('Tài khoản đã tồn tại');
+                    } else {
+                        alert('Đăng ký thất bại');
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
