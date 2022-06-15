@@ -20,7 +20,7 @@
 }
 
 .search-btn {
-    color: black;
+    color: var(--black-color);
     width: 40px;
     line-height: 40px;
     font-size: 1.8rem;
@@ -42,7 +42,7 @@
     background: none;
     outline: none;
     padding: 0 16px;
-    color: var(--color-black);
+    color: var(--black-color);
     font-size: 16px;
     line-height: 40px;
     width: 100%;

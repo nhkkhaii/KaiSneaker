@@ -12,13 +12,13 @@
         }
 
         .close-btn {
-            background-color: #ccc;
-            color: white;
+            background-color: var(--black-color);
+            color: var(--white-color);
             border-radius: 40px;
             line-height: 40px;
             transition: all 0.25s;
             &:hover {
-                background-color: rgb(159, 158, 158);
+                opacity: 0.8;
             }
         }
     }
@@ -130,7 +130,7 @@
                 padding: 0 8px;
                 background: white;
                 position: absolute;
-                color: var(--black1-color);
+                color: var(--black-color);
             }
         }
 
@@ -265,7 +265,8 @@
 
 .option .logo_brand {
     position: absolute;
-    left: 14px;
+    left: 10px;
+    width: 25px;
     padding: 0;
     display: none;
 }
@@ -278,7 +279,7 @@
 .item_label {
     display: none;
     padding: 0;
-    margin-left: 27px;
+    margin-left: 32px;
 }
 
 .select_view:checked ~ .options .item_label {

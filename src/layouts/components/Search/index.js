@@ -32,7 +32,6 @@ function Search() {
                 data: { keysearch: debounced },
             })
             .then((res) => {
-                console.log(res.data);
                 setSearchResult(res.data);
                 setLoading(false);
             });

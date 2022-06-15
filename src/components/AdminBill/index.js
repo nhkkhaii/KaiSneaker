@@ -72,7 +72,6 @@ function AdminBill() {
                     </thead>
                     {billData.map((bill, index) => {
                         var status = bill.STATUSBILL;
-                        console.log(status);
                         return (
                             <tbody className={cx('details-tbody')} key={bill.IDBILL}>
                                 <tr className={cx('details-content-list')}>

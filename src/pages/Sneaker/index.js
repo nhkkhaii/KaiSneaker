@@ -29,20 +29,23 @@ function Sneaker() {
         return <div>Loading...</div>;
     } else {
         return (
-            <div className="row">
-                {items.map((item) => (
-                    <div className="col l-3" key={item.SHOESID}>
-                        <Products
-                            id={item.SHOESID}
-                            name={item.SHOESNAME}
-                            price={item.SHOESPRICE}
-                            imgID={item.IMAGEID}
-                            description={item.SHOESDESCRIPTION}
-                            brand={item.BRANDNAME}
-                        />
-                    </div>
-                ))}
-            </div>
+            <>
+                {' '}
+                <div className="row">
+                    {items.map((item) => (
+                        <div className="col l-3" key={item.SHOESID}>
+                            <Products
+                                id={item.SHOESID}
+                                name={item.SHOESNAME}
+                                price={item.SHOESPRICE}
+                                imgID={item.IMAGEID}
+                                description={item.SHOESDESCRIPTION}
+                                brand={item.BRANDNAME}
+                            />
+                        </div>
+                    ))}
+                </div>
+            </>
         );
     }
 }

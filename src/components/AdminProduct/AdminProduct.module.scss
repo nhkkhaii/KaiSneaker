@@ -10,10 +10,10 @@
 }
 
 .account-create-btn {
-    width: 84px;
     padding: 10px 6px;
-    border-radius: 10px;
+    border-radius: 20px;
     background-color: black;
+    font-size: 1.4rem !important;
     border: none;
     color: var(--white-color) !important;
 }
@@ -36,7 +36,7 @@
     font-weight: 600;
     padding: 4px 4px;
     text-align: center;
-    color: var(--black1-color);
+    color: var(--black-color);
 }
 
 .details-tbody + .details-tbody {
@@ -50,7 +50,7 @@
     overflow: hidden;
     max-width: 100px;
     min-width: 20px;
-    color: var(--black1-color);
+    color: var(--black-color);
 }
 
 .details-content-item::after {
@@ -67,13 +67,16 @@
 .details-content-item:nth-child(7)::after {
     border-right: none;
 }
+.details-content-item-img {
+    width: 100%;
+}
 
 .details-content-item-btn {
     padding: 8px 8px;
     border: none;
     background-color: black;
     border-radius: 20px;
-    color: var(--white-color);
+    color: var(--white-color) !important;
 }
 
 .details-content-item-btn:hover {

@@ -30,9 +30,8 @@ function Header() {
     const [cookies, setCookie, removeCookie] = useCookies(['name']);
     const [countShopping, setCountShopping] = useState([]);
     const [accountData, setAccountData] = useState([]);
-    const debounced = useDebounce(countShopping, 1000);
+    const debounced = useDebounce(countShopping, 500);
 
-    let navigate = useNavigate();
     const removeCK = () => {
         removeCookie('name');
         window.location.reload();

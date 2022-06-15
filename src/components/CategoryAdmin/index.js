@@ -8,6 +8,7 @@ import axios from 'axios';
 import Button from '~/components/Button';
 import { initStateBrand, detailBrandReducer } from '~/reducers/brandReducers';
 import { setBrandName, setDesBrand, setImgBrand, deleteImgBrand } from '~/actions/brandActions';
+import Image from '~/components/Image';
 
 const cx = classNames.bind(styles);
 
@@ -132,8 +133,9 @@ function AdminUser() {
                 <table className={cx('details-table')}>
                     <thead className={cx('details-thead')}>
                         <tr className={cx('details-title-list')}>
-                            <td className={cx('details-title-item')}>ID danh mục</td>
-                            <td className={cx('details-title-item')}>Tên Danh mục</td>
+                            <td className={cx('details-title-item')}>ID Thương hiệu</td>
+                            <td className={cx('details-title-item')}>Tên Thương hiệu</td>
+                            <td className={cx('details-title-item')}>Ảnh Thương hiệu</td>
                             <td className={cx('details-title-item')}>Mô tả</td>
                         </tr>
                     </thead>
@@ -143,6 +145,12 @@ function AdminUser() {
                                 <tr className={cx('details-content-list')}>
                                     <td className={cx('details-content-item')}>{item.IDBRAND}</td>
                                     <td className={cx('details-content-item')}>{item.BRANDNAME}</td>
+                                    <td className={cx('details-content-item')}>
+                                        <Image
+                                            className={cx('details-content-item-img')}
+                                            src={item.IMAGEBRAND !== null ? item.IMAGEBRAND : ''}
+                                        ></Image>
+                                    </td>
                                     <td className={cx('details-content-item', 'details-content-item--maxwith')}>
                                         <span>{item.DESCRIPTIONBRAND}</span>
                                     </td>
@@ -163,12 +171,12 @@ function AdminUser() {
                                         </Button>
                                     </td>
                                     <td className={cx('details-content-item')}>
-                                        <button
+                                        <Button
                                             className={cx('details-content-item-btn')}
                                             onClick={(e) => handleSubmitDeleteBrand({ item })}
                                         >
                                             Xóa
-                                        </button>
+                                        </Button>
                                     </td>
                                 </tr>
                             </tbody>

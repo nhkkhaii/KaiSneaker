@@ -10,11 +10,13 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import NumberFormat from 'react-number-format';
 import ShoppingItem from '~/components/ShoppingItem';
+import { useDebounce } from '~/hooks';
 
 const cx = classNames.bind(styles);
 function Shipping() {
     const [cookies, setCookie] = useCookies(['name']);
     const [shoppingCart, setShoppingCart] = useState([]);
+    const debounced = useDebounce(shoppingCart, 500);
     let money = 0;
     const delivery = 30000;
     let navigate = useNavigate();
@@ -31,7 +33,7 @@ function Shipping() {
         } else {
             navigate('/login');
         }
-    }, []);
+    }, [debounced]);
 
     const countMoney = (e) => {
         money += e;
@@ -46,7 +48,6 @@ function Shipping() {
                         shoppingCart.map((product, index) => {
                             const count = product.SHOESPRICE * product.QUANTITY;
                             countMoney(count);
-                            console.log(product);
                             return (
                                 <ShoppingItem
                                     key={index}

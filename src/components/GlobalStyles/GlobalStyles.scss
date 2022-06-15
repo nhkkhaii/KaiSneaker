@@ -2,14 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap');
 
 :root {
-    --black: #000;
-    --white: #fff;
+    --black-color: #000;
+    --white-color: #fff;
     // Header
-    --height-header: 80px;
-
     --text-nav-color: #8c8c8c;
     --height-header: 8rem;
-    --logo-header: 20rem;
     --subitem-hover: rgba(22, 24, 35, 0.05);
     //Footer
     --backgroundColor-footer: #000000;
@@ -25,18 +22,13 @@
     --text-color-signIn: #e6e6e6;
     // Shopping
     --text-shopping-brand: #8c8c8c;
-    // Admin
-    --blue-color: #287bff;
-    --white-color: #fff;
-    --grey-color: #f5f5f5;
-    --black1-color: #222;
-    --black2-color: #999;
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Montserrat', sans-serif;
 }
 
 html {
@@ -44,7 +36,6 @@ html {
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizespeed;

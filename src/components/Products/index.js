@@ -55,7 +55,11 @@ function Products({ featured, id, name, price, imgID, description, brand }) {
                 }}
             >
                 <div className={cx('product')}>
-                    <Image src={imgProducts.IMAGESHOES1} alt={name} className={cx('product-img')} />
+                    <Image
+                        src={imgProducts.IMAGESHOES1 !== null ? imgProducts.IMAGESHOES1 : ''}
+                        alt={name}
+                        className={cx('product-img')}
+                    />
                 </div>
             </Link>
             <div className={cx('content')}>

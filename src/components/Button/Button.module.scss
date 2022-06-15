@@ -1,12 +1,13 @@
 .wrapper {
     display: inline-flex;
     align-items: center;
+    font-family: 'Montserrat', sans-serif;
     justify-content: center;
     min-width: 100px;
     padding: 9px 16px;
     border-radius: 4px;
     font-size: 1.6rem;
-    font-weight: 700;
+    font-weight: 400;
     cursor: pointer;
     background-color: var(--white);
     border: 1px solid transparent;

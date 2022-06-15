@@ -2,8 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './Dashboard.module.scss';
 import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faEye, faMoneyCheckDollar } from '@fortawesome/free-solid-svg-icons';
-import { faComment } from '@fortawesome/free-regular-svg-icons';
+import { faBoxesStacked, faCartShopping, faEye, faMoneyCheckDollar } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import Image from '~/components/Image';
 import NumberFormat from 'react-number-format';
@@ -34,13 +33,17 @@ function Dashboard() {
         }
     }, []);
 
-    billData.forEach((data) => {
-        money = money + data.TOTAL * 1;
-    });
+    if (billData) {
+        billData.forEach((data) => {
+            money = money + data.TOTAL * 1;
+        });
+    }
 
-    stockData.forEach((data) => {
-        quantitystock = quantitystock + data.QUANTITYINSTOCK * 1;
-    });
+    if (stockData) {
+        stockData.forEach((data) => {
+            quantitystock = quantitystock + data.QUANTITYINSTOCK * 1;
+        });
+    }
 
     return (
         <>
@@ -57,7 +60,7 @@ function Dashboard() {
 
                 <div className={cx('card')}>
                     <div>
-                        <div className={cx('card-numbers')}>{billData.length}</div>
+                        <div className={cx('card-numbers')}>{billData ? billData.length : '0'}</div>
                         <div className={cx('card-name')}>Số hóa đơn</div>
                     </div>
                     <div className={cx('card-icon')}>
@@ -67,11 +70,11 @@ function Dashboard() {
 
                 <div className={cx('card')}>
                     <div>
-                        <div className={cx('card-numbers')}>{quantitystock}</div>
+                        <div className={cx('card-numbers')}>{stockData ? quantitystock : '0'}</div>
                         <div className={cx('card-name')}>Số sản phẩm có trong kho</div>
                     </div>
                     <div className={cx('card-icon')}>
-                        <FontAwesomeIcon icon={faComment} />
+                        <FontAwesomeIcon icon={faBoxesStacked} />
                     </div>
                 </div>
 

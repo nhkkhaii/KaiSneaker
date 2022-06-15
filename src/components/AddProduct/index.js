@@ -10,9 +10,9 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { initState, productDetailsReducer } from '~/reducers/productReducers';
 import { setID, setName, setPrice, setDescription, setImg, deleteImg, setBrand } from '~/actions/productActions';
-import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import Image from '~/components/Image';
 
 const cx = classNames.bind(styles);
 
@@ -250,10 +250,10 @@ function AddProduct() {
                                                     value={brand.IDBRAND}
                                                     onChange={(e) => dispatch(setBrand(e.target.value))}
                                                 />
-                                                <FontAwesomeIcon
-                                                    icon={faFacebook}
+                                                <Image
+                                                    src={brand.IMAGEBRAND != null ? brand.IMAGEBRAND : ''}
                                                     className={cx('logo_brand')}
-                                                ></FontAwesomeIcon>
+                                                ></Image>
                                                 <span className={cx('item_label')}>{brand.BRANDNAME}</span>
                                                 <span className={cx('opt-val')}>{brand.BRANDNAME}</span>
                                             </div>

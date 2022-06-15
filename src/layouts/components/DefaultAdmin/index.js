@@ -9,6 +9,7 @@ import config from '~/config';
 import { useCookies } from 'react-cookie';
 import {
     faBars,
+    faBoxesStacked,
     faBoxOpen,
     faDashboard,
     faFileInvoiceDollar,
@@ -18,7 +19,7 @@ import {
     faSliders,
     faUsers,
 } from '@fortawesome/free-solid-svg-icons';
-import { faBarChart, faComment } from '@fortawesome/free-regular-svg-icons';
+import { faBarChart } from '@fortawesome/free-regular-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -97,7 +98,7 @@ function SidebarAdmin({ children }) {
                     <li className={cx('nav-item')}>
                         <Link to={config.routes.adminStock} className={cx('nav-item-link')}>
                             <span className={cx('nav-icon')}>
-                                <FontAwesomeIcon icon={faComment} />
+                                <FontAwesomeIcon icon={faBoxesStacked} />
                             </span>
                             <span className={cx('nav-title')}>Kho</span>
                         </Link>
@@ -119,13 +120,7 @@ function SidebarAdmin({ children }) {
                     <div className={cx('toggle')} onClick={handleToggleMenu}>
                         <FontAwesomeIcon icon={faBars} />
                     </div>
-                    {/* <!-- search --> */}
-                    <div className={cx('search')}>
-                        <label htmlFor="" className={cx('search-label')}>
-                            <input className={cx('search-input')} type="text" placeholder="Search..." />
-                            <FontAwesomeIcon icon={faSearch} className={cx('search-icon')} />
-                        </label>
-                    </div>
+
                     {/* <!-- user --> */}
                     <div className={cx('user')}>
                         <Image className={cx('user-img')} src="" alt="" />

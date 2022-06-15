@@ -20,45 +20,42 @@ function ShoppingItem({
     QUANTITYINSTOCK,
 }) {
     const deleteItem = async () => {
-        await axios
-            .post('http://26.17.209.162/api/shoppingcart/post', {
-                type: 'delete',
-                data: { IDACCOUNT: IDACCOUNT, IDSIZE: IDSIZE, SHOESID: SHOESID },
-            })
-            .then((res) => {
-                if ((res.data != 0) & (res.data != -1)) {
-                    alert('Xóa sản phẩm khỏi giỏ hàng thành công');
-                    window.location.reload();
-                } else {
-                    alert('Xóa sản phẩm khỏi giỏ hàng thất bại');
-                }
-            });
+        try {
+            if (window.confirm('Bạn có chắc chắc muốn xóa sản phẩm khỏi giỏ hàng không ?')) {
+                await axios
+                    .post('http://26.17.209.162/api/shoppingcart/post', {
+                        type: 'delete',
+                        data: { IDACCOUNT: IDACCOUNT, IDSIZE: IDSIZE, SHOESID: SHOESID },
+                    })
+                    .then((res) => {
+                        if ((res.data != 0) & (res.data != -1)) {
+                            alert('Xóa sản phẩm khỏi giỏ hàng thành công');
+                            window.location.reload();
+                        } else {
+                            alert('Xóa sản phẩm khỏi giỏ hàng thất bại');
+                        }
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
-    console.log(QUANTITY);
 
     const quantityUp = async () => {
-        if (QUANTITY < QUANTITYINSTOCK) {
-            await axios
-                .post('http://26.17.209.162/api/shoppingcart/post', {
-                    type: 'update',
-                    data: { IDACCOUNT: IDACCOUNT, IDSIZE: IDSIZE, SHOESID: SHOESID, QUANTITY: QUANTITY * 1 + 1 },
-                })
-                .then((res) => {
-                    console.log(res.data);
-                });
+        if (Number(QUANTITY) < Number(QUANTITYINSTOCK)) {
+            await axios.post('http://26.17.209.162/api/shoppingcart/post', {
+                type: 'update',
+                data: { IDACCOUNT: IDACCOUNT, IDSIZE: IDSIZE, SHOESID: SHOESID, QUANTITY: Number(QUANTITY) + 1 },
+            });
         }
     };
 
     const quantityDown = async () => {
-        if (QUANTITY > 1) {
-            await axios
-                .post('http://26.17.209.162/api/shoppingcart/post', {
-                    type: 'update',
-                    data: { IDACCOUNT: IDACCOUNT, IDSIZE: IDSIZE, SHOESID: SHOESID, QUANTITY: QUANTITY * 1 - 1 },
-                })
-                .then((res) => {
-                    console.log(res.data);
-                });
+        if (Number(QUANTITY) > 1) {
+            await axios.post('http://26.17.209.162/api/shoppingcart/post', {
+                type: 'update',
+                data: { IDACCOUNT: IDACCOUNT, IDSIZE: IDSIZE, SHOESID: SHOESID, QUANTITY: Number(QUANTITY) - 1 },
+            });
         }
     };
     return (
@@ -77,13 +74,13 @@ function ShoppingItem({
                                 <p className={cx('size_option')}>{SIZEEUR}</p>
                             </div>
                             <div className={cx('info_quantity')}>
-                                <span className={cx('minus')} onClick={(e) => quantityDown}>
+                                <span className={cx('minus')} onClick={quantityDown}>
                                     -
                                 </span>
                                 <span className={cx('num')}>
                                     {Number(QUANTITY) < 10 ? '0' + QUANTITY : Number(QUANTITY)}
                                 </span>
-                                <span className={cx('plus')} onClick={(e) => quantityUp}>
+                                <span className={cx('plus')} onClick={quantityUp}>
                                     +
                                 </span>
                             </div>

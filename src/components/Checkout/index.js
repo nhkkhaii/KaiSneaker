@@ -50,40 +50,58 @@ function Checkout() {
     }, []);
 
     const addOrder = async () => {
-        await axios
-            .post('http://26.17.209.162/api/bill/post', {
-                type: 'create',
-                data: stateOrder,
-            })
-            .then((res) => {
-                console.log(res);
-            });
+        try {
+            await axios
+                .post('http://26.17.209.162/api/bill/post', {
+                    type: 'create',
+                    data: stateOrder,
+                })
+                .then((res) => {
+                    if (res.data == 1) {
+                        alert('Thanh toán thành công !!');
+                        navigate('/home');
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const getCourses = async () => {
-        await axios
-            .post('http://26.17.209.162/api/shippinginfo/post', {
-                type: 'get',
-                data: { IDACCOUNT: cookies.name.ID },
-            })
-            .then((res) => {
-                setAddressData(res.data);
-            });
+        try {
+            await axios
+                .post('http://26.17.209.162/api/shippinginfo/post', {
+                    type: 'get',
+                    data: { IDACCOUNT: cookies.name.ID },
+                })
+                .then((res) => {
+                    setAddressData(res.data);
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        await axios
-            .post('http://26.17.209.162/api/shippinginfo/post', {
-                type: 'create',
-                data: stateAddress,
-            })
-            .then((response) => {
-                if (response.data == 1) {
-                    setStatusModal(false);
-                    getCourses();
-                }
-            });
+        try {
+            e.preventDefault();
+            await axios
+                .post('http://26.17.209.162/api/shippinginfo/post', {
+                    type: 'create',
+                    data: stateAddress,
+                })
+                .then((response) => {
+                    if (response.data == 1) {
+                        alert('Thêm địa chỉ thành công !!');
+                        setStatusModal(false);
+                        getCourses();
+                    } else if (response.data == -1) {
+                        alert('Thêm địa chỉ thất bại !!');
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const showBuyTickets = () => {
@@ -135,7 +153,7 @@ function Checkout() {
                                         disabled={stateOrder.SHOPPINGINFOID === '' ? true : false}
                                         onClick={addOrder}
                                     >
-                                        Tiếp tục
+                                        Thanh toán
                                     </Button>
                                     <button className={cx('btn_add')} onClick={showBuyTickets}>
                                         Thêm địa chỉ
@@ -143,30 +161,17 @@ function Checkout() {
                                 </div>
                             </div>
                         </div>
-                        <div className={cx('payment')}>
+                        {/* <div className={cx('payment')}>
                             <h2 className={cx('payment_title')}>Phương thức thanh toán</h2>
                             <div className={cx('payment_container')}>
                                 <div className={cx('payment-item')}>
-                                    <input
-                                        type="radio"
-                                        name="payment"
-                                        value="Tiền mặt"
-                                        className={cx('payment_input')}
-                                        id="acc1"
-                                    />
-                                    <label htmlFor="acc1" className={cx('payment-item_title')}>
-                                        <i className={cx('fa fa-map-marker')}></i> My name?
-                                    </label>
-                                    <div className={cx('payment_content')}>Hi, You can call me Dandi.</div>
-                                </div>
-                                <div className={cx('payment-item')}>
                                     <input type="radio" name="payment" value="PayPal" id="acc2" />
                                     <label htmlFor="acc2">
-                                        <i className={cx('fa fa-heart')}></i> What am I interesting for?
+                                        <i className={cx('fa fa-heart')}></i> Tiền mặt
                                     </label>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className={cx('col', 'l-4', 'order')}>
                         <h2 className={cx('order_title')}>Sơ lược hóa đơn</h2>

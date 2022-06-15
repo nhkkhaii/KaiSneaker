@@ -6,7 +6,7 @@
         font-weight: 600;
         padding: 4px 4px;
         text-align: center;
-        color: var(--black1-color);
+        color: var(--black-color);
     }
 }
 
@@ -18,7 +18,7 @@
     position: relative;
     padding: 2px 0;
     text-align: center;
-    color: var(--black1-color);
+    color: var(--black-color);
     .stock-img {
         width: 100px;
         height: 100px;
@@ -35,7 +35,7 @@
     .details-content-item-btn {
         padding: 8px 8px;
         border: none;
-        background-color: var(--blue-color);
+        background-color: var(--black-color);
         border-radius: 20px;
         color: var(--white-color);
         &:hover {
@@ -67,7 +67,7 @@
     .modal-detail {
         width: 600px;
         height: 350px;
-        background-color: #fff;
+        background-color: var(--white-color);
         border-radius: 20px;
 
         .modal-header {
@@ -108,14 +108,14 @@
                     padding: 0 8px;
                     background: white;
                     position: absolute;
-                    color: var(--black1-color);
+                    color: var(--black-color);
                 }
 
                 .mt-10 {
                     margin-top: -10px;
                 }
                 .input-item {
-                    color: var(--black1-color);
+                    color: var(--black-color);
                     font-size: 1.4rem;
                     width: 460px;
                     padding: 12px 0 12px 26px;
@@ -133,9 +133,9 @@
             margin: 10px 68px 0 0;
             padding: 10px 22px;
             border-radius: 20px;
-            background-color: #bfbfbf;
+            background-color: var(--black-color);
             border: none;
-            color: #000;
+            color: var(--white-color);
         }
 
         .btn:hover {

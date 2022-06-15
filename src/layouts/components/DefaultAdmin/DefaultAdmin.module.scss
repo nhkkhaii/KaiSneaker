@@ -1,5 +1,5 @@
 .navigation {
-    background-color: var(--blue-color);
+    background-color: #262626;
     transition: 0.5s;
     overflow: hidden;
     padding-left: 0;
@@ -39,7 +39,7 @@
 
             &:nth-child(1) {
                 margin-bottom: 34px;
-                background-color: var(--blue-color) !important;
+                background-color: #262626 !important;
                 &:hover {
                     background-color: none;
 
@@ -47,7 +47,7 @@
                         color: white;
                         &::before {
                             content: '';
-                            color: var(--blue-color);
+                            color: #262626;
                             position: absolute;
                             right: -12px;
                             top: -48px;
@@ -62,7 +62,7 @@
                         &::after {
                             content: '';
                             position: absolute;
-                            color: var(--blue-color);
+                            color: #262626;
                             right: -12px;
                             bottom: -48px;
                             width: 50px;
@@ -80,7 +80,7 @@
                 background-color: var(--white-color);
 
                 .nav-item-link {
-                    color: var(--blue-color);
+                    color: var(--black-color);
 
                     /* curve outside  */
 

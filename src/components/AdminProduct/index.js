@@ -3,6 +3,8 @@ import styles from './AdminProduct.module.scss';
 import Button from '~/components/Button';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import NumberFormat from 'react-number-format';
+import Image from '~/components/Image';
 
 const cx = classNames.bind(styles);
 
@@ -57,16 +59,15 @@ function AdminProduct() {
                 </Button>
             </div>
 
-            {productData != 0 ? (
+            {productData ? (
                 <table className={cx('details-table')}>
                     <thead className={cx('details-thead')}>
                         <tr className={cx('details-title-list')}>
                             <td className={cx('details-title-item')}>ID sản phẩm</td>
-                            <td className={cx('details-title-item')}>ID Ảnh</td>
+                            <td className={cx('details-title-item')}>Ảnh</td>
                             <td className={cx('details-title-item')}>ID Brand</td>
                             <td className={cx('details-title-item')}>Tên sản phẩm</td>
                             <td className={cx('details-title-item')}>Giá</td>
-                            <td className={cx('details-title-item')}>Mô tả</td>
                         </tr>
                     </thead>
                     {productData.map((product, index) => {
@@ -74,12 +75,22 @@ function AdminProduct() {
                             <tbody className={cx('details-tbody')} key={product.SHOESID}>
                                 <tr className={cx('details-content-list')}>
                                     <td className={cx('details-content-item')}>{product.SHOESID}</td>
-                                    <td className={cx('details-content-item')}>{product.IMAGEID}</td>
+                                    <td className={cx('details-content-item')}>
+                                        <Image
+                                            src={product.IMAGESHOES1 != null ? product.IMAGESHOES1 : ''}
+                                            alt={product.SHOESNAME}
+                                            className={cx('details-content-item-img')}
+                                        />
+                                    </td>
                                     <td className={cx('details-content-item')}>{product.IDBRAND}</td>
                                     <td className={cx('details-content-item', 'justify_item')}>{product.SHOESNAME}</td>
-                                    <td className={cx('details-content-item')}>{product.SHOESPRICE}</td>
-                                    <td className={cx('details-content-item', 'justify_item')}>
-                                        {product.SHOESDESCRIPTION}
+                                    <td className={cx('details-content-item')}>
+                                        <NumberFormat
+                                            value={product.SHOESPRICE}
+                                            displayType={'text'}
+                                            thousandSeparator={true}
+                                            suffix={'đ'}
+                                        />
                                     </td>
 
                                     <td className={cx('details-content-item')}>

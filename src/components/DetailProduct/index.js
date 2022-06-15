@@ -33,23 +33,26 @@ function DetailProduct() {
     let navigate = useNavigate();
     let location = useLocation();
 
-    console.log(location.state.data);
     useEffect(() => {
-        if (cookies.name) {
-            dispatchShopping(setIDAccount(cookies.name.ID));
+        try {
+            if (cookies.name) {
+                dispatchShopping(setIDAccount(cookies.name.ID));
+            }
+            dispatchShopping(setShoesID(location.state.data.SHOESID));
+            axios
+                .post('http://26.17.209.162/api/stock/post', {
+                    type: 'getsize',
+                    data: { SHOESID: location.state.data.SHOESID },
+                })
+                .then((res) => {
+                    if ((res.data != 0) & (res.data != -1)) {
+                        setSizeData(res.data);
+                        dispatchShopping(setIDSize(res.data[0].IDSIZE));
+                    }
+                });
+        } catch (error) {
+            console.log(error);
         }
-        dispatchShopping(setShoesID(location.state.data.SHOESID));
-        axios
-            .post('http://26.17.209.162/api/stock/post', {
-                type: 'getsize',
-                data: { SHOESID: location.state.data.SHOESID },
-            })
-            .then((res) => {
-                if ((res.data != 0) & (res.data != -1)) {
-                    setSizeData(res.data);
-                    dispatchShopping(setIDSize(res.data[0].IDSIZE));
-                }
-            });
     }, []);
 
     const quantityUp = () => {
@@ -74,15 +77,25 @@ function DetailProduct() {
     }
 
     const handleShoppingCart = () => {
-        if (cookies.name) {
-            axios
-                .post('http://26.17.209.162/api/shoppingcart/post', {
-                    type: 'create',
-                    data: stateShopping,
-                })
-                .then(async (res) => console.log(res.data));
-        } else {
-            navigate('/login');
+        try {
+            if (cookies.name) {
+                axios
+                    .post('http://26.17.209.162/api/shoppingcart/post', {
+                        type: 'create',
+                        data: stateShopping,
+                    })
+                    .then(async (res) => {
+                        if (res.data == 1) {
+                            alert('Thêm vào giỏ hàng thành công!!');
+                        } else if (res.data == -1) {
+                            alert('Sản phẩm đã tồn tại trong giỏ hàng!!');
+                        }
+                    });
+            } else {
+                navigate('/login');
+            }
+        } catch (error) {
+            console.log(error);
         }
     };
 

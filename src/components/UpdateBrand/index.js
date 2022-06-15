@@ -50,8 +50,6 @@ function UpdateBrand({}) {
         }
     };
 
-    console.log(stateBrand);
-
     // check coi có thay đổi dữ liệu không
     const checkChangeDataBrand = () => {
         if (JSON.stringify(brandData[0]) === JSON.stringify(stateBrand)) {
@@ -88,7 +86,11 @@ function UpdateBrand({}) {
             <div className={cx('wrapper')}>
                 <div className={cx('inner')}>
                     <h2 className={cx('heading')}>Cập nhật thương hiệu</h2>
-                    <Button to={config.routes.adminCategory} className={cx('btn_cancel')}>
+                    <Button
+                        to={config.routes.adminCategory}
+                        rightIcon={<FontAwesomeIcon icon={faXmark} />}
+                        className={cx('btn_cancel')}
+                    >
                         Hủy
                     </Button>
                 </div>

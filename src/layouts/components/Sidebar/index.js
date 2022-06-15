@@ -12,9 +12,13 @@ const cx = classNames.bind(styles);
 function Sidebar({ children }) {
     const [brandData, setBrandData] = useState([]);
     useEffect(() => {
-        axios.post('http://26.17.209.162/api/brand/get').then((res) => {
-            setBrandData(res.data);
-        });
+        try {
+            axios.post('http://26.17.209.162/api/brand/get').then((res) => {
+                setBrandData(res.data);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }, []);
 
     return (
@@ -22,7 +26,6 @@ function Sidebar({ children }) {
             <Breadcrumbs />
             <div className={cx('col', 'l-3')}>
                 <div className={cx('category')}>
-                    <h3 className={cx('category__heading')}>Thương hiệu </h3>
                     {brandData != 0 ? (
                         <ul className={cx('category-list')}>
                             <li className={cx('category-item')}>
@@ -33,7 +36,10 @@ function Sidebar({ children }) {
                             {brandData.map((brand) => {
                                 return (
                                     <li className={cx('category-item')} key={brand.IDBRAND}>
-                                        <Link to={`/${brand.BRANDNAME}`} className={cx('category-item__link')}>
+                                        <Link
+                                            to={`/${brand.BRANDNAME.toLowerCase()}`}
+                                            className={cx('category-item__link')}
+                                        >
                                             {brand.BRANDNAME}
                                         </Link>
                                     </li>
@@ -67,26 +73,6 @@ function Sidebar({ children }) {
                                 </a>
                             </li>
                         </ul>
-                    </div>
-
-                    <div className={cx('filter__page')}>
-                        <span className={cx('filter__page-num')}>
-                            <span className={cx('filter__page-current')}>1</span>/14
-                        </span>
-                        <div className={cx('filter__page-control')}>
-                            <a href="" className={cx('filter__page-btn', 'filter__page-btn--disabled ')}>
-                                <FontAwesomeIcon
-                                    icon={faAngleLeft}
-                                    className={cx('filter__page-icon')}
-                                ></FontAwesomeIcon>
-                            </a>
-                            <a href="" className={cx('filter__page-btn')}>
-                                <FontAwesomeIcon
-                                    icon={faAngleRight}
-                                    className={cx('filter__page-icon')}
-                                ></FontAwesomeIcon>
-                            </a>
-                        </div>
                     </div>
                 </div>
                 {/* Product */}
