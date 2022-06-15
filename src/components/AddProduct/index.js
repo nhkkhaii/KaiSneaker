@@ -19,9 +19,11 @@ const cx = classNames.bind(styles);
 function AddProduct() {
     const [state, dispatch] = useReducer(productDetailsReducer, initState);
     const [brandData, setBrandData] = useState([]);
+    const [brandName, setBrandName] = useState('');
     let location = useLocation();
     let navigate = useNavigate();
 
+    console.log(state);
     useEffect(() => {
         try {
             if (location.state) {
@@ -30,6 +32,8 @@ function AddProduct() {
                     dispatch(setDescription(location.state.data.SHOESDESCRIPTION));
                     dispatch(setPrice(location.state.data.SHOESPRICE));
                     dispatch(setName(location.state.data.SHOESNAME));
+                    dispatch(setBrand(location.state.data.IDBRAND));
+                    setBrandName(location.state.data.BRANDNAME);
                     axios
                         .post('http://26.17.209.162/api/image/post', {
                             type: 'get',
@@ -56,15 +60,6 @@ function AddProduct() {
                                 dispatch(setImg(array[3]));
                             }
                         });
-
-                    axios
-                        .post('http://26.17.209.162/api/brand/post', {
-                            type: 'get',
-                            data: { IDBRAND: location.state.data.IDBRAND },
-                        })
-                        .then((res) => {
-                            dispatch(setBrand(res.data[0]));
-                        });
                 }
             }
             axios.post('http://26.17.209.162/api/brand/get').then((res) => {
@@ -90,6 +85,7 @@ function AddProduct() {
                     data: state,
                 })
                 .then((res) => {
+                    console.log(res.data);
                     if (res.data == 1) {
                         alert('Cập nhật sản phẩm thành công !!!');
                         navigate('/admin/shoes');
@@ -104,7 +100,7 @@ function AddProduct() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await handleCreateProduct({
+        await handleCreateProduct({
             state,
         });
     };
@@ -220,7 +216,7 @@ function AddProduct() {
                                 <div className={cx('selected-value')}>
                                     <span>
                                         {location.state
-                                            ? state.IDBRAND.BRANDNAME
+                                            ? brandName
                                             : brandData != 0
                                             ? 'Chọn thương hiệu'
                                             : 'Chưa có thương hiệu'}
@@ -278,7 +274,6 @@ function AddProduct() {
                                 onChange={(e, editor) => {
                                     const data = editor.getData();
                                     dispatch(setDescription(data));
-                                    console.log(data);
                                 }}
                             />
                         </div>

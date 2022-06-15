@@ -21,6 +21,7 @@ export const detailBrandReducer = (state, action) => {
                 BRANDNAME: action.payload,
             };
             break;
+
         case SET_IMAGEBRAND:
             return {
                 ...state,
