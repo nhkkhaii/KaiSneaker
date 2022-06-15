@@ -1,13 +1,25 @@
 import Products from '~/components/Products';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames/bind';
+import styles from './MLB.module.scss';
+const cx = classNames.bind(styles);
 function Nike() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
     const brand = 'MLb';
+    const [sort, setSort] = useState('');
 
+    const setSortPriceLowToHigh = () => {
+        setSort('price_low_to_high');
+    };
+
+    const setSortPriceHighToLow = () => {
+        setSort('price_high_to_low');
+    };
     // Note: the empty deps array [] means
     // this useEffect will run once
     // similar to componentDidMount()
@@ -30,24 +42,91 @@ function Nike() {
         return <div>Loading...</div>;
     } else {
         return (
-            <div className="row">
-                {items.map((item) => {
-                    if (item.BRANDNAME.toLowerCase() === brand.toLowerCase()) {
-                        return (
-                            <div className="col l-3" key={item.SHOESID}>
-                                <Products
-                                    id={item.SHOESID}
-                                    name={item.SHOESNAME}
-                                    price={item.SHOESPRICE}
-                                    imgID={item.IMAGEID}
-                                    description={item.SHOESDESCRIPTION}
-                                    brand={item.BRANDNAME}
-                                />
-                            </div>
-                        );
-                    }
-                })}
-            </div>
+            <>
+                <div className={cx('filter')}>
+                    <span className={cx('filter-label')}>Sắp xếp theo</span>
+
+                    <div className={cx('select-input')}>
+                        <span className={cx('select-input__label')}>Giá</span>
+                        <FontAwesomeIcon icon={faAngleDown} className={cx('select-input__icon')} />
+
+                        <ul className={cx('select-input__list')}>
+                            <li className={cx('select-input__item')}>
+                                <div className={cx('select-input__link')} onClick={setSortPriceLowToHigh}>
+                                    Thấp đến cao
+                                </div>
+                            </li>
+                            <li className={cx('select-input__item')}>
+                                <div className={cx('select-input__link')} onClick={setSortPriceHighToLow}>
+                                    Cao đến thấp
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div className={cx('row')}>
+                    {items ? (
+                        sort == 'price_low_to_high' ? (
+                            items
+                                .sort((a, b) => a.SHOESPRICE - b.SHOESPRICE)
+                                .map((item) => {
+                                    if (item.BRANDNAME.toLowerCase() === brand.toLowerCase()) {
+                                        return (
+                                            <div className={cx('col', 'l-3')} key={item.SHOESID}>
+                                                <Products
+                                                    id={item.SHOESID}
+                                                    name={item.SHOESNAME}
+                                                    price={item.SHOESPRICE}
+                                                    imgID={item.IMAGEID}
+                                                    description={item.SHOESDESCRIPTION}
+                                                    brand={item.BRANDNAME}
+                                                />
+                                            </div>
+                                        );
+                                    }
+                                })
+                        ) : sort == 'price_high_to_low' ? (
+                            items
+                                .sort((a, b) => b.SHOESPRICE - a.SHOESPRICE)
+                                .map((item) => {
+                                    if (item.BRANDNAME.toLowerCase() === brand.toLowerCase()) {
+                                        return (
+                                            <div className={cx('col', 'l-3')} key={item.SHOESID}>
+                                                <Products
+                                                    id={item.SHOESID}
+                                                    name={item.SHOESNAME}
+                                                    price={item.SHOESPRICE}
+                                                    imgID={item.IMAGEID}
+                                                    description={item.SHOESDESCRIPTION}
+                                                    brand={item.BRANDNAME}
+                                                />
+                                            </div>
+                                        );
+                                    }
+                                })
+                        ) : (
+                            items.map((item) => {
+                                if (item.BRANDNAME.toLowerCase() === brand.toLowerCase()) {
+                                    return (
+                                        <div className={cx('col', 'l-3')} key={item.SHOESID}>
+                                            <Products
+                                                id={item.SHOESID}
+                                                name={item.SHOESNAME}
+                                                price={item.SHOESPRICE}
+                                                imgID={item.IMAGEID}
+                                                description={item.SHOESDESCRIPTION}
+                                                brand={item.BRANDNAME}
+                                            />
+                                        </div>
+                                    );
+                                }
+                            })
+                        )
+                    ) : (
+                        <></>
+                    )}
+                </div>
+            </>
         );
     }
 }

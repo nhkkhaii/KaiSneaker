@@ -1,5 +1,3 @@
-import { faAngleDown, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 import Breadcrumbs from '~/components/Breadcrumbs';
@@ -52,29 +50,6 @@ function Sidebar({ children }) {
                 </div>
             </div>
             <div className={cx('col', 'l-9')}>
-                <div className={cx('filter')}>
-                    <span className={cx('filter-label')}>Sắp xếp theo</span>
-                    <button className={cx('filter-btn', 'btn')}>Phổ biến</button>
-                    <button className={cx('filter-btn', 'btn', 'btn-primary')}>Mới nhất</button>
-                    <button className={cx('filter-btn', 'btn')}>Bán chạy</button>
-                    <div className={cx('select-input')}>
-                        <span className={cx('select-input__label')}>Giá</span>
-                        <FontAwesomeIcon icon={faAngleDown} className={cx('select-input__icon')} />
-
-                        <ul className={cx('select-input__list')}>
-                            <li className={cx('select-input__item')}>
-                                <a href="" className={cx('select-input__link')}>
-                                    Thấp đến cao{' '}
-                                </a>
-                            </li>
-                            <li className={cx('select-input__item')}>
-                                <a href="" className={cx('select-input__link')}>
-                                    Cao đến thấp{' '}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
                 {/* Product */}
                 {children}
             </div>
