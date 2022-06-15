@@ -59,7 +59,7 @@ function Checkout() {
                 .then((res) => {
                     if (res.data == 1) {
                         alert('Thanh toán thành công !!');
-                        navigate('/home');
+                        navigate('/');
                     }
                 });
         } catch (error) {

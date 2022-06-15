@@ -21,15 +21,16 @@
 }
 
 .avatar {
-    width: 40px;
-    height: 40px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .info {
-    width: 250px;
+    width: 200px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     margin-left: 12px;
 }

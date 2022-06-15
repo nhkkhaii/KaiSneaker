@@ -18,7 +18,7 @@
         position: relative;
         padding: 2px 0;
         text-align: center;
-        color: var(--black1-color);
+        color: var(--black-color);
         .details-content-select {
             font-size: 1.6rem;
             padding: 4px 0;
@@ -65,7 +65,8 @@
     border: none;
     background-color: black;
     border-radius: 20px;
-    color: var(--white-color);
+    font-weight: 400 !important;
+    color: var(--white-color) !important;
 }
 
 .details-content-item-btn:hover {

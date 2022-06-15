@@ -83,6 +83,7 @@ function SignIn() {
                 .then((res) => {
                     if (res.data == 1) {
                         alert('Đăng ký thành công');
+                        navigate('/');
                     } else if (res.data == -1) {
                         alert('Tài khoản đã tồn tại');
                     } else {

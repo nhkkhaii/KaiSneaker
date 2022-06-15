@@ -241,11 +241,13 @@ function AddProduct() {
                                                     type="radio"
                                                     name="brand"
                                                     value={brand.IDBRAND}
+                                                    required
                                                     onChange={(e) => dispatch(setBrand(e.target.value))}
                                                 />
                                                 <input
                                                     className={cx('s-c', 'bottom')}
                                                     type="radio"
+                                                    required
                                                     name="brand"
                                                     value={brand.IDBRAND}
                                                     onChange={(e) => dispatch(setBrand(e.target.value))}

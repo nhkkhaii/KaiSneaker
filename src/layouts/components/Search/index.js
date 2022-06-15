@@ -55,25 +55,27 @@ function Search() {
                 <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                     <PopperWrapper>
                         {searchResult != 0 ? (
-                            searchResult.map((result) => {
-                                return (
-                                    <ProductItem
-                                        SHOESDESCRIPTION={result.SHOESDESCRIPTION}
-                                        key={result.SHOESID}
-                                        SHOESID={result.SHOESID}
-                                        BRANDNAME={result.BRANDNAME}
-                                        IMAGESHOES1={result.IMAGESHOES1}
-                                        imgProducts={{
-                                            IMAGEID: result.IMAGEID,
-                                            IMAGESHOES1: result.IMAGESHOES1,
-                                            IMAGESHOES2: result.IMAGESHOES2,
-                                            IMAGESHOES3: result.IMAGESHOES3,
-                                            IMAGESHOES4: result.IMAGESHOES4,
-                                        }}
-                                        SHOESNAME={result.SHOESNAME}
-                                        SHOESPRICE={result.SHOESPRICE}
-                                    />
-                                );
+                            searchResult.map((result, index) => {
+                                if (index < 5) {
+                                    return (
+                                        <ProductItem
+                                            SHOESDESCRIPTION={result.SHOESDESCRIPTION}
+                                            key={result.SHOESID}
+                                            SHOESID={result.SHOESID}
+                                            BRANDNAME={result.BRANDNAME}
+                                            IMAGESHOES1={result.IMAGESHOES1}
+                                            imgProducts={{
+                                                IMAGEID: result.IMAGEID,
+                                                IMAGESHOES1: result.IMAGESHOES1,
+                                                IMAGESHOES2: result.IMAGESHOES2,
+                                                IMAGESHOES3: result.IMAGESHOES3,
+                                                IMAGESHOES4: result.IMAGESHOES4,
+                                            }}
+                                            SHOESNAME={result.SHOESNAME}
+                                            SHOESPRICE={result.SHOESPRICE}
+                                        />
+                                    );
+                                }
                             })
                         ) : (
                             <></>
