@@ -91,7 +91,7 @@ function AdminSlider() {
         <>
             <div className={cx('wrapper')}>
                 <div className={cx('inner')}>
-                    <h2 className={cx('heading')}>Chỉnh sữa Slider</h2>
+                    <h2 className={cx('heading')}>Chỉnh sửa Slider</h2>
                 </div>
                 <div className={cx('wrapper_img')}>
                     <form className={cx('inner_img')} onSubmit={handleSubmit}>

@@ -157,7 +157,7 @@ function DetailProduct() {
                                     dispatchShopping(setQuantity());
                                 }}
                             >
-                                {sizeData != 0 ? (
+                                {sizeData ? (
                                     sizeData.map((size) => {
                                         return (
                                             <option value={size.IDSIZE} key={size.IDSIZE}>
@@ -192,7 +192,7 @@ function DetailProduct() {
                 </div>
             </div>
             <div className={cx('row', 'description')}>
-                <div className={cx('col', 'l-8', 'describe')}>
+                <div className={cx('col', 'l-12', 'describe')}>
                     <h2 className={cx('describe_heading')}>Mô tả sản phẩm</h2>
                     <div className={cx('describe_content')}>
                         <h3 className={cx('describe_content-name')}>{location.state.data.SHOESNAME}</h3>
@@ -202,21 +202,6 @@ function DetailProduct() {
                                 className={cx('describe_content-summary-content')}
                                 dangerouslySetInnerHTML={createMarkup()}
                             ></p>
-                        </div>
-                    </div>
-                </div>
-                <div className={cx('col', 'l-4', 'detailed_informations')}>
-                    <h2 className={cx('detailed_informations-heading')}>Thông tin chi tiết</h2>
-                    <div className={cx('row', 'details')}>
-                        <div className={cx('col', 'l-4', 'details_name')}>
-                            <p className={cx('details_name-product')}>Thương hiệu</p>
-                            <p className={cx('details_name-product')}>Thương hiệu</p>
-                            <p className={cx('details_name-product')}>Thương hiệu</p>
-                        </div>
-                        <div className={cx('col', 'l-8', 'details_info')}>
-                            <p className={cx('details_info-product')}>Lenovo</p>
-                            <p className={cx('details_info-product')}>Lenovo</p>
-                            <p className={cx('details_info-product')}>Lenovo</p>
                         </div>
                     </div>
                 </div>

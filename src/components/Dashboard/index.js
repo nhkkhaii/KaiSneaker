@@ -14,7 +14,6 @@ const cx = classNames.bind(styles);
 function Dashboard() {
     const [cookies, setCookie] = useCookies(['name']);
     const [billData, setBillData] = useState([]);
-    const [accData, setAccData] = useState([]);
     const [stockData, setStockData] = useState([]);
 
     let money = 0;
@@ -23,9 +22,6 @@ function Dashboard() {
         if (cookies.name) {
             axios.get('http://26.17.209.162/api/bill/get').then((res) => {
                 setBillData(res.data);
-            });
-            axios.get('http://26.17.209.162/api/account/get').then((res) => {
-                setAccData(res.data);
             });
             axios.get('http://26.17.209.162/api/stock/get').then((res) => {
                 setStockData(res.data);
@@ -48,16 +44,6 @@ function Dashboard() {
     return (
         <>
             <div className={cx('card__box')}>
-                <div className={cx('card')}>
-                    <div>
-                        <div className={cx('card-numbers')}>{accData.length - 1}</div>
-                        <div className={cx('card-name')}>Số tài khoản</div>
-                    </div>
-                    <div className={cx('card-icon')}>
-                        <FontAwesomeIcon icon={faEye} />
-                    </div>
-                </div>
-
                 <div className={cx('card')}>
                     <div>
                         <div className={cx('card-numbers')}>{billData ? billData.length : '0'}</div>

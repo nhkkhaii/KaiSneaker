@@ -21,7 +21,7 @@ function Featured() {
         <div className={cx('row', 'features')}>
             <h1 className={cx('features_heading', 'col', 'l-12')}>Sản phẩm nổi bật</h1>
             <div className={cx('row', 'item', 'l-12', 'col')}>
-                {countProduct != 0 ? (
+                {countProduct ? (
                     countProduct
                         .sort((a, b) => b.TOTAL - a.TOTAL)
                         .map((product, index) => {

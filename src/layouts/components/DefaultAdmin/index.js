@@ -68,7 +68,7 @@ function SidebarAdmin({ children }) {
                             <span className={cx('nav-icon')}>
                                 <FontAwesomeIcon icon={faBarChart} />
                             </span>
-                            <span className={cx('nav-title')}>Danh mục</span>
+                            <span className={cx('nav-title')}>Thương hiệu</span>
                         </Link>
                     </li>
                     <li className={cx('nav-item')}>
